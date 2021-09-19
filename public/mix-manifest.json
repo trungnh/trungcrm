@@ -1,0 +1,6 @@
+{
+    "/js/admin.js": "/js/admin.js",
+    "/css/admin/admin.css": "/css/admin/admin.css",
+    "/lib/vue/vue.min.js": "/lib/vue/vue.min.js",
+    "/lib/vuex/vuex.min.js": "/lib/vuex/vuex.min.js"
+}
