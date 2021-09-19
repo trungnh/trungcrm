@@ -57,6 +57,7 @@
 <script src="{{ asset('lib/lodash/lodash.min.js') }}"></script>
 <script src="{{ asset('lib/vue/vue.min.js') }}"></script>
 <script src="{{ asset('lib/vuex/vuex.min.js') }}"></script>
+<script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ mix('js/admin.js') }}" defer></script>
 </body>
 </html>

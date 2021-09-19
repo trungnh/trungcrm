@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/', 'Admin\HomeController@index')->name('admin.index');
     Route::get('/product', 'Admin\ProductController@index')->name('product.index');
     Route::post('/addProduct', 'Admin\ProductController@addProduct')->name('product.addProduct');
+    Route::get('/order', 'Admin\OrderController@index')->name('order.index');
+    Route::post('/addOrder', 'Admin\OrderController@addOrder')->name('order.addOrder');
     Route::get('/sample', 'Admin\SampleController@index')->name('sample.index');
 });
 

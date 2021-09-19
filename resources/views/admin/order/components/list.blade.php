@@ -3,7 +3,14 @@
         <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-                <h3 class="mb-0">Danh sách sản phẩm</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="mb-0">Danh sách đơn hàng</h3>
+                    </div>
+                    <div class="col-md-8">
+                        <button type="button" class="btn btn-block btn-success col-md-3 float-right" data-toggle="modal" data-target="#modal-form">Tạo đơn</button>
+                    </div>
+                </div>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -18,7 +25,7 @@
                     </thead>
                     <tbody class="list">
                     @verbatim
-                    <tr v-for="item in products">
+                    <tr v-for="item in orders">
                         <th scope="row">
                             <div class="media align-items-center">
                                 <div class="media-body">
@@ -30,11 +37,7 @@
                             {{item.price}}
                         </td>
                         <td>
-                          <ul>
-                              <li v-for="fieldItem in parseCustomFields(item.custom_fields)">
-                                  {{fieldItem.label}}: {{fieldItem.value}}
-                              </li>
-                          </ul>
+                          zzz
                         </td>
                         <td class="text-right">
                             <div class="dropdown">
