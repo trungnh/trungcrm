@@ -34,4 +34,9 @@ class ProductService extends Service
     {
         return $this->productRepository->getList();
     }
+
+    public function getAllProducts()
+    {
+        return $this->productRepository->getAllProducts();
+    }
 }

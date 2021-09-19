@@ -10,11 +10,17 @@ export default {
         PageModule.default,
     ],
     data: {
-        products: [],
-        product: {
-            name: '',
-            price: 0,
-            fields: []
+        orders: [],
+        products: global.products,
+        useProduct: {},
+        useCustomer: {},
+        tmpOrder: {
+            customer_name: '',
+            phone: '',
+            address: '',
+            qty: 1,
+            total: '',
+            note: '',
         },
         message: {},
         pagination: {
@@ -28,36 +34,40 @@ export default {
 
     },
     methods: {
-        addField() {
-            let fieldCount = this.product.fields.length;
-            this.product.fields.push({
-                label: 'Label ' + (fieldCount+1),
-                value: '',
-            });
+        setItems: function () {
+            if (global.orders) {
+                this.orders = global.orders.data;
+                this.orders = global.orders.pagination;
+            }
         },
-        removeField(item) {
-            this.product.fields.splice(this.product.fields.indexOf(item), 1);
+        setUseProduct: function (product) {
+            this.useProduct = product;
+            this.tmpOrder.product_id = product.id;
         },
-        addProduct() {
-            axios.post('/addProduct', this.product).then(response => {
+        setUseCustomer: function (customer) {
+            this.useCustomer = customer;
+            this.tmpOrder.customer_id = customer.id;
+        },
+        parseCustomFields(field) {
+            return JSON.parse(field);
+        },
+        addOrder() {
+            let params = {
+                order: this.tmpOrder,
+                product: this.useProduct,
+                customer: this.useCustomer
+            }
+
+            axios.post('/addOrder', params).then(response => {
                 if (response.status == 200) {
                     return {data: response.data, success: true};
                 } else {
                     return {data: response.data, success: false};
                 }
             }).then(res => {
-                this.product = {
-                    name: '',
-                        price: 0,
-                        fields: []
-                };
                 let type = res.success ? 'success' : 'danger';
                 this.setMessage(type, res.data.message);
             });
-
-        },
-        parseCustomFields(field) {
-            return JSON.parse(field);
         },
         setMessage(type, content) {
             this.message = {
@@ -66,12 +76,6 @@ export default {
             }
 
             return;
-        },
-        setItems: function () {
-            if (global.products) {
-                this.products = global.products.data;
-                this.pagination = global.products.pagination;
-            }
         },
         // changePage: function (page=1) {
         //     this.pagination.current_page = page;
@@ -121,8 +125,11 @@ export default {
                 from++;
             }
             return pagesArray;
+        },
+        total () {
+            this.tmpOrder.total = this.tmpOrder.qty * parseInt(this.useProduct.price||0);
+            return this.tmpOrder.total;
         }
-
     },
     mounted () {
         this.setItems();

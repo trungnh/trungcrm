@@ -31,4 +31,9 @@ class ProductRepository extends Repository
 
         return $collection->paginate(5);
     }
+
+    public function getAllProducts()
+    {
+        return $this->all();
+    }
 }
