@@ -7,9 +7,9 @@ use App\Models\OrderItem;
 class OrderItemRepository extends Repository
 {
     /**
-     * @var OrderItemRepository
+     * @var OrderItem
      */
-    protected $model = OrderItemRepository::class;
+    protected $model = OrderItem::class;
 
     public function getList()
     {

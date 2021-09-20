@@ -38,7 +38,11 @@
                         <div class="col">
                             <div class="form-outline">
                                 <label class="form-label" for="form6Example2" style="margin-left: 0px;">Số ĐT</label>
-                                <input type="text" id="form6Example2" class="form-control" v-model="tmpOrder.phone">
+                                <input type="text"
+                                       id="form6Example2"
+                                       class="form-control"
+                                       v-model="tmpOrder.phone"
+                                       v-on:keyup="getCustomer()">
                                 <div class="form-notch">
                                     <div class="form-notch-leading" style="width: 9px;"></div>
                                     <div class="form-notch-middle" style="width: 68px;"></div>

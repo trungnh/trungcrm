@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\OrderRequest;
 use App\Services\OrderService;
+use App\Services\CustomerService;
 use App\Services\ProductService;
+use App\Services\OrderItemService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 
@@ -16,6 +18,16 @@ class OrderController extends Controller
     private $orderService;
 
     /**
+     * @var CustomerService
+     */
+    private $customerService;
+
+    /**
+     * @var OrderItemService
+     */
+    private $orderItemService;
+
+    /**
      * @var ProductService
      */
     private $productService;
@@ -24,11 +36,20 @@ class OrderController extends Controller
      * SampleController constructor.
      *
      * @param OrderService $orderService
+     * @param CustomerService $customerService
+     * @param OrderItemService $orderItemService
      * @param ProductService $productService
      */
-    public function __construct(OrderService $orderService, ProductService $productService)
+    public function __construct(
+        OrderService $orderService,
+        CustomerService $customerService ,
+        OrderItemService $orderItemService,
+        ProductService $productService
+    )
     {
         $this->orderService = $orderService;
+        $this->customerService = $customerService;
+        $this->orderItemService = $orderItemService;
         $this->productService = $productService;
     }
 
@@ -52,11 +73,51 @@ class OrderController extends Controller
         $attributes = $request->all();
         $orderAttributes = $attributes['order'];
         $productAttributes = $attributes['product'];
+        $customerAttributes = $attributes['customer'];
         $orderAttributes['total'] = $productAttributes['price'];
-        $orderAttributes = $attributes['order'];
-        // TODO
-        // Insert order & order item
-        // Check customer exist, if not then insert
-        var_dump($attributes);die;
+        $orderAttributes['ordered_date'] = date('Y-m-d');
+
+        try {
+            \DB::beginTransaction();
+            $order = $this->orderService->create($orderAttributes);
+            if ($order->id) {
+                // Create order item
+                $orderItemAttributes = [
+                    'order_id' => $order->id,
+                    'product_id' => $productAttributes['id'],
+                    'product_name' => $productAttributes['name'],
+                    'qty' => $orderAttributes['qty'],
+                    'price' => $productAttributes['price'],
+                    'total' => $order->total,
+                ];
+                $this->orderItemService->create($orderItemAttributes);
+
+                // Create customer
+                if (!isset($customerAttributes['id'])) {
+                    $customerAttributes = [
+                        'name' => $order->customer_name,
+                        'phone' => $order->phone,
+                        'address' => $order->address,
+                        'note' => '',
+                    ];
+
+                    $customer = $this->customerService->create($customerAttributes);
+                    // Save customer id to order
+                    if ($customer->id) {
+                        $order->customer_id = $customer->id;
+                        $order->save();
+                    }
+                }
+            }
+            \DB::commit();
+        }catch(\Exception $e){
+            \DB::rollback();
+            return response()->json(['message' => trans('messages.admin.errors.create', [], 'vi')], 202);
+        }
+
+        return response()->json(
+            ['order' => $order, 'message' => trans('messages.admin.success.create', [], 'vi')],
+            200
+        );
     }
 }

@@ -45,7 +45,6 @@ class ProductController extends Controller
         try {
             $product = $this->productService->create($attributes);
         } catch (\Exception $e) {
-            echo $e->getMessage();die;
             return response()->json(['message' => trans('messages.admin.errors.create', [], 'vi')], 202);
         }
 

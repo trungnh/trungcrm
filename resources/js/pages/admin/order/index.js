@@ -77,6 +77,19 @@ export default {
 
             return;
         },
+        getCustomer() {
+            axios.post('/getCustomer', {phone: this.tmpOrder.phone}).then(response => {
+                if (response.status == 200) {
+                    return {data: response.data, success: true};
+                } else {
+                    return {data: response.data, success: false};
+                }
+            }).then(res => {
+                this.customer = res.data.customer;
+                this.tmpOrder.customer_name = this.customer.name;
+                this.tmpOrder.address = this.customer.address;
+            });
+        }
         // changePage: function (page=1) {
         //     this.pagination.current_page = page;
         //     this.getItems(page);
@@ -129,7 +142,7 @@ export default {
         total () {
             this.tmpOrder.total = this.tmpOrder.qty * parseInt(this.useProduct.price||0);
             return this.tmpOrder.total;
-        }
+        },
     },
     mounted () {
         this.setItems();

@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->decimal('price');
             $table->text('custom_fields')->nullable();
-            $table->boolean('active');
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }

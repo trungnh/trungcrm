@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/addProduct', 'Admin\ProductController@addProduct')->name('product.addProduct');
     Route::get('/order', 'Admin\OrderController@index')->name('order.index');
     Route::post('/addOrder', 'Admin\OrderController@addOrder')->name('order.addOrder');
+    Route::post('/getCustomer', 'Admin\CustomerController@getCustomer')->name('customer.getCustomer');
     Route::get('/sample', 'Admin\SampleController@index')->name('sample.index');
 });
 

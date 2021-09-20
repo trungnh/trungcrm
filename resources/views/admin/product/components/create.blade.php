@@ -26,7 +26,7 @@
                         <input type="number" v-model="product.price" class="form-control" aria-describedby="basic-addon3">
                     </div>
                 </div>
-                <div class="form-group" v-if="Object.keys(product.fields).length > 0">
+                <div class="form-group">
                     <label class="form-control-label" for="basic-url">Các trường</label>
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">

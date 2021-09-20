@@ -16,11 +16,11 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->string('address');
-            $table->text('note');
-            $table->integer('success_count');
-            $table->integer('fail_count');
+            $table->text('note')->default('');
+            $table->integer('success_count')->default(0);
+            $table->integer('fail_count')->default(0);
             $table->timestamps();
         });
     }
