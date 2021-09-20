@@ -31,7 +31,7 @@ export default {
             current_page: 1
         },
         offset: 4,
-
+        phoneSearchTimer: null,
     },
     methods: {
         setItems: function () {
@@ -78,18 +78,25 @@ export default {
             return;
         },
         getCustomer() {
-            axios.post('/getCustomer', {phone: this.tmpOrder.phone}).then(response => {
-                if (response.status == 200) {
-                    return {data: response.data, success: true};
-                } else {
-                    return {data: response.data, success: false};
-                }
-            }).then(res => {
-                this.customer = res.data.customer;
-                this.tmpOrder.customer_name = this.customer.name;
-                this.tmpOrder.address = this.customer.address;
-            });
-        }
+            if (this.phoneSearchTimer) {
+                clearTimeout(this.phoneSearchTimer);
+                this.phoneSearchTimer = null;
+            }
+            this.phoneSearchTimer = setTimeout(() => {
+                axios.post('/getCustomer', {phone: this.tmpOrder.phone}).then(response => {
+                    if (response.status == 200) {
+                        return {data: response.data, success: true};
+                    } else {
+                        return {data: response.data, success: false};
+                    }
+                }).then(res => {
+                    this.customer = res.data.customer;
+                    this.tmpOrder.customer_name = this.customer.name;
+                    this.tmpOrder.address = this.customer.address;
+                });
+            }, 300);
+
+        },
         // changePage: function (page=1) {
         //     this.pagination.current_page = page;
         //     this.getItems(page);
