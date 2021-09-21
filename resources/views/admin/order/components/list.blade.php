@@ -17,27 +17,43 @@
                 <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                     <tr>
-                        <th scope="col" class="sort" data-sort="name">Tên sản phẩm</th>
-                        <th scope="col" class="sort" data-sort="budget">Giá</th>
-                        <th scope="col" class="sort" data-sort="status">Custom fields</th>
+                        <th scope="col">#</th>
+                        <th scope="col" class="sort" data-sort="name">Khách hàng</th>
+                        <th scope="col" class="sort" data-sort="budget">Số ĐT</th>
+                        <th scope="col" class="sort" data-sort="status">Địa chỉ</th>
+                        <th scope="col" class="sort" data-sort="status">Sản phẩm</th>
+                        <th scope="col" class="sort" data-sort="status">Tổng tiền</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody class="list">
                     @verbatim
-                    <tr v-for="item in orders">
+                    <tr v-for="(item, index) in orders">
+                        <td width="3%">
+                            {{index+1}}
+                        </td>
                         <th scope="row">
                             <div class="media align-items-center">
                                 <div class="media-body">
-                                    <span class="name mb-0 text-sm">{{item.name}}</span>
+                                    <span class="name mb-0 text-sm">{{item.customer_name}}</span>
                                 </div>
                             </div>
                         </th>
                         <td class="budget">
-                            {{item.price}}
+                            {{item.phone}}
                         </td>
-                        <td>
-                          zzz
+                        <td class="budget">
+                            {{item.address}}
+                        </td>
+                        <td class="budget">
+                            <ul>
+                                <li v-for="oItem in item.order_items">
+                                    {{oItem.qty}} x {{oItem.product_name}}<span v-if="oItem.extra_information != ''">: {{oItem.extra_information}}</span>
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="budget">
+                            {{item.total}}
                         </td>
                         <td class="text-right">
                             <div class="dropdown">
@@ -57,33 +73,7 @@
                 </table>
             </div>
             <!-- Card footer -->
-            <div class="card-footer py-4">
-                <nav aria-label="...">
-                    <ul class="pagination justify-content-end mb-0">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">
-                                <i class="fas fa-angle-left"></i>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                <i class="fas fa-angle-right"></i>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            @include('admin.partials.pagination')
         </div>
-    </div>
-</div>
     </div>
 </div>

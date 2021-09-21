@@ -10,6 +10,7 @@
                 <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col" class="sort" data-sort="name">Tên sản phẩm</th>
                         <th scope="col" class="sort" data-sort="budget">Giá</th>
                         <th scope="col" class="sort" data-sort="status">Custom fields</th>
@@ -80,7 +81,5 @@
                 </nav>
             </div>
         </div>
-    </div>
-</div>
     </div>
 </div>

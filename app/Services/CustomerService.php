@@ -22,6 +22,11 @@ class CustomerService extends Service
         $this->customerRepository = $customerRepository;
     }
 
+    public function create($attributes)
+    {
+        return $this->customerRepository->create($attributes);
+    }
+
     public function findByPhone($phone)
     {
         return $this->customerRepository->findByPhone($phone);

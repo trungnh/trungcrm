@@ -37,7 +37,7 @@ export default {
         setItems: function () {
             if (global.orders) {
                 this.orders = global.orders.data;
-                this.orders = global.orders.pagination;
+                this.pagination = global.orders.pagination;
             }
         },
         setUseProduct: function (product) {

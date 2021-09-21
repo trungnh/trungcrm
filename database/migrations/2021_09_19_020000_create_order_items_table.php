@@ -19,6 +19,7 @@ class CreateOrderItemsTable extends Migration
             $table->bigInteger('product_id');
             $table->string('product_name')->nullable();
             $table->integer('qty')->default(1);
+            $table->text('extra_information')->default('');
             $table->integer('price');
             $table->decimal('total');
             $table->timestamps();

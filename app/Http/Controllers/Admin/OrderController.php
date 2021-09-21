@@ -58,8 +58,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = [];
         $products = $this->productService->getAllProducts();
+        $orders = $this->getCollection($this->orderService->getList());
 
         return view('admin.order.index', compact('orders', 'products'));
     }
@@ -76,6 +76,14 @@ class OrderController extends Controller
         $customerAttributes = $attributes['customer'];
         $orderAttributes['total'] = $productAttributes['price'];
         $orderAttributes['ordered_date'] = date('Y-m-d');
+        $customFields = json_decode($productAttributes['custom_fields']);
+        $extraInfo = '';
+        if (!empty($customFields)) {
+            foreach ($customFields as $field) {
+                $extraInfo .= $field->value . ' - ';
+//                $extraInfo .= $field->label . ' - ' . $field->value;
+            }
+        }
 
         try {
             \DB::beginTransaction();
@@ -89,6 +97,7 @@ class OrderController extends Controller
                     'qty' => $orderAttributes['qty'],
                     'price' => $productAttributes['price'],
                     'total' => $order->total,
+                    'extra_information' => trim($extraInfo, ' - '),
                 ];
                 $this->orderItemService->create($orderItemAttributes);
 
@@ -111,6 +120,7 @@ class OrderController extends Controller
             }
             \DB::commit();
         }catch(\Exception $e){
+            echo $e->getMessage();die;
             \DB::rollback();
             return response()->json(['message' => trans('messages.admin.errors.create', [], 'vi')], 202);
         }
