@@ -1,6 +1,7 @@
 import {global} from '../../../system/storage';
 import * as PageModule from '../module';
 import axios from "axios";
+import {parseInt} from "lodash/string";
 
 /**
  * Export main module application for current page.
@@ -72,6 +73,10 @@ export default {
                     break;
             }
             return className;
+        },
+        formatNumber : function (number) {
+            let numberIn = parseInt(number);
+            return new Intl.NumberFormat('vi-VN').format(numberIn);
         }
 
     },

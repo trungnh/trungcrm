@@ -49,10 +49,10 @@
                                     {{statusIdToText(item.status)}}
                                 </td>
                                 <td class="budget">
-                                    {{item.payment.currentBilling}}
+                                    {{formatNumber(item.payment.currentBilling)}}
                                 </td>
                                 <td class="budget">
-                                    {{item.payment.threshold}}
+                                    {{formatNumber(item.payment.threshold)}}
                                 </td>
                                 <td>
                                     {{item.currency}}
