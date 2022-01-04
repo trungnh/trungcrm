@@ -53,8 +53,8 @@ class Facebook extends Command
                 $currentBilling = intval($adAccount->payment->currentBilling);
                 $threshold = $adAccount->payment->threshold;
                 if ($currentBilling >= ($threshold * 0.85)) {
-                    $currentBillingStr = number_format($currentBilling, 0, '.', ',');
-                    $thresholdStr = number_format($threshold, 0, '.', ',');
+                    $currentBillingStr = number_format($currentBilling, 0, ',', '.');
+                    $thresholdStr = number_format($threshold, 0, ',', '.');
                     $message = "Cần thanh toán: {$adAccount->business->businessName} - {$adAccount->name}: {$currentBillingStr}/{$thresholdStr}";
                     General::sendMessageToTelegramBot($message);
                 }
