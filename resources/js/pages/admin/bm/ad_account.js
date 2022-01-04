@@ -74,7 +74,7 @@ export default {
             }
 
             if (payment.currentBilling >= (payment.threshold * 0.8)) {
-
+                className = 'row-unsettled';
             }
 
 

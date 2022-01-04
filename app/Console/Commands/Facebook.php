@@ -37,7 +37,10 @@ class Facebook extends Command
         $bmData = $bmService->getBmInformation();
 
         Redis::set('bm_all_data', json_encode($bmData));
-        $this->sendNotice($bmData);
+        $currentH = date('H');
+        if ($currentH > 7) {
+            $this->sendNotice($bmData);
+        }
     }
 
     /**
