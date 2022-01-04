@@ -30,15 +30,15 @@ class Facebook extends Command
      */
     public function handle()
     {
-        /**
-         * @var BmService $bmService
-         */
-        $bmService = app(BmService::class);
-        $bmData = $bmService->getBmInformation();
-
-        Redis::set('bm_all_data', json_encode($bmData));
         $currentH = date('H');
         if ($currentH > 7) {
+            /**
+             * @var BmService $bmService
+             */
+            $bmService = app(BmService::class);
+            $bmData = $bmService->getBmInformation();
+
+            Redis::set('bm_all_data', json_encode($bmData));
             $this->sendNotice($bmData);
         }
     }
