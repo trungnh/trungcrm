@@ -27,7 +27,7 @@
                         </thead>
                         <tbody class="list">
                         @verbatim
-                            <tr v-for="item in bm.ad_account" v-bind:class="rowClass(item.status)">
+                            <tr v-for="item in bm.ad_account" v-bind:class="rowClass(item.status, item.payment)">
                                 <th scope="row">
                                     <div class="media align-items-center">
                                         <div class="media-body">

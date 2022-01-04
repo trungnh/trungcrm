@@ -56,7 +56,7 @@ export default {
             }
             return realStt;
         },
-        rowClass: function (status) {
+        rowClass: function (status, payment) {
             let className = '';
             switch (status) {
                 case 1:
@@ -72,6 +72,12 @@ export default {
                     className = 'row-disabled';
                     break;
             }
+
+            if (payment.currentBilling >= (payment.threshold * 0.8)) {
+
+            }
+
+
             return className;
         },
         formatNumber : function (number) {
