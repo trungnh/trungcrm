@@ -18,6 +18,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route('bm.index')}}">
+                            <i class="ni ni-shop text-primary"></i>
+                            <span class="nav-link-text">BM</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('bm.ad_account')}}">
+                            <i class="ni ni-shop text-primary"></i>
+                            <span class="nav-link-text">Ad Account</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{route('order.index')}}">
                             <i class="ni ni-cart text-orange"></i>
                             <span class="nav-link-text">Đơn hàng</span>

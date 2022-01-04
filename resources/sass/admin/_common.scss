@@ -1,3 +1,8 @@
 .frontendPage {
-
+    tr.row-disabled {
+        color: red;
+    }
+    tr.row-unsettled {
+        color: green;
+    }
 }

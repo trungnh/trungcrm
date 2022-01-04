@@ -9,6 +9,8 @@
 namespace App\Utilities;
 
 
+use App\Constants;
+
 class General
 {
     /**
@@ -220,5 +222,35 @@ class General
         }
 
         return json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    }
+
+    /**
+     * Send message to telegram
+     *
+     * @param $message
+     * @return void
+     */
+    public static function sendMessageToTelegramBot($message)
+    {
+        $token = Constants::TELEGRAM_BOT_TOKEN;
+        $chatId = Constants::TELEGRAM_CHAT_ID;
+        // using GET URL Parameter -> message
+        $pesan = urlencode($message);
+
+        $url = "https://api.telegram.org/$token/sendMessage?parse_mode=markdown&chat_id=$chatId&text=$pesan";
+
+        $ch = curl_init();
+        $optArray = [
+            CURLOPT_URL => $url,
+            CURLOPT_HEADER => false,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false
+        ];
+
+        curl_setopt_array($ch, $optArray);
+        $result = curl_exec($ch);
+
+        $err = curl_error($ch);
+        curl_close($ch);
     }
 }

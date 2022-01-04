@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\Bm;
+
+class BmRepository extends Repository
+{
+    /**
+     * @var Bm
+     */
+    protected $model = Bm::class;
+
+    /**
+     * get top ten items
+     *
+     * @param array $fields
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getTop($fields = ['*'])
+    {
+        return $this->model()->limit(10)->get($fields);
+    }
+
+    public function getList()
+    {
+        $collection = $this->model()->select(
+            ['*']
+        );
+
+        return $collection->paginate(5);
+    }
+
+    public function getAllBms()
+    {
+        return $this->all();
+    }
+}

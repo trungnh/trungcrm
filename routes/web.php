@@ -30,6 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/order', 'Admin\OrderController@index')->name('order.index');
     Route::post('/addOrder', 'Admin\OrderController@addOrder')->name('order.addOrder');
     Route::get('/sample', 'Admin\SampleController@index')->name('sample.index');
+
+    Route::get('/bm', 'Admin\BmController@index')->name('bm.index');
+    Route::post('/addBm', 'Admin\BmController@addBm')->name('bm.addBm');
+    Route::get('/ad-account', 'Admin\BmController@adAccount')->name('bm.ad_account');
 });
 
 
