@@ -29,18 +29,6 @@
                             <span class="nav-link-text">Ad Account</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('order.index')}}">
-                            <i class="ni ni-cart text-orange"></i>
-                            <span class="nav-link-text">Đơn hàng</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('product.index')}}">
-                            <i class="ni ni-shop text-primary"></i>
-                            <span class="nav-link-text">Sản phẩm</span>
-                        </a>
-                    </li>
                 </ul>
                 <!-- Divider -->
                 <hr class="my-3">
