@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/bm', 'Admin\BmController@index')->name('bm.index');
     Route::post('/addBm', 'Admin\BmController@addBm')->name('bm.addBm');
     Route::get('/ad-account', 'Admin\BmController@adAccount')->name('bm.ad_account');
+    Route::get('/reloadAccount', 'Admin\BmController@reloadAccount')->name('bm.reloadAccount');
 });
 
 

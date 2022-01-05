@@ -8080,13 +8080,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_module__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: {
-    bmData: []
+    bmData: [],
+    loading: false
   },
   methods: {
     setItems: function setItems() {
       if (_system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bmData) {
         this.bmData = _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bmData;
       }
+    },
+    reload: function reload() {
+      var _this = this;
+
+      this.loading = true;
+      this.bmData = [];
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/reloadAccount').then(function (response) {
+        if (response.status == 200) {
+          return {
+            data: response.data,
+            success: true
+          };
+        } else {
+          return {
+            data: response.data,
+            success: false
+          };
+        }
+      }).then(function (res) {
+        _this.bmData = res.data.bmData;
+        _this.loading = false;
+      });
     },
     statusIdToText: function statusIdToText(status) {
       var realStt = '';

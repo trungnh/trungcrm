@@ -3,7 +3,15 @@
         <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-                <h3 class="mb-0">Danh sách BM</h3>
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3 class="mb-0">Danh sách BM</h3>
+                        <img v-show="loading" src="/assets/img/loading.gif" style="height: 40px;">
+                    </div>
+                    <div class="col-md-2">
+                        <button @click="reload()" class="btn btn-primary">Reload</button>
+                    </div>
+                </div>
             </div>
             <div class="card" v-for="bm in bmData">
                 <div class="card-header border-0">

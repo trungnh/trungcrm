@@ -76,4 +76,20 @@ class BmController extends Controller
 
         return view('admin.bm.ad_account', compact('bmData'));
     }
+
+    public function reloadAccount()
+    {
+        /**
+         * @var BmService $bmService
+         */
+        $bmService = app(BmService::class);
+        $bmData = $bmService->getBmInformation();
+
+        Redis::set('bm_all_data', json_encode($bmData));
+
+        return response()->json(
+            ['bmData' => $bmData, 'message' => trans('messages.admin.success.create', [], 'vi')],
+            200
+        );
+    }
 }

@@ -11,7 +11,8 @@ export default {
         PageModule.default,
     ],
     data: {
-        bmData: []
+        bmData: [],
+        loading: false
 
     },
     methods: {
@@ -19,6 +20,20 @@ export default {
             if (global.bmData) {
                 this.bmData = global.bmData;
             }
+        },
+        reload: function () {
+            this.loading = true;
+            this.bmData = [];
+            axios.get('/reloadAccount').then(response => {
+                if (response.status == 200) {
+                    return {data: response.data, success: true};
+                } else {
+                    return {data: response.data, success: false};
+                }
+            }).then(res => {
+                this.bmData = res.data.bmData;
+                this.loading = false;
+            });
         },
         statusIdToText: function (status) {
             let realStt = '';
