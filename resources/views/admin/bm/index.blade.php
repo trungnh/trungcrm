@@ -11,5 +11,6 @@
 @section('head')
     @jsData([
     'bms' => $bms,
+    'userId' => $userId,
     ])
 @endsection

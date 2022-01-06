@@ -12,6 +12,7 @@ export default {
     data: {
         bms: [],
         bm: {
+            user_id: global.userId,
             business_name: '',
             business_id: '',
             token: ''
@@ -37,6 +38,7 @@ export default {
                 }
             }).then(res => {
                 this.bm = {
+                    user_id: global.userId,
                     business_name: '',
                     business_id: '',
                     token: ''
@@ -56,8 +58,7 @@ export default {
         },
         setItems: function () {
             if (global.bms) {
-                this.bms = global.bms.data;
-                this.pagination = global.bms.pagination;
+                this.bms = global.bms;
             }
         },
         // changePage: function (page=1) {

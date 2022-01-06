@@ -14,6 +14,7 @@
 
             <!-- Card footer -->
             <div class="card-body py-4">
+                <input type="hidden" v-model="bm.user_id" class="form-control" aria-describedby="basic-addon3">
                 <div class="form-group">
                     <label class="form-control-label" for="basic-url">Tên BM</label>
                     <div class="input-group">

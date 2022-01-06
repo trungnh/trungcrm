@@ -8223,6 +8223,7 @@ __webpack_require__.r(__webpack_exports__);
   data: {
     bms: [],
     bm: {
+      user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
       business_name: '',
       business_id: '',
       token: ''
@@ -8255,6 +8256,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         _this.bm = {
+          user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
           business_name: '',
           business_id: '',
           token: ''
@@ -8273,8 +8275,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     setItems: function setItems() {
       if (_system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bms) {
-        this.bms = _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bms.data;
-        this.pagination = _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bms.pagination;
+        this.bms = _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bms;
       }
     } // changePage: function (page=1) {
     //     this.pagination.current_page = page;

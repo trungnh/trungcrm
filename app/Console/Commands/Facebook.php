@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\UserService;
 use Illuminate\Console\Command;
 use App\Services\BmService;
 use Illuminate\Support\Facades\Redis;
@@ -32,14 +33,22 @@ class Facebook extends Command
     {
         $currentH = date('H');
         if ($currentH > 7) {
+            // Get all user
             /**
-             * @var BmService $bmService
+             * @var UserService $userService
              */
-            $bmService = app(BmService::class);
-            $bmData = $bmService->getBmInformation();
+            $userService = app(UserService::class);
+            $users = $userService->getAllUser();
+            foreach ($users as $user) {
+                /**
+                 * @var BmService $bmService
+                 */
+                $bmService = app(BmService::class);
+                $bmData = $bmService->getBmInformation($user->id);
 
-            Redis::set('bm_all_data', json_encode($bmData));
-            $this->sendNotice($bmData);
+                Redis::set('bm_all_data_' . $user->id, json_encode($bmData));
+                $this->sendNotice($bmData);
+            }
         }
     }
 

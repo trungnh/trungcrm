@@ -16,5 +16,5 @@ class Bm extends Model
      *
      * @var array
      */
-    protected $fillable = ['business_name', 'business_id', 'token', 'active'];
+    protected $fillable = ['business_name', 'business_id', 'token', 'active', 'user_id'];
 }

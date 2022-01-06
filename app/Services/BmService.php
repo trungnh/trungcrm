@@ -27,10 +27,10 @@ class BmService extends Service
     /**
      * @return array
      */
-    public function getBmInformation()
+    public function getBmInformation($id)
     {
         $bmData = [];
-        $bms = $this->getAllBms();
+        $bms = $this->getAllBms($id);
         foreach ($bms as $bm) {
             $bmData[$bm->business_id]['business_name'] = $bm->business_name;
             $bmData[$bm->business_id]['business_id'] = $bm->business_id;
@@ -119,6 +119,9 @@ class BmService extends Service
         $responseBody = json_decode($response->body());
         if (!property_exists($responseBody, 'error') && property_exists($responseBody, 'data')) {
             $data = $responseBody->data;
+            if (empty($data)) {
+                return 0;
+            }
             $thresholdStr = '';
             if (property_exists($data[0], 'threshold_amount')) {
                 $thresholdStr = $data[0]->threshold_amount;
@@ -147,18 +150,20 @@ class BmService extends Service
     }
 
     /**
+     * @param $userId
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getList()
+    public function getList($userId)
     {
-        return $this->bmRepository->getList();
+        return $this->bmRepository->getList($userId);
     }
 
     /**
-     * @return mixed
+     * @param $userId
+     * @return \App\Models\Model[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getAllBms()
+    public function getAllBms($userId)
     {
-        return $this->bmRepository->getAllBms();
+        return $this->bmRepository->getAllBms($userId);
     }
 }

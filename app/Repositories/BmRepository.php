@@ -23,17 +23,22 @@ class BmRepository extends Repository
         return $this->model()->limit(10)->get($fields);
     }
 
-    public function getList()
+    public function getList($userId)
     {
         $collection = $this->model()->select(
             ['*']
-        );
+        )->where('id', $userId);
 
-        return $collection->paginate(5);
+        return $collection->paginate(10);
     }
 
-    public function getAllBms()
+    /**
+     * @param $userId
+     * @return \App\Models\Model[]|\Illuminate\Database\Eloquent\Collection
+     * @throws \Exception
+     */
+    public function getAllBms($userId)
     {
-        return $this->all();
+        return $this->model()->where('user_id', $userId)->get();
     }
 }

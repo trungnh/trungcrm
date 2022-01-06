@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\BmRequest;
 use App\Services\BmService;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use App\Utilities\Facebook;
 use Illuminate\Support\Facades\Redis;
 
 class BmController extends Controller
@@ -31,9 +31,10 @@ class BmController extends Controller
      */
     public function index()
     {
-        $bms = $this->bmService->getList();
+        $userId = Auth::id();
+        $bms = $this->bmService->getAllBms($userId);
 
-        return view('admin.bm.index', compact('bms'));
+        return view('admin.bm.index', compact('bms', 'userId'));
     }
 
     /**
@@ -47,12 +48,13 @@ class BmController extends Controller
         try {
             $bm = $this->bmService->create($attributes);
         } catch (\Exception $e) {
-            echo $e->getMessage();die;
+            dd($e->getMessage());
             return response()->json(['message' => trans('messages.admin.errors.create', [], 'vi')], 202);
         }
 
         if ($bm->id) {
             $response = [
+                'user_id' => $bm->user_id,
                 'business_name' => $bm->business_name,
                 'business_id' => $bm->business_id,
                 'token' => $bm->token,
@@ -72,24 +74,37 @@ class BmController extends Controller
      */
     public function adAccount()
     {
-        $bmData = json_decode(Redis::get('bm_all_data'));
+        $userId = Auth::id();
+        $bmData = json_decode(Redis::get('bm_all_data_' . $userId));
 
         return view('admin.bm.ad_account', compact('bmData'));
     }
 
     public function reloadAccount()
     {
+        $userId = Auth::id();
         /**
          * @var BmService $bmService
          */
         $bmService = app(BmService::class);
-        $bmData = $bmService->getBmInformation();
+        $bmData = $bmService->getBmInformation($userId);
 
-        Redis::set('bm_all_data', json_encode($bmData));
+        Redis::set('bm_all_data_' . $userId, json_encode($bmData));
 
         return response()->json(
             ['bmData' => $bmData, 'message' => trans('messages.admin.success.create', [], 'vi')],
             200
         );
+    }
+
+    public function test()
+    {
+        $userId = Auth::id();
+        /**
+         * @var BmService $bmService
+         */
+        $bmService = app(BmService::class);
+        $bmData = $bmService->getBmInformation($userId);
+        dd($bmData);
     }
 }
