@@ -227,13 +227,13 @@ class General
     /**
      * Send message to telegram
      *
+     * @param $chatId
      * @param $message
      * @return void
      */
-    public static function sendMessageToTelegramBot($message)
+    public static function sendMessageToTelegramBot($chatId, $message)
     {
         $token = Constants::TELEGRAM_BOT_TOKEN;
-        $chatId = Constants::TELEGRAM_CHAT_ID;
         // using GET URL Parameter -> message
         $pesan = urlencode($message);
 

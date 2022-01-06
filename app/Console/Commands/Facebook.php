@@ -47,7 +47,7 @@ class Facebook extends Command
                 $bmData = $bmService->getBmInformation($user->id);
 
                 Redis::set('bm_all_data_' . $user->id, json_encode($bmData));
-                $this->sendNotice($bmData);
+                $this->sendNotice($user->id, $bmData);
             }
         }
     }
@@ -55,11 +55,17 @@ class Facebook extends Command
     /**
      * Check billing and threshold then send message to telegram
      *
+     * @param $userId
      * @param $bmData
      * @return void
      */
-    public function sendNotice($bmData)
+    public function sendNotice($userId, $bmData)
     {
+        /**
+         * @var UserService $userService
+         */
+        $userService = app(UserService::class);
+        $user = $userService->getById($userId);
         foreach ($bmData as $bmID => $bm) {
             foreach ($bm['ad_account'] as $adAccount) {
                 $currentBilling = intval($adAccount->payment->currentBilling);
@@ -68,7 +74,7 @@ class Facebook extends Command
                     $currentBillingStr = number_format($currentBilling, 0, ',', '.');
                     $thresholdStr = number_format($threshold, 0, ',', '.');
                     $message = "Cần thanh toán: {$adAccount->business->businessName} - {$adAccount->name}: {$currentBillingStr}/{$thresholdStr}";
-                    General::sendMessageToTelegramBot($message);
+                    General::sendMessageToTelegramBot($user->chat_id, $message);
                 }
             }
         }

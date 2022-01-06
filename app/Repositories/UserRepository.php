@@ -26,4 +26,9 @@ class UserRepository extends Repository
     {
         return $this->model->get();
     }
+
+    public function getById($userId)
+    {
+        return $this->model->findOrFail($userId);
+    }
 }

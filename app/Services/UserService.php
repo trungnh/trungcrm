@@ -26,4 +26,9 @@ class UserService extends Service
     {
         return $this->userRepository->getAllUser();
     }
+
+    public function getById($userId)
+    {
+        return $this->userRepository->getById($userId);
+    }
 }
