@@ -8198,6 +8198,82 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/admin/bm/edit.js":
+/*!*********************************************!*\
+  !*** ./resources/js/pages/admin/bm/edit.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _system_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../system/storage */ "./resources/js/system/storage.js");
+/* harmony import */ var _module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../module */ "./resources/js/pages/admin/module.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+/**
+ * Export main module application for current page.
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_module__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  data: {
+    bm: {
+      user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
+      business_name: '',
+      business_id: '',
+      token: '',
+      ignored_ada_ids: ''
+    },
+    message: {}
+  },
+  methods: {
+    saveBm: function saveBm() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/saveBm', this.bm).then(function (response) {
+        if (response.status == 200) {
+          return {
+            data: response.data,
+            success: true
+          };
+        } else {
+          return {
+            data: response.data,
+            success: false
+          };
+        }
+      }).then(function (res) {
+        _this.bm = {
+          user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
+          business_name: '',
+          business_id: '',
+          token: '',
+          ignored_ada_ids: ''
+        };
+        var type = res.success ? 'success' : 'danger';
+
+        _this.setMessage(type, res.data.message);
+      });
+    },
+    setMessage: function setMessage(type, content) {
+      this.message = {
+        messageClass: 'alert alert-' + type,
+        messageText: content
+      };
+      return;
+    }
+  },
+  mounted: function mounted() {
+    this.bm = _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bm;
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/pages/admin/bm/index.js":
 /*!**********************************************!*\
   !*** ./resources/js/pages/admin/bm/index.js ***!
@@ -8226,7 +8302,8 @@ __webpack_require__.r(__webpack_exports__);
       user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
       business_name: '',
       business_id: '',
-      token: ''
+      token: '',
+      ignored_ada_ids: ''
     },
     message: {},
     pagination: {
@@ -8259,12 +8336,41 @@ __webpack_require__.r(__webpack_exports__);
           user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
           business_name: '',
           business_id: '',
-          token: ''
+          token: '',
+          ignored_ada_ids: ''
         };
         var type = res.success ? 'success' : 'danger';
 
         _this.setMessage(type, res.data.message);
       });
+    },
+    getEditUrl: function getEditUrl(id) {
+      return '/bm/edit/' + id;
+    },
+    removeBm: function removeBm(id) {
+      var _this2 = this;
+
+      if (confirm('Chắc xóa chưa? Mà xóa rồi sau thêm lại phút mốt!')) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/removeBm', {
+          id: id
+        }).then(function (response) {
+          if (response.status == 200) {
+            return {
+              data: response.data,
+              success: true
+            };
+          } else {
+            return {
+              data: response.data,
+              success: false
+            };
+          }
+        }).then(function (res) {
+          var type = res.success ? 'success' : 'danger';
+
+          _this2.setMessage(type, res.data.message);
+        });
+      }
     },
     setMessage: function setMessage(type, content) {
       this.message = {
@@ -8356,6 +8462,7 @@ __webpack_require__.r(__webpack_exports__);
   productIndex: __webpack_require__(/*! admin/product/index */ "./resources/js/pages/admin/product/index.js"),
   orderIndex: __webpack_require__(/*! admin/order/index */ "./resources/js/pages/admin/order/index.js"),
   bmIndex: __webpack_require__(/*! admin/bm/index */ "./resources/js/pages/admin/bm/index.js"),
+  bmEdit: __webpack_require__(/*! admin/bm/edit */ "./resources/js/pages/admin/bm/edit.js"),
   adAccount: __webpack_require__(/*! admin/bm/ad_account */ "./resources/js/pages/admin/bm/ad_account.js")
 });
 

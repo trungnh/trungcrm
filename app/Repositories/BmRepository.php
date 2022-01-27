@@ -41,4 +41,23 @@ class BmRepository extends Repository
     {
         return $this->model()->where('user_id', $userId)->get();
     }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getById(int $id)
+    {
+        return $this->find($id);
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function deleteById(int $id)
+    {
+        return $this->delete($id);
+    }
 }

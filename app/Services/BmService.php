@@ -34,6 +34,7 @@ class BmService extends Service
         foreach ($bms as $bm) {
             $bmData[$bm->business_id]['business_name'] = $bm->business_name;
             $bmData[$bm->business_id]['business_id'] = $bm->business_id;
+            $bmData[$bm->business_id]['ignored_ada_ids'] = $bm->ignored_ada_ids;
             $bmData[$bm->business_id]['ad_account'] = $this->getBMAdAccount($bm);
         }
 
@@ -165,5 +166,24 @@ class BmService extends Service
     public function getAllBms($userId)
     {
         return $this->bmRepository->getAllBms($userId);
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getById(int $id)
+    {
+        return $this->bmRepository->getById($id);
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function deleteById(int $id)
+    {
+        return $this->bmRepository->deleteById($id);
     }
 }

@@ -67,7 +67,12 @@ class Facebook extends Command
         $userService = app(UserService::class);
         $user = $userService->getById($userId);
         foreach ($bmData as $bmID => $bm) {
+            $ignoredAdaIds = explode(',', $bm['ignored_ada_ids']);
             foreach ($bm['ad_account'] as $adAccount) {
+                // Ignore sending notice
+                if (in_array($adAccount->accountId, $ignoredAdaIds)) {
+                    continue;
+                }
                 $currentBilling = intval($adAccount->payment->currentBilling);
                 $threshold = $adAccount->payment->threshold;
                 if ($currentBilling >= ($threshold * 0.85)) {

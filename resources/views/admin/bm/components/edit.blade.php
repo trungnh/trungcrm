@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <button class="btn btn-success" type="button" @click="addBm()">Thêm BM</button>
+                        <button class="btn btn-success" type="button" @click="saveBm()">Lưu nhể</button>
                     </div>
                 </div>
             </div>

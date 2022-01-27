@@ -15,7 +15,8 @@ export default {
             user_id: global.userId,
             business_name: '',
             business_id: '',
-            token: ''
+            token: '',
+            ignored_ada_ids: ''
         },
         message: {},
         pagination: {
@@ -41,12 +42,30 @@ export default {
                     user_id: global.userId,
                     business_name: '',
                     business_id: '',
-                    token: ''
+                    token: '',
+                    ignored_ada_ids: ''
                 };
                 let type = res.success ? 'success' : 'danger';
                 this.setMessage(type, res.data.message);
             });
 
+        },
+        getEditUrl(id) {
+            return '/bm/edit/' + id;
+        },
+        removeBm(id) {
+            if(confirm('Chắc xóa chưa? Mà xóa rồi sau thêm lại phút mốt!')) {
+                axios.post('/removeBm', {id: id}).then(response => {
+                    if (response.status == 200) {
+                        return {data: response.data, success: true};
+                    } else {
+                        return {data: response.data, success: false};
+                    }
+                }).then(res => {
+                    let type = res.success ? 'success' : 'danger';
+                    this.setMessage(type, res.data.message);
+                });
+            }
         },
         setMessage(type, content) {
             this.message = {

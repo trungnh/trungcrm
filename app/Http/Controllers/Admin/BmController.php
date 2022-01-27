@@ -39,6 +39,46 @@ class BmController extends Controller
 
     /**
      * @param BmRequest $request
+     * @param int $id
+     * @return Factory|View
+     */
+    public function edit(BmRequest $request, int $id)
+    {
+        $userId = Auth::id();
+        $bm = $this->bmService->getById($id);
+
+        return view('admin.bm.edit', compact('bm', 'userId'));
+    }
+
+    /**
+     * @param BmRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function saveBm(BmRequest $request)
+    {
+        $attributes = $request->all();
+        $bm = $this->bmService->getById($attributes['id']);
+        if ($bm) {
+            $bm->update($attributes);
+        }
+
+        return redirect(route('bm.index'));
+    }
+
+    /**
+     * @param BmRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function removeBm(BmRequest $request)
+    {
+        $attributes = $request->all();
+        $this->bmService->deleteById($attributes['id']);
+
+        return redirect(route('bm.index'));
+    }
+
+    /**
+     * @param BmRequest $request
      * @return Factory|View
      */
     public function addBm(BmRequest $request)

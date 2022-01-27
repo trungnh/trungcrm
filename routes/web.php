@@ -32,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/sample', 'Admin\SampleController@index')->name('sample.index');
 
     Route::get('/bm', 'Admin\BmController@index')->name('bm.index');
+    Route::get('/bm/edit/{id}', 'Admin\BmController@edit')->name('bm.edit');
+    Route::post('/saveBm', 'Admin\BmController@saveBm')->name('bm.saveBm');
+    Route::post('/removeBm', 'Admin\BmController@removeBm')->name('bm.removeBm');
     Route::post('/addBm', 'Admin\BmController@addBm')->name('bm.addBm');
     Route::get('/ad-account', 'Admin\BmController@adAccount')->name('bm.ad_account');
     Route::get('/reloadAccount', 'Admin\BmController@reloadAccount')->name('bm.reloadAccount');
