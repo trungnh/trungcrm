@@ -29,13 +29,6 @@ export default {
                     return {data: response.data, success: false};
                 }
             }).then(res => {
-                this.bm = {
-                    user_id: global.userId,
-                    business_name: '',
-                    business_id: '',
-                    token: '',
-                    ignored_ada_ids: ''
-                };
                 let type = res.success ? 'success' : 'danger';
                 this.setMessage(type, res.data.message);
             });

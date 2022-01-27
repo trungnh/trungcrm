@@ -62,7 +62,7 @@ class BmController extends Controller
             $bm->update($attributes);
         }
 
-        return redirect(route('bm.index'));
+        return response()->json(['message' => trans('messages.admin.success.create', [], 'vi')], 200);
     }
 
     /**
@@ -74,7 +74,7 @@ class BmController extends Controller
         $attributes = $request->all();
         $this->bmService->deleteById($attributes['id']);
 
-        return redirect(route('bm.index'));
+        return response()->json(['message' => trans('messages.admin.success.create', [], 'vi')], 200);
     }
 
     /**

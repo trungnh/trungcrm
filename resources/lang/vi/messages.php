@@ -3,10 +3,10 @@
 return [
     'admin' => [
         'errors' => [
-            'create' => 'Tạo mới thất bại'
+            'create' => 'Toạch rồi'
         ],
-        'errors' => [
-            'create' => 'Tạo mới thành công'
+        'success' => [
+            'create' => 'Đã xong'
         ],
     ],
 ];

@@ -7,14 +7,15 @@
             <ul class="navbar-nav align-items-center  ml-md-auto ">
                 <li class="nav-item d-xl-none">
                     <!-- Sidenav toggler -->
-                    <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
-                         data-target="#sidenav-main">
-                        <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                        </div>
-                    </div>
+                    <button class="navbar-toggler1"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#sidenav-main"
+                            aria-controls="sidenav-main"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                 </li>
                 <li class="nav-item d-sm-none">
                     <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
@@ -144,46 +145,6 @@
                        aria-expanded="false">
                         <i class="ni ni-ungroup"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right ">
-                        <div class="row shortcuts px-4">
-                            <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-red">
-                      <i class="ni ni-calendar-grid-58"></i>
-                    </span>
-                                <small>Calendar</small>
-                            </a>
-                            <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
-                      <i class="ni ni-email-83"></i>
-                    </span>
-                                <small>Email</small>
-                            </a>
-                            <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-info">
-                      <i class="ni ni-credit-card"></i>
-                    </span>
-                                <small>Payments</small>
-                            </a>
-                            <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-green">
-                      <i class="ni ni-books"></i>
-                    </span>
-                                <small>Reports</small>
-                            </a>
-                            <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
-                      <i class="ni ni-pin-3"></i>
-                    </span>
-                                <small>Maps</small>
-                            </a>
-                            <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
-                      <i class="ni ni-basket"></i>
-                    </span>
-                                <small>Shop</small>
-                            </a>
-                        </div>
-                    </div>
                 </li>
             </ul>
             <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
@@ -203,22 +164,6 @@
                         <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Welcome!</h6>
                         </div>
-                        <a href="#!" class="dropdown-item">
-                            <i class="ni ni-single-02"></i>
-                            <span>My profile</span>
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                            <i class="ni ni-settings-gear-65"></i>
-                            <span>Settings</span>
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                            <i class="ni ni-calendar-grid-58"></i>
-                            <span>Activity</span>
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                            <i class="ni ni-support-16"></i>
-                            <span>Support</span>
-                        </a>
                         <div class="dropdown-divider"></div>
                         <a href="#!" class="dropdown-item">
                             <i class="ni ni-user-run"></i>
