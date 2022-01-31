@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\BmRequest;
+use App\Http\Requests\Request;
 use App\Services\BmService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\Auth;
@@ -133,6 +134,35 @@ class BmController extends Controller
 
         return response()->json(
             ['bmData' => $bmData, 'message' => trans('messages.admin.success.create', [], 'vi')],
+            200
+        );
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|View
+     */
+    public function camp()
+    {
+        $userId = Auth::id();
+        $bmData = json_decode(Redis::get('bm_all_data_' . $userId));
+
+        return view('admin.bm.camp', compact('bmData'));
+    }
+
+    public function getCampData(Request $request)
+    {
+        $params = $request->all();
+        $timeRange = "time_range=%7B%22since%22%3A%22" . date('Y-m-d', strtotime($params['start'])) . "%22%2C%22until%22%3A%22" . date('Y-m-d', strtotime($params['end'])) . "%22%7D";
+        /**
+         * @var BmService $bmService
+         */
+        $bmService = app(BmService::class);
+        // getBM by businessID
+        $bm = $bmService->getByBusinessId($params['bm_id']);
+        $data = $bmService->getListCampInformation('act_' . $params['ada_id'], $bm->token, $timeRange);
+
+        return response()->json(
+            ['campData' => $data, 'message' => trans('messages.admin.success.create', [], 'vi')],
             200
         );
     }

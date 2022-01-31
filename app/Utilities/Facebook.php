@@ -25,6 +25,14 @@ class Facebook
     const AD_LIMIT_PATH_3 = '&_reqName=adaccount%2Fadspaymentcycle&_reqSrc=AdsCMBillingTransactionsDataLoader&_sessionID=';
     const AD_LIMIT_PATH_4 = '&include_headers=false&locale=vi_VN&method=get&pretty=0&suppress_http_code=1';
 
+    const BUSINESS_URL_PATH_1 = '/insights?access_token=';
+    const BUSINESS_URL_PATH_2 = '&__activeScenarios=%5B%22insightsTable.view%22%5D&__business_id=';
+    const BUSINESS_URL_PATH_3 = '&_app=ADS_MANAGER&_priority=LOW&_reqName=adaccount%2Finsights&_reqSrc=AdsPETableDataFetchingPolicy.fetchFooter%3EfetchAsyncAfterSyncFails&_sessionID=42bf73c6f58e1bba&action_attribution_windows=%5B%22default%22%5D&date_preset=this_month&fields=%5B%22results%22%2C%22objective%22%2C%22reach%22%2C%22impressions%22%2C%22cost_per_result%22%2C%22spend%22%2C%22actions%22%5D&filtering=%5B%7B%22field%22%3A%22campaign.objective%22%2C%22operator%22%3A%22IN%22%2C%22value%22%3A%5B%22';
+    const BUSINESS_URL_PATH_4 = '%22%5D%7D%5D&include_headers=false&level=account&limit=5000&locale=vi_VN&method=get&pretty=0&suppress_http_code=1&';
+    const BUSINESS_URL_PATH_5 = '&xref=f20a1f48d67b418';
+
+    const CAMP_PATH_1 = '/campaigns?fields=clicks%2Cname%2Cspent%2Cctr%2Creach%2Cresult%2Cdelivery_info%2Cstatus&access_token=';
+
 
 
     public static function getBMOwnedAccountUrl($bmId, $token)
@@ -124,5 +132,31 @@ class Facebook
         $payment->threshold = $threshold;
 
         return $payment;
+    }
+
+    public static function getBusinessInsightUrl($actId, $token, $bmId, $type, $timeRange)
+    {
+        return self::FB_API_ENDPOINT . '/' .
+            self::FB_API_VERSION . '/' .
+            $actId .
+            self::BUSINESS_URL_PATH_1 .
+            $token .
+            self::BUSINESS_URL_PATH_2 .
+            $bmId .
+            self::BUSINESS_URL_PATH_3 .
+            $type .
+            self::BUSINESS_URL_PATH_4 .
+            $timeRange .
+            self::BUSINESS_URL_PATH_5;
+    }
+
+    public static function getListCampUrl($actId, $token, $timeRange)
+    {
+        return self::FB_API_ENDPOINT . '/' .
+            self::FB_API_VERSION . '/' .
+            $actId .
+            self::CAMP_PATH_1 .
+            $token .
+            '&' . $timeRange;
     }
 }

@@ -141,6 +141,25 @@ class BmService extends Service
     }
 
     /**
+     * Get list campaign information
+     *
+     * @param $actId
+     * @param $bmId
+     * @param $bmToken
+     * @param $timeRange
+     * @return mixed
+     */
+    public function getListCampInformation($actId, $bmToken, $timeRange)
+    {
+        $listCampUrl = Facebook::getListCampUrl($actId, $bmToken, $timeRange);
+        $response = Http::get($listCampUrl);
+        $responseBody = json_decode($response->body());
+        if (!property_exists($responseBody, 'error') && property_exists($responseBody, 'data')) {
+            return $responseBody->data;
+        }
+    }
+
+    /**
      * @param $attributes
      * @return mixed
      * @throws \Exception
@@ -175,6 +194,15 @@ class BmService extends Service
     public function getById(int $id)
     {
         return $this->bmRepository->getById($id);
+    }
+
+    /**
+     * @param string $bmId
+     * @return mixed
+     */
+    public function getByBusinessId($bmId)
+    {
+        return $this->bmRepository->getByBusinessId($bmId);
     }
 
     /**

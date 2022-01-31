@@ -6,4 +6,5 @@ export default {
     bmIndex: require('admin/bm/index'),
     bmEdit: require('admin/bm/edit'),
     adAccount: require('admin/bm/ad_account'),
+    bmCamp: require('admin/bm/camp'),
 };

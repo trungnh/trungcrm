@@ -29,6 +29,12 @@
                             <span class="nav-link-text">Ad Account</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('bm.camp')}}">
+                            <i class="ni ni-shop text-primary"></i>
+                            <span class="nav-link-text">Camp</span>
+                        </a>
+                    </li>
                 </ul>
                 <!-- Divider -->
                 <hr class="my-3">

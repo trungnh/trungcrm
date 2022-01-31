@@ -52,6 +52,15 @@ class BmRepository extends Repository
     }
 
     /**
+     * @param string $bmId
+     * @return mixed
+     */
+    public function getByBusinessId($bmId)
+    {
+        return $this->model()->where('business_id', $bmId)->first();
+    }
+
+    /**
      * @param int $id
      * @return mixed
      * @throws \Exception
