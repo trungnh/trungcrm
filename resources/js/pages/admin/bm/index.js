@@ -16,6 +16,7 @@ export default {
             business_name: '',
             business_id: '',
             token: '',
+            cookie: '',
             ignored_ada_ids: ''
         },
         message: {},
@@ -42,6 +43,7 @@ export default {
                     user_id: global.userId,
                     business_name: '',
                     business_id: '',
+                    cookie: '',
                     token: '',
                     ignored_ada_ids: ''
                 };

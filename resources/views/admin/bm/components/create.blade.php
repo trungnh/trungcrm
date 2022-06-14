@@ -28,6 +28,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" for="basic-url">Cookie</label>
+                    <div class="input-group">
+                        <input type="text" v-model="bm.cookie" class="form-control" aria-describedby="basic-addon3">
+                    </div>
+                </div>
+				<div class="form-group">
                     <label class="form-control-label" for="basic-url">Token</label>
                     <div class="input-group">
                         <input type="text" v-model="bm.token" class="form-control" aria-describedby="basic-addon3">
