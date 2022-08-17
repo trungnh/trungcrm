@@ -227,15 +227,26 @@ class BmService extends Service
 	public function getRequest($url, $cookie)
 	{
 		$ch = curl_init();
-
+		$agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36';
+		
         curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-				'cookie: ' . $cookie)
+		curl_setopt($ch, CURLOPT_HTTPHEADER, 
+				[ 
+					'cookie: ' . $cookie,
+					'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+					//'accept-encoding: gzip, deflate, br',
+					'accept-language: en-US,en;q=0.9',
+					'cache-control: max-age=0',
+					'connection: keep-alive',
+					'upgrade-insecure-requests: 1'
+				]
 			);
+		curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+		//curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate, br');
 
         $output = curl_exec($ch);
         curl_close($ch);    
