@@ -42,6 +42,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/camp', 'Admin\BmController@camp')->name('bm.camp');
     Route::post('/getCampData', 'Admin\BmController@getCampData')->name('bm.getCampData');
+
+    Route::get('/act', 'Admin\ActController@index')->name('act.index');
+    Route::post('/addAct', 'Admin\ActController@addAct')->name('act.addAct');
+    Route::get('/act-account', 'Admin\ActController@adAccount')->name('act.ad_account');
+    Route::get('/reloadAccount', 'Admin\ActController@reloadAccount')->name('act.reloadAccount');
 });
 
 

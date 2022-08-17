@@ -30282,6 +30282,324 @@ Object(_system_bootstrap__WEBPACK_IMPORTED_MODULE_1__["default"])(_pages_admin_d
 
 /***/ }),
 
+/***/ "./resources/js/pages/admin/act/ad_account.js":
+/*!****************************************************!*\
+  !*** ./resources/js/pages/admin/act/ad_account.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _system_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../system/storage */ "./resources/js/system/storage.js");
+/* harmony import */ var _module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../module */ "./resources/js/pages/admin/module.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash/string */ "./node_modules/lodash/string.js");
+/* harmony import */ var lodash_string__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_string__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+/**
+ * Export main module application for current page.
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_module__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  data: {
+    actData: [],
+    loading: false
+  },
+  methods: {
+    setItems: function setItems() {
+      if (_system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].actData) {
+        this.actData = _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].actData;
+      }
+    },
+    reload: function reload() {
+      var _this = this;
+
+      this.loading = true;
+      this.actData = [];
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/reloadAccount').then(function (response) {
+        if (response.status == 200) {
+          return {
+            data: response.data,
+            success: true
+          };
+        } else {
+          return {
+            data: response.data,
+            success: false
+          };
+        }
+      }).then(function (res) {
+        _this.actData = res.data.actData;
+        _this.loading = false;
+      });
+    },
+    statusIdToText: function statusIdToText(status) {
+      var realStt = '';
+
+      switch (status) {
+        case 1:
+          realStt = 'ACTIVE';
+          break;
+
+        case 2:
+          realStt = 'VÔ HIỆU HÓA';
+          break;
+
+        case 3:
+          realStt = 'UNSETTLED';
+          break;
+
+        case 7:
+          realStt = 'PENDING_RISK_REVIEW';
+          break;
+
+        case 8:
+          realStt = 'PENDING_SETTLEMENT';
+          break;
+
+        case 9:
+          realStt = 'IN_GRACE_PERIOD';
+          break;
+
+        case 100:
+          realStt = 'PENDING_CLOSURE';
+          break;
+
+        case 101:
+          realStt = 'CLOSED';
+          break;
+
+        case 201:
+          realStt = 'ANY_ACTIVE';
+          break;
+
+        case 202:
+          realStt = 'ANY_CLOSED';
+          break;
+      }
+
+      return realStt;
+    },
+    rowClass: function rowClass(status, payment) {
+      var className = '';
+
+      switch (status) {
+        case 1:
+          className = 'row-active';
+          break;
+
+        case 2:
+          className = 'row-disabled';
+          break;
+
+        case 3:
+          className = 'row-unsettled';
+          break;
+
+        default:
+          className = 'row-disabled';
+          break;
+      }
+
+      if (payment.currentBilling >= payment.threshold * 0.8) {
+        className = 'row-unsettled';
+      }
+
+      return className;
+    },
+    formatNumber: function formatNumber(number) {
+      var numberIn = Object(lodash_string__WEBPACK_IMPORTED_MODULE_3__["parseInt"])(number);
+      return new Intl.NumberFormat('vi-VN').format(numberIn);
+    }
+  },
+  computed: {},
+  mounted: function mounted() {
+    this.setItems();
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/act/index.js":
+/*!***********************************************!*\
+  !*** ./resources/js/pages/admin/act/index.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _system_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../system/storage */ "./resources/js/system/storage.js");
+/* harmony import */ var _module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../module */ "./resources/js/pages/admin/module.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+/**
+ * Export main module application for current page.
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_module__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  data: {
+    acts: [],
+    act: {
+      user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
+      act_name: '',
+      act_id: '',
+      token: '',
+      cookie: ''
+    },
+    message: {},
+    pagination: {
+      total: 0,
+      per_page: 2,
+      from: 1,
+      to: 0,
+      current_page: 1
+    },
+    offset: 4
+  },
+  methods: {
+    addAct: function addAct() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/addAct', this.act).then(function (response) {
+        if (response.status == 200) {
+          return {
+            data: response.data,
+            success: true
+          };
+        } else {
+          return {
+            data: response.data,
+            success: false
+          };
+        }
+      }).then(function (res) {
+        _this.act = {
+          user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
+          act_name: '',
+          act_id: '',
+          token: '',
+          cookie: ''
+        };
+        var type = res.success ? 'success' : 'danger';
+
+        _this.setMessage(type, res.data.message);
+      });
+    },
+    getEditUrl: function getEditUrl(id) {
+      return '/act/edit/' + id;
+    },
+    removeAct: function removeAct(id) {
+      var _this2 = this;
+
+      if (confirm('Chắc xóa chưa? Mà xóa rồi sau thêm lại phút mốt!')) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/removeAct', {
+          id: id
+        }).then(function (response) {
+          if (response.status == 200) {
+            return {
+              data: response.data,
+              success: true
+            };
+          } else {
+            return {
+              data: response.data,
+              success: false
+            };
+          }
+        }).then(function (res) {
+          var type = res.success ? 'success' : 'danger';
+
+          _this2.setMessage(type, res.data.message);
+        });
+      }
+    },
+    setMessage: function setMessage(type, content) {
+      this.message = {
+        messageClass: 'alert alert-' + type,
+        messageText: content
+      };
+      return;
+    },
+    setItems: function setItems() {
+      if (_system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].acts) {
+        this.acts = _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].acts;
+      }
+    } // changePage: function (page=1) {
+    //     this.pagination.current_page = page;
+    //     this.getItems(page);
+    // },
+    // getItems: function (page) {
+    //     this.loading = true;
+    //     let params = {
+    //         page: page
+    //     };
+    //     axios.post(this.getListUrl, params)
+    //         .then(function ( response) {
+    //             if (response.status == 200) {
+    //                 return {data: response.data, success: true};
+    //             } else {
+    //                 return {data: response.data, success: false};
+    //             }
+    //         }).then(res => {
+    //         if (res.success) {
+    //             this.items = res.data.data;
+    //             this.pagination = res.data.pagination;
+    //         }
+    //         this.loading = false;
+    //     });
+    // },
+
+  },
+  computed: {
+    isActived: function isActived() {
+      return this.pagination.current_page;
+    },
+    pagesNumber: function pagesNumber() {
+      if (!this.pagination.to) {
+        return [];
+      }
+
+      var from = this.pagination.current_page - this.offset;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + this.offset * 2;
+
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
+    }
+  },
+  mounted: function mounted() {
+    console.log(123123);
+    this.setItems();
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/pages/admin/bm/ad_account.js":
 /*!***************************************************!*\
   !*** ./resources/js/pages/admin/bm/ad_account.js ***!
@@ -30632,6 +30950,7 @@ __webpack_require__.r(__webpack_exports__);
       user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
       business_name: '',
       business_id: '',
+      cookie: '',
       token: '',
       ignored_ada_ids: ''
     },
@@ -30703,6 +31022,7 @@ __webpack_require__.r(__webpack_exports__);
       business_name: '',
       business_id: '',
       token: '',
+      cookie: '',
       ignored_ada_ids: ''
     },
     message: {},
@@ -30736,6 +31056,7 @@ __webpack_require__.r(__webpack_exports__);
           user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
           business_name: '',
           business_id: '',
+          cookie: '',
           token: '',
           ignored_ada_ids: ''
         };
@@ -30858,91 +31179,14 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   adminPage: __webpack_require__(/*! admin/module */ "./resources/js/pages/admin/module.js"),
-  exampleIndex: __webpack_require__(/*! admin/example/index */ "./resources/js/pages/admin/example/index.js"),
   productIndex: __webpack_require__(/*! admin/product/index */ "./resources/js/pages/admin/product/index.js"),
   orderIndex: __webpack_require__(/*! admin/order/index */ "./resources/js/pages/admin/order/index.js"),
   bmIndex: __webpack_require__(/*! admin/bm/index */ "./resources/js/pages/admin/bm/index.js"),
   bmEdit: __webpack_require__(/*! admin/bm/edit */ "./resources/js/pages/admin/bm/edit.js"),
   adAccount: __webpack_require__(/*! admin/bm/ad_account */ "./resources/js/pages/admin/bm/ad_account.js"),
-  bmCamp: __webpack_require__(/*! admin/bm/camp */ "./resources/js/pages/admin/bm/camp.js")
-});
-
-/***/ }),
-
-/***/ "./resources/js/pages/admin/example/index.js":
-/*!***************************************************!*\
-  !*** ./resources/js/pages/admin/example/index.js ***!
-  \***************************************************/
-/*! exports provided: events, init, ready, loaded, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "events", function() { return events; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "init", function() { return init; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ready", function() { return ready; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loaded", function() { return loaded; });
-/* harmony import */ var _system_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../system/storage */ "./resources/js/system/storage.js");
-/* harmony import */ var _module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../module */ "./resources/js/pages/admin/module.js");
-
-
-/**
- * List all element of pages was affected.
- * @type {{string: string}}
- */
-
-var ui = {// header: '.header',
-};
-/**
- * Custom register events without without vue.
- * @type {{string: Function}}
- */
-
-var events = {
-  'click->.btn-test': showDialog
-};
-
-function showDialog() {
-  alert('Test');
-}
-/**
- * Hook for init this module.
- * Run first
- */
-
-
-var init = function init() {
-  // Call parent init
-  _module__WEBPACK_IMPORTED_MODULE_1__["init"](); // Do something.
-};
-/**
- * Hook for document on ready event.
- */
-
-var ready = function ready() {
-  // Call parent ready
-  _module__WEBPACK_IMPORTED_MODULE_1__["ready"](); // Do something.
-};
-/**
- * Hook for document on loaded event.
- */
-
-var loaded = function loaded() {
-  // Call parent loaded
-  _module__WEBPACK_IMPORTED_MODULE_1__["loaded"](); // Do some thing.
-};
-/**
- * Export main module application for current page.
- */
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_module__WEBPACK_IMPORTED_MODULE_1__["default"]],
-  data: {},
-  methods: {},
-  computed: {},
-  mounted: function mounted() {
-    console.log('You go example page. This page have data from view: ', _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].sampleData);
-  }
+  bmCamp: __webpack_require__(/*! admin/bm/camp */ "./resources/js/pages/admin/bm/camp.js"),
+  actIndex: __webpack_require__(/*! admin/act/index */ "./resources/js/pages/admin/act/index.js"),
+  actAccount: __webpack_require__(/*! admin/act/ad_account */ "./resources/js/pages/admin/act/ad_account.js")
 });
 
 /***/ }),

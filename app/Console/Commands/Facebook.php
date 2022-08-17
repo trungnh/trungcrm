@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\ActService;
 use App\Services\UserService;
 use Illuminate\Console\Command;
 use App\Services\BmService;
@@ -47,7 +48,19 @@ class Facebook extends Command
                 $bmData = $bmService->getBmInformation($user->id);
 
                 Redis::set('bm_all_data_' . $user->id, json_encode($bmData));
-                $this->sendNotice($user->id, $bmData);
+                if (!empty($bmData)) {
+                    $this->sendNotice($user->id, $bmData);
+                }
+
+                /**
+                 * @var ActService $actService
+                 */
+                $actService = app(ActService::class);
+                $actData = $actService->getAllActInformation($user->id);
+                Redis::set('act_all_data_' . $user->id, json_encode($actData));
+                if (!empty($actData)) {
+                    $this->sendActNotice($user->id, $actData);
+                }
             }
         }
     }
@@ -81,6 +94,32 @@ class Facebook extends Command
                     $message = "Cần thanh toán: {$adAccount->business->businessName} - {$adAccount->name}: {$currentBillingStr}/{$thresholdStr}";
                     General::sendMessageToTelegramBot($user->chat_id, $message);
                 }
+            }
+        }
+    }
+
+    /**
+     * Check billing and threshold then send message to telegram
+     *
+     * @param $userId
+     * @param $actData
+     * @return void
+     */
+    public function sendActNotice($userId, $actData)
+    {
+        /**
+         * @var UserService $userService
+         */
+        $userService = app(UserService::class);
+        $user = $userService->getById($userId);
+        foreach ($actData as $actId => $act) {
+            $currentBilling = intval($act['payment']->currentBilling);
+            $threshold = $act['payment']->threshold;
+            if ($currentBilling >= ($threshold * 0.85)) {
+                $currentBillingStr = number_format($currentBilling, 0, ',', '.');
+                $thresholdStr = number_format($threshold, 0, ',', '.');
+                $message = "Cần thanh toán: TK cá nhân - {$act['act_name']} - {$act['act_id']}: {$currentBillingStr}/{$thresholdStr}";
+                General::sendMessageToTelegramBot($user->chat_id, $message);
             }
         }
     }
