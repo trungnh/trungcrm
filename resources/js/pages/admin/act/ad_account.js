@@ -24,7 +24,7 @@ export default {
         reload: function () {
             this.loading = true;
             this.actData = [];
-            axios.get('/reloadAccount').then(response => {
+            axios.get('/reloadActAccount').then(response => {
                 if (response.status == 200) {
                     return {data: response.data, success: true};
                 } else {

@@ -53,8 +53,9 @@ class ActService extends Service
     {
         $adAccountPaymentUrl = Facebook::getActAdAccountPaymentUrl($actId, $token);
 
-        $response = $this->getRequest($adAccountPaymentUrl, $cookie);
-        $responseBody = json_decode($response);
+        $response = Http::get($adAccountPaymentUrl);
+        $responseBody = json_decode($response->body());
+        dd($responseBody);
         $currentBilling = 0;
         $minBilling = 0;
         $maxBilling = 0;
@@ -81,8 +82,8 @@ class ActService extends Service
     public function getAdAccountThreshold($actId, $token, $currency, $cookie)
     {
         $adAccountThresholdUrl = Facebook::getActAdAccountThresholdUrl($actId, $token);
-        $response = $this->getRequest($adAccountThresholdUrl, $cookie);
-        $responseBody = json_decode($response);
+        $response = Http::get($adAccountThresholdUrl);
+        $responseBody = json_decode($response->body());
         if (!property_exists($responseBody, 'error') && property_exists($responseBody, 'adspaymentcycle')) {
             $adspaymentcycle = $responseBody->adspaymentcycle;
             if (property_exists($adspaymentcycle, 'data')) {
