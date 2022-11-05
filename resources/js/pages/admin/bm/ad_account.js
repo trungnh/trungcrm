@@ -12,8 +12,8 @@ export default {
     ],
     data: {
         user_id: global.userId,
+        adaIgnoreIds: global.adaIgnoreIds,
         bmData: [],
-        ignored_ada_ids: [],
         loading: false
 
     },
@@ -24,7 +24,7 @@ export default {
             }
         },
         addAdaIgnoreIds() {
-            axios.post('/addAdaIgnoreIds', {ignored_ada_ids: this.ignored_ada_ids}).then(response => {
+            axios.post('/addAdaIgnoreIds', {ignored_ada_ids: this.adaIgnoreIds}).then(response => {
                 if (response.status == 200) {
                     return {data: response.data, success: true};
                 } else {

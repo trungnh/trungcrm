@@ -67,9 +67,16 @@ class BmController extends Controller
     public function adAccount()
     {
         $userId = Auth::id();
+        /**
+         * @var UserService $userService
+         */
+        $userService = app(UserService::class);
+        $user = $userService->getById($userId);
+        $adaIgnoreIds = $user->ada_ignore_ids;
+
         $bmData = json_decode(Redis::get('bm_all_data_' . $userId));
 
-        return view('admin.bm.ad_account', compact('bmData', 'userId'));
+        return view('admin.bm.ad_account', compact('bmData', 'userId', 'adaIgnoreIds'));
     }
 
     /**

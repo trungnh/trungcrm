@@ -30322,7 +30322,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loading = true;
       this.actData = [];
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/reloadAccount').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/reloadActAccount').then(function (response) {
         if (response.status == 200) {
           return {
             data: response.data,
@@ -30626,6 +30626,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_module__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: {
+    user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
+    adaIgnoreIds: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].adaIgnoreIds,
     bmData: [],
     loading: false
   },
@@ -30634,6 +30636,23 @@ __webpack_require__.r(__webpack_exports__);
       if (_system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bmData) {
         this.bmData = _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bmData;
       }
+    },
+    addAdaIgnoreIds: function addAdaIgnoreIds() {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/addAdaIgnoreIds', {
+        ignored_ada_ids: this.adaIgnoreIds
+      }).then(function (response) {
+        if (response.status == 200) {
+          return {
+            data: response.data,
+            success: true
+          };
+        } else {
+          return {
+            data: response.data,
+            success: false
+          };
+        }
+      });
     },
     reload: function reload() {
       var _this = this;
@@ -31019,146 +31038,15 @@ __webpack_require__.r(__webpack_exports__);
     bms: [],
     bm: {
       user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
-      business_name: '',
-      business_id: '',
-      token: '',
-      cookie: '',
-      ignored_ada_ids: ''
-    },
-    message: {},
-    pagination: {
-      total: 0,
-      per_page: 2,
-      from: 1,
-      to: 0,
-      current_page: 1
-    },
-    offset: 4
+      name: '',
+      id: ''
+    }
   },
   methods: {
-    addBm: function addBm() {
-      var _this = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/addBm', this.bm).then(function (response) {
-        if (response.status == 200) {
-          return {
-            data: response.data,
-            success: true
-          };
-        } else {
-          return {
-            data: response.data,
-            success: false
-          };
-        }
-      }).then(function (res) {
-        _this.bm = {
-          user_id: _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].userId,
-          business_name: '',
-          business_id: '',
-          cookie: '',
-          token: '',
-          ignored_ada_ids: ''
-        };
-        var type = res.success ? 'success' : 'danger';
-
-        _this.setMessage(type, res.data.message);
-      });
-    },
-    getEditUrl: function getEditUrl(id) {
-      return '/bm/edit/' + id;
-    },
-    removeBm: function removeBm(id) {
-      var _this2 = this;
-
-      if (confirm('Chắc xóa chưa? Mà xóa rồi sau thêm lại phút mốt!')) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/removeBm', {
-          id: id
-        }).then(function (response) {
-          if (response.status == 200) {
-            return {
-              data: response.data,
-              success: true
-            };
-          } else {
-            return {
-              data: response.data,
-              success: false
-            };
-          }
-        }).then(function (res) {
-          var type = res.success ? 'success' : 'danger';
-
-          _this2.setMessage(type, res.data.message);
-        });
-      }
-    },
-    setMessage: function setMessage(type, content) {
-      this.message = {
-        messageClass: 'alert alert-' + type,
-        messageText: content
-      };
-      return;
-    },
     setItems: function setItems() {
       if (_system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bms) {
         this.bms = _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bms;
       }
-    } // changePage: function (page=1) {
-    //     this.pagination.current_page = page;
-    //     this.getItems(page);
-    // },
-    // getItems: function (page) {
-    //     this.loading = true;
-    //     let params = {
-    //         page: page
-    //     };
-    //     axios.post(this.getListUrl, params)
-    //         .then(function ( response) {
-    //             if (response.status == 200) {
-    //                 return {data: response.data, success: true};
-    //             } else {
-    //                 return {data: response.data, success: false};
-    //             }
-    //         }).then(res => {
-    //         if (res.success) {
-    //             this.items = res.data.data;
-    //             this.pagination = res.data.pagination;
-    //         }
-    //         this.loading = false;
-    //     });
-    // },
-
-  },
-  computed: {
-    isActived: function isActived() {
-      return this.pagination.current_page;
-    },
-    pagesNumber: function pagesNumber() {
-      if (!this.pagination.to) {
-        return [];
-      }
-
-      var from = this.pagination.current_page - this.offset;
-
-      if (from < 1) {
-        from = 1;
-      }
-
-      var to = from + this.offset * 2;
-
-      if (to >= this.pagination.last_page) {
-        to = this.pagination.last_page;
-      }
-
-      var pagesArray = [];
-
-      while (from <= to) {
-        pagesArray.push(from);
-        from++;
-      }
-
-      return pagesArray;
     }
   },
   mounted: function mounted() {

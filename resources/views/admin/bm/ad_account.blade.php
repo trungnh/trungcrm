@@ -11,6 +11,7 @@
 @section('head')
     @jsData([
     'bmData' => $bmData,
-    'userId' => $userId
+    'userId' => $userId,
+    'adaIgnoreIds' => $adaIgnoreIds
     ])
 @endsection
