@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Services\ActService;
+use App\Services\TaiKhoanService;
 use App\Services\UserService;
 use Illuminate\Console\Command;
 use App\Services\BmService;
@@ -45,21 +46,17 @@ class Facebook extends Command
                  * @var BmService $bmService
                  */
                 $bmService = app(BmService::class);
-                $bmData = $bmService->getBmInformation($user->id);
+
+                /**
+                 * @var TaiKhoanService $taiKhoanService
+                 */
+                $taiKhoanService = app(TaiKhoanService::class);
+                $via = $taiKhoanService->getByUserId($user->id);
+                $bmData = $bmService->getBmInformation($via);
 
                 Redis::set('bm_all_data_' . $user->id, json_encode($bmData));
                 if (!empty($bmData)) {
                     $this->sendNotice($user->id, $bmData);
-                }
-
-                /**
-                 * @var ActService $actService
-                 */
-                $actService = app(ActService::class);
-                $actData = $actService->getAllActInformation($user->id);
-                Redis::set('act_all_data_' . $user->id, json_encode($actData));
-                if (!empty($actData)) {
-                    $this->sendActNotice($user->id, $actData);
                 }
             }
         }
@@ -79,8 +76,8 @@ class Facebook extends Command
          */
         $userService = app(UserService::class);
         $user = $userService->getById($userId);
+        $ignoredAdaIds = explode(',', $user->ada_ignore_ids);
         foreach ($bmData as $bmID => $bm) {
-            $ignoredAdaIds = explode(',', $bm['ignored_ada_ids']);
             foreach ($bm['ad_account'] as $adAccount) {
                 // Ignore sending notice
                 if (in_array($adAccount->accountId, $ignoredAdaIds)) {

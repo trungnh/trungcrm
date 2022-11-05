@@ -4,7 +4,6 @@
 @section('pageId', 'bmIndex')
 
 @section('content')
-    @include('admin.bm.components.create')
     @include('admin.bm.components.list')
 @endsection
 

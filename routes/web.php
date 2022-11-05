@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/addAct', 'Admin\ActController@addAct')->name('act.addAct');
     Route::get('/act-account', 'Admin\ActController@adAccount')->name('act.ad_account');
     Route::get('/reloadActAccount', 'Admin\ActController@reloadAccount')->name('act.reloadAccount');
+
+    Route::post('/addAdaIgnoreIds', 'Admin\BmController@addAdaIgnoreIds')->name('bm.addAdaIgnoreIds');
 });
 
 

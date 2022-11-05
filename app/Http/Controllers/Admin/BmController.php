@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\BmRequest;
 use App\Http\Requests\Request;
 use App\Services\BmService;
+use App\Services\TaiKhoanService;
+use App\Services\UserService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -18,13 +20,19 @@ class BmController extends Controller
     private $bmService;
 
     /**
+     * @var TaiKhoanService
+     */
+    private $taiKhoanService;
+
+    /**
      * SampleController constructor.
      *
      * @param BmService $bmService
      */
-    public function __construct(BmService $bmService)
+    public function __construct(BmService $bmService, TaiKhoanService $taiKhoanService)
     {
         $this->bmService = $bmService;
+        $this->taiKhoanService = $taiKhoanService;
     }
 
     /**
@@ -33,7 +41,9 @@ class BmController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $bms = $this->bmService->getAllBms($userId);
+
+        $via = $this->taiKhoanService->getByUserId($userId);
+        $bms = $this->bmService->getAllBms($via);
 
         return view('admin.bm.index', compact('bms', 'userId'));
     }
@@ -52,65 +62,6 @@ class BmController extends Controller
     }
 
     /**
-     * @param BmRequest $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function saveBm(BmRequest $request)
-    {
-        $attributes = $request->all();
-        $bm = $this->bmService->getById($attributes['id']);
-        if ($bm) {
-            $bm->update($attributes);
-        }
-
-        return response()->json(['message' => trans('messages.admin.success.create', [], 'vi')], 200);
-    }
-
-    /**
-     * @param BmRequest $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function removeBm(BmRequest $request)
-    {
-        $attributes = $request->all();
-        $this->bmService->deleteById($attributes['id']);
-
-        return response()->json(['message' => trans('messages.admin.success.create', [], 'vi')], 200);
-    }
-
-    /**
-     * @param BmRequest $request
-     * @return Factory|View
-     */
-    public function addBm(BmRequest $request)
-    {
-        $attributes = $request->all();
-
-        try {
-            $bm = $this->bmService->create($attributes);
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-            return response()->json(['message' => trans('messages.admin.errors.create', [], 'vi')], 202);
-        }
-
-        if ($bm->id) {
-            $response = [
-                'user_id' => $bm->user_id,
-                'business_name' => $bm->business_name,
-                'business_id' => $bm->business_id,
-                'token' => $bm->token,
-            ];
-
-            return response()->json(
-                ['product' => $response, 'message' => trans('messages.admin.success.create', [], 'vi')],
-                200
-            );
-        }
-
-        return response()->json(['message' => trans('messages.admin.errors.create', [], 'vi')], 202);
-    }
-
-    /**
      * @return \Illuminate\Contracts\Foundation\Application|Factory|View
      */
     public function adAccount()
@@ -118,9 +69,34 @@ class BmController extends Controller
         $userId = Auth::id();
         $bmData = json_decode(Redis::get('bm_all_data_' . $userId));
 
-        return view('admin.bm.ad_account', compact('bmData'));
+        return view('admin.bm.ad_account', compact('bmData', 'userId'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addAdaIgnoreIds(Request $request)
+    {
+        $ignoredAdaIds = $request->post('ignored_ada_ids');
+        $userId = Auth::id();
+        /**
+         * @var UserService $userService
+         */
+        $userService = app(UserService::class);
+        $user = $userService->getById($userId);
+        $user->ada_ignore_ids = $ignoredAdaIds;
+        $user->save();
+
+        return response()->json(
+            ['data' => [], 'message' => trans('messages.admin.success.create', [], 'vi')],
+            200
+        );
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function reloadAccount()
     {
         $userId = Auth::id();
@@ -128,7 +104,13 @@ class BmController extends Controller
          * @var BmService $bmService
          */
         $bmService = app(BmService::class);
-        $bmData = $bmService->getBmInformation($userId);
+        /**
+         * @var TaiKhoanService $taiKhoanService
+         */
+        $taiKhoanService = app(TaiKhoanService::class);
+
+        $via = $taiKhoanService->getByUserId($userId);
+        $bmData = $bmService->getBmInformation($via);
 
         Redis::set('bm_all_data_' . $userId, json_encode($bmData));
 

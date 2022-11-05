@@ -25,50 +25,49 @@ class BmService extends Service
     }
 
     /**
+     * @param $via
      * @return array
      */
-    public function getBmInformation($id)
+    public function getBmInformation($via)
     {
         $bmData = [];
-        $bms = $this->getAllBms($id);
+        $bms = $this->getAllBms($via);
         foreach ($bms as $bm) {
-            $bmData[$bm->business_id]['business_name'] = $bm->business_name;
-            $bmData[$bm->business_id]['business_id'] = $bm->business_id;
-            $bmData[$bm->business_id]['ignored_ada_ids'] = $bm->ignored_ada_ids;
-            $bmData[$bm->business_id]['ad_account'] = $this->getBMAdAccount($bm);
+            $bmData[$bm->id]['business_name'] = $bm->name;
+            $bmData[$bm->id]['business_id'] = $bm->id;
+            $bmData[$bm->id]['ad_account'] = $this->getBMAdAccount($bm, $via);
         }
 
         return $bmData;
     }
 
     /**
-     * Get BM's account infor
+     * Get BM's account information
      *
      * @param $bm
+     * @param $via
      * @return array
      */
-    public function getBMAdAccount($bm)
+    public function getBMAdAccount($bm, $via)
     {
         $adAccounts = [];
 
         // Get owned ad account
-        $ownedAdAccountUrl = Facebook::getBMOwnedAccountUrl($bm->business_id, $bm->token);
-        $response = $this->getRequest($ownedAdAccountUrl, $bm->cookie);
-        $responseBody = json_decode($response);
-        if (property_exists($responseBody, 'data')) {
-            foreach ($responseBody->data as $item) {
-                $adAccountPaymentInfo = $this->getAdAccountPaymentInformation($item->id, $bm->business_id, $bm->token, $item->currency, $bm->cookie);
+        $ownedAdAccountUrl = Facebook::getBMOwnedAccountUrl($bm->id, $via->token);
+        $response = $this->getRequest($ownedAdAccountUrl, $via->proxy, $via->pass_proxy, $via->agent, $via->cookie);
+        if (property_exists($response, 'data')) {
+            foreach ($response->data as $item) {
+                $adAccountPaymentInfo = $this->getAdAccountPaymentInformation($item->id, $bm->id, $via, $item->currency, $via->cookie);
                 $adAccounts[] = Facebook::dataToAdAcount($item, $bm, $adAccountPaymentInfo);
             }
         }
 
         // Get client ad account
-        $clientAdAccountUrl = Facebook::getBMClientAccountUrl($bm->business_id, $bm->token);
-        $response2 = $this->getRequest($clientAdAccountUrl, $bm->cookie);
-        $responseBody2 = json_decode($response2);
-        if (property_exists($responseBody2, 'data')) {
-            foreach ($responseBody2->data as $item2) {
-                $adAccountPaymentInfo = $this->getAdAccountPaymentInformation($item2->id, $bm->business_id, $bm->token, $item2->currency, $bm->cookie);
+        $clientAdAccountUrl = Facebook::getBMClientAccountUrl($bm->id, $via->token);
+        $response2 = $this->getRequest($clientAdAccountUrl, $via->proxy, $via->pass_proxy, $via->agent, $via->cookie);
+        if (property_exists($response2, 'data')) {
+            foreach ($response2->data as $item2) {
+                $adAccountPaymentInfo = $this->getAdAccountPaymentInformation($item2->id, $bm->id, $via, $item2->currency, $via->cookie);
                 $adAccounts[] = Facebook::dataToAdAcount($item2, $bm, $adAccountPaymentInfo);
             }
         }
@@ -81,25 +80,23 @@ class BmService extends Service
      *
      * @param $actId
      * @param $bmId
-     * @param $bmToken
+     * @param $via
      * @param $currency
-     * @param $cookie
      * @return \stdClass
      */
-    public function getAdAccountPaymentInformation($actId, $bmId, $bmToken, $currency, $cookie = '')
+    public function getAdAccountPaymentInformation($actId, $bmId, $via, $currency)
     {
-        $adAccountPaymentUrl = Facebook::getAdAccountPaymentUrl($actId, $bmId, $bmToken);
-        $response = $this->getRequest($adAccountPaymentUrl, $cookie);
-        $responseBody = json_decode($response);
+        $adAccountPaymentUrl = Facebook::getAdAccountPaymentUrl($actId, $bmId, $via->token);
+        $response = $this->getRequest($adAccountPaymentUrl, $via->proxy, $via->pass_proxy, $via->agent, $via->cookie);
         $currentBilling = 0;
         $minBilling = 0;
         $maxBilling = 0;
         $threshold = 0;
-        if (!property_exists($responseBody, 'error')) {
-            $currentBilling = str_replace('.', '', $responseBody->current_unbilled_spend->amount);
-            $minBilling = str_replace('.', '', $responseBody->min_billing_threshold->amount);
-            $maxBilling = str_replace('.', '', $responseBody->max_billing_threshold->amount);
-            $threshold = $this->getAdAccountThreshold($actId, $bmId, $bmToken, $currency, $cookie);
+        if (!property_exists($response, 'error')) {
+            $currentBilling = str_replace('.', '', $response->current_unbilled_spend->amount);
+            $minBilling = str_replace('.', '', $response->min_billing_threshold->amount);
+            $maxBilling = str_replace('.', '', $response->max_billing_threshold->amount);
+            $threshold = $this->getAdAccountThreshold($actId, $bmId, $via, $currency, $via->cookie);
         }
 
         return Facebook::Payment($currentBilling, $minBilling, $maxBilling, $threshold);
@@ -110,18 +107,16 @@ class BmService extends Service
      *
      * @param $actId
      * @param $bmId
-     * @param $bmToken
+     * @param $via
      * @param $currency
-     * @param $cookie
      * @return int
      */
-    public function getAdAccountThreshold($actId, $bmId, $bmToken, $currency, $cookie = '')
+    public function getAdAccountThreshold($actId, $bmId, $via, $currency)
     {
-        $adAccountLimitUrl = Facebook::getAdAccountLimitUrl($actId, $bmId, $bmToken);
-        $response = $this->getRequest($adAccountLimitUrl, $cookie);
-        $responseBody = json_decode($response);
-        if (!property_exists($responseBody, 'error') && property_exists($responseBody, 'data')) {
-            $data = $responseBody->data;
+        $adAccountLimitUrl = Facebook::getAdAccountLimitUrl($actId, $bmId, $via->token);
+        $response = $this->getRequest($adAccountLimitUrl, $via->proxy, $via->pass_proxy, $via->agent, $via->cookie);
+        if (!property_exists($response, 'error') && property_exists($response, 'data')) {
+            $data = $response->data;
             if (empty($data)) {
                 return 0;
             }
@@ -146,20 +141,33 @@ class BmService extends Service
      * Get list campaign information
      *
      * @param $actId
-     * @param $bmId
-     * @param $bmToken
+     * @param $via
      * @param $timeRange
-     * @param $cookie
      * @return mixed
      */
-    public function getListCampInformation($actId, $bmToken, $timeRange, $cookie = '')
+    public function getListCampInformation($actId, $via, $timeRange)
     {
-        $listCampUrl = Facebook::getListCampUrl($actId, $bmToken, $timeRange);
-        $response = $this->getRequest($listCampUrl, $cookie);
-        $responseBody = json_decode($response);
-        if (!property_exists($responseBody, 'error') && property_exists($responseBody, 'data')) {
-            return $responseBody->data;
+        $listCampUrl = Facebook::getListCampUrl($actId, $via->token, $timeRange);
+        $response = $this->getRequest($listCampUrl, $via->proxy, $via->pass_proxy, $via->agent, $via->cookie);
+        if (!property_exists($response, 'error') && property_exists($response, 'data')) {
+            return $response->data;
         }
+    }
+
+    /**
+     * @param $via
+     * @return array
+     */
+    public function getAllBms($via)
+    {
+        // Get uid
+        $listBMUrl = Facebook::getBMUrl($via->uid, $via->token);
+        $response = $this->getRequest($listBMUrl, $via->proxy, $via->pass_proxy, $via->agent, $via->cookie);
+        if (!property_exists($response, 'error') && property_exists($response, 'data')) {
+            return $response->data;
+        }
+
+        return [];
     }
 
     /**
@@ -179,15 +187,6 @@ class BmService extends Service
     public function getList($userId)
     {
         return $this->bmRepository->getList($userId);
-    }
-
-    /**
-     * @param $userId
-     * @return \App\Models\Model[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getAllBms($userId)
-    {
-        return $this->bmRepository->getAllBms($userId);
     }
 
     /**
@@ -217,40 +216,81 @@ class BmService extends Service
     {
         return $this->bmRepository->deleteById($id);
     }
-	
-	/**
+
+    /**
      * @param $url
+     * @param $proxy
+     * @param $proxyauth
+     * @param $agent
      * @param $cookie
-	 *
      * @return mixed
      */
-	public function getRequest($url, $cookie)
+	public function getRequest($url, $proxy, $proxyauth, $agent, $cookie)
 	{
-		$ch = curl_init();
-		$agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36';
-		
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'cookie: '.$cookie,
+            'user-agent: '.$agent,
+            'sec-fetch-site: same-site',
+        ));
+
         curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        curl_setopt($ch, CURLOPT_PROXY, $proxy);     // PROXY details with port
+        curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);   // Use if proxy have username and password
+        curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP); // If expected to call with specific PROXY type
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+
+        curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, 
-				[ 
-					'cookie: ' . $cookie,
-					'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-					//'accept-encoding: gzip, deflate, br',
-					'accept-language: en-US,en;q=0.9',
-					'cache-control: max-age=0',
-					'connection: keep-alive',
-					'upgrade-insecure-requests: 1'
-				]
-			);
-		curl_setopt($ch, CURLOPT_USERAGENT, $agent);
-		//curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate, br');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
-        $output = curl_exec($ch);
-        curl_close($ch);    
+        $response = curl_exec($ch);
+        $data = json_decode($response);
 
-		return $output;		
+        curl_close($ch);
+
+		return $data;
 	}
+
+    /**
+     * @param $url
+     * @param $postData
+     * @param $proxy
+     * @param $proxyauth
+     * @param $agent
+     * @param $cookie
+     * @return mixed
+     */
+    public function postRequest($url, $postData, $proxy, $proxyauth, $agent, $cookie)
+    {
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'cookie: '.$cookie,
+            'user-agent: '.$agent,
+            'sec-fetch-site: same-site',
+        ));
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        curl_setopt($ch, CURLOPT_PROXY, $proxy);     // PROXY details with port
+        curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);   // Use if proxy have username and password
+        curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP); // If expected to call with specific PROXY type
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+        $response = curl_exec($ch);
+        $data = json_decode($response);
+
+        curl_close($ch);
+
+        return $data;
+    }
 }

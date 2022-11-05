@@ -32,6 +32,15 @@ class TaiKhoanService extends Service
     }
 
     /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getByUserId(int $id)
+    {
+        return $this->taiKhoanRepository->getByUserId($id);
+    }
+
+    /**
      * @param string $uId
      * @return mixed
      */

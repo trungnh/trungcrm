@@ -11,7 +11,9 @@ export default {
         PageModule.default,
     ],
     data: {
+        user_id: global.userId,
         bmData: [],
+        ignored_ada_ids: [],
         loading: false
 
     },
@@ -20,6 +22,16 @@ export default {
             if (global.bmData) {
                 this.bmData = global.bmData;
             }
+        },
+        addAdaIgnoreIds() {
+            axios.post('/addAdaIgnoreIds', {ignored_ada_ids: this.ignored_ada_ids}).then(response => {
+                if (response.status == 200) {
+                    return {data: response.data, success: true};
+                } else {
+                    return {data: response.data, success: false};
+                }
+            });
+
         },
         reload: function () {
             this.loading = true;

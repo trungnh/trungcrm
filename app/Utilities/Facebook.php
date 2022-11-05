@@ -10,6 +10,9 @@ class Facebook
     const FB_API_VERSION = 'v11.0';
     const SESSION_ID = '2b24b38c0e92085c';
     const ACT_SESSION_ID = '28dfdfba6a7ae3ec';
+
+    const BM_LIST_PATH = '/businesses';
+
     const BM_OWNED_AD_ACCOUNT_PATH = '/owned_ad_accounts?access_token=';
     const BM_OWNED_AD_ACCOUNT_FIELDS = '&fields=%5B%22id%22%2C%22name%22%2C%22account_id%22%2C%22account_status%22%2C%22disable_reason%22%2C%22business%22%2C%22currency%22%2C%22timezone_name%22%2C%22end_advertiser%22%2C%22end_advertiser_name%22%2C%22invoicing_emails%22%2C%22funding_source%22%2C%22onbehalf_requests.fields(receiving_business.fields(name)%2Cstatus)%22%5D&sort=name_ascending&suppress_http_code=1';
     const BM_CLIENT_AD_ACCOUNT_PATH = '/client_ad_accounts?access_token=';
@@ -40,7 +43,13 @@ class Facebook
 
     const CAMP_PATH_1 = '/campaigns?fields=clicks%2Cname%2Cspent%2Cctr%2Creach%2Cresult%2Cdelivery_info%2Cstatus&access_token=';
 
-
+    public static function getBMUrl($uID, $token)
+    {
+        return self::FB_API_ENDPOINT . '/' .
+            self::FB_API_VERSION . '/' .
+            $uID .
+            self::BM_LIST_PATH . '?access_token=' . $token;
+    }
 
     public static function getBMOwnedAccountUrl($bmId, $token)
     {
@@ -103,8 +112,8 @@ class Facebook
             $business->businessId = $data->business->id;
             $business->businessName = $data->business->name;
         } else {
-            $business->businessId = $bm->business_id;
-            $business->businessName = $bm->business_name;
+            $business->businessId = $bm->id;
+            $business->businessName = $bm->name;
         }
 
         $currency = $data->currency;

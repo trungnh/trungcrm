@@ -42,6 +42,15 @@ class TaiKhoanRepository extends Repository
     }
 
     /**
+     * @param string $id
+     * @return mixed
+     */
+    public function getByUserId($id)
+    {
+        return $this->model()->where('user_id', $id)->first();
+    }
+
+    /**
      * @param string $uId
      * @return mixed
      */

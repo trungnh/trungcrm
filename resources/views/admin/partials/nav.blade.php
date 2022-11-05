@@ -35,18 +35,18 @@
                             <span class="nav-link-text">BM Camp</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('act.index')}}">
-                            <i class="ni ni-shop text-primary"></i>
-                            <span class="nav-link-text">Cá nhân</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('act.ad_account')}}">
-                            <i class="ni ni-shop text-primary"></i>
-                            <span class="nav-link-text">Cá nhân Ad Account</span>
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="{{route('act.index')}}">--}}
+{{--                            <i class="ni ni-shop text-primary"></i>--}}
+{{--                            <span class="nav-link-text">Cá nhân</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="{{route('act.ad_account')}}">--}}
+{{--                            <i class="ni ni-shop text-primary"></i>--}}
+{{--                            <span class="nav-link-text">Cá nhân Ad Account</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                 </ul>
                 <!-- Divider -->
                 <hr class="my-3">
