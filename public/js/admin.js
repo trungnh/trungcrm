@@ -30634,6 +30634,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     setItems: function setItems() {
       if (_system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bmData) {
+        console.log(_system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bmData);
         this.bmData = _system_storage__WEBPACK_IMPORTED_MODULE_0__["global"].bmData;
       }
     },

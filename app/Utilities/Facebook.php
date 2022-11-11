@@ -14,7 +14,7 @@ class Facebook
     const BM_LIST_PATH = '/businesses';
 
     const BM_OWNED_AD_ACCOUNT_PATH = '/owned_ad_accounts?access_token=';
-    const BM_OWNED_AD_ACCOUNT_FIELDS = '&fields=%5B%22id%22%2C%22name%22%2C%22account_id%22%2C%22account_status%22%2C%22disable_reason%22%2C%22business%22%2C%22currency%22%2C%22timezone_name%22%2C%22end_advertiser%22%2C%22end_advertiser_name%22%2C%22invoicing_emails%22%2C%22funding_source%22%2C%22onbehalf_requests.fields(receiving_business.fields(name)%2Cstatus)%22%5D&sort=name_ascending&suppress_http_code=1';
+    const BM_OWNED_AD_ACCOUNT_FIELDS = '&fields=%5B%22id%22%2C%22name%22%2C%22account_id%22%2C%22account_status%22%2C%22disable_reason%22%2C%22amount_spent%22%2C%22business%22%2C%22currency%22%2C%22timezone_name%22%2C%22end_advertiser%22%2C%22end_advertiser_name%22%2C%22invoicing_emails%22%2C%22funding_source%22%2C%22onbehalf_requests.fields(receiving_business.fields(name)%2Cstatus)%22%5D&sort=name_ascending&suppress_http_code=1';
     const BM_CLIENT_AD_ACCOUNT_PATH = '/client_ad_accounts?access_token=';
     const BM_CLIENT_AD_ACCOUNT_FIELDS = '&fields=%5B%22id%22%2C%22name%22%2C%22account_id%22%2C%22account_status%22%2C%22disable_reason%22%2C%22business%22%2C%22currency%22%2C%22timezone_name%22%2C%22end_advertiser%22%2C%22end_advertiser_name%22%2C%22invoicing_emails%22%2C%22funding_source%22%2C%22onbehalf_requests.fields(receiving_business.fields(name)%2Cstatus)%22%5D&sort=name_ascending&suppress_http_code=1';
 
@@ -139,13 +139,14 @@ class Facebook
         return $adAccount;
     }
 
-    public static function Payment($currentBilling, $minBilling, $maxBilling, $threshold)
+    public static function Payment($currentBilling, $minBilling, $maxBilling, $threshold, $nextDayBilling)
     {
         $payment = new \stdClass();
         $payment->currentBilling = $currentBilling;
         $payment->minBilling = $minBilling;
         $payment->maxBilling = $maxBilling;
         $payment->threshold = $threshold;
+        $payment->nextDayBilling = $nextDayBilling;
 
         return $payment;
     }

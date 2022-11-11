@@ -30,7 +30,9 @@
                             <th scope="col" class="sort" data-sort="status">STATUS</th>
                             <th scope="col" class="sort" data-sort="status">ĐÃ TIÊU</th>
                             <th scope="col" class="sort" data-sort="status">NGƯỠNG</th>
+                            <th scope="col" class="sort" data-sort="status">NGÀY THANH TOÁN</th>
                             <th scope="col" class="sort" data-sort="status">CURRENCY</th>
+                            <th scope="col" class="sort" data-sort="status">MÚI GIỜ</th>
                         </tr>
                         </thead>
                         <tbody class="list">
@@ -62,8 +64,14 @@
                                 <td class="budget">
                                     {{formatNumber(item.payment.threshold)}}
                                 </td>
+                                <td class="budget">
+                                    {{item.payment.nextDayBilling}}
+                                </td>
                                 <td>
                                     {{item.currency}}
+                                </td>
+                                <td>
+                                    {{item.timezone}}
                                 </td>
                             </tr>
                         @endverbatim

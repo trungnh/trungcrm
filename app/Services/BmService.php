@@ -92,14 +92,16 @@ class BmService extends Service
         $minBilling = 0;
         $maxBilling = 0;
         $threshold = 0;
+        $nextDayBilling = 0;
         if (!property_exists($response, 'error')) {
             $currentBilling = str_replace('.', '', $response->current_unbilled_spend->amount);
             $minBilling = str_replace('.', '', $response->min_billing_threshold->amount);
             $maxBilling = str_replace('.', '', $response->max_billing_threshold->amount);
             $threshold = $this->getAdAccountThreshold($actId, $bmId, $via, $currency, $via->cookie);
+            $nextDayBilling = date('Y-m-d', strtotime($response->next_bill_date));
         }
 
-        return Facebook::Payment($currentBilling, $minBilling, $maxBilling, $threshold);
+        return Facebook::Payment($currentBilling, $minBilling, $maxBilling, $threshold, $nextDayBilling);
     }
 
     /**

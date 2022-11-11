@@ -20,6 +20,7 @@ export default {
     methods: {
         setItems: function () {
             if (global.bmData) {
+                console.log(global.bmData);
                 this.bmData = global.bmData;
             }
         },
