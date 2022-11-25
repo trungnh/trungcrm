@@ -85,6 +85,9 @@ class Facebook extends Command
                 }
                 $currentBilling = intval($adAccount->payment->currentBilling);
                 $threshold = $adAccount->payment->threshold;
+                if ($threshold == 0) {
+                    continue;
+                }
                 if ($currentBilling >= ($threshold * 0.85)) {
                     $currentBillingStr = number_format($currentBilling, 0, ',', '.');
                     $thresholdStr = number_format($threshold, 0, ',', '.');
