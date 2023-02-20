@@ -22,10 +22,15 @@ class ProductService extends Service
         $this->productRepository = $productRepository;
     }
 
+    public function getById($id)
+    {
+        return$this->productRepository->find($id);
+    }
+
     public function create($attributes)
     {
-        $attributes['custom_fields'] = json_encode($attributes['fields']);
-        unset($attributes['fields']);
+//        $attributes['custom_fields'] = json_encode($attributes['fields']);
+//        unset($attributes['fields']);
 
         return $this->productRepository->create($attributes);
     }

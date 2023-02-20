@@ -5,8 +5,9 @@ return [
         'errors' => [
             'create' => 'Tạo mới thất bại'
         ],
-        'errors' => [
-            'create' => 'Tạo mới thành công'
+        'success' => [
+            'create' => 'Tạo mới thành công',
+            'update' => 'Update thành công',
         ],
     ],
 ];

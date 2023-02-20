@@ -1,3 +1,62 @@
 .frontendPage {
-
+    .editable {
+        width: 100%;
+        cursor: pointer;
+        display: block;
+        color: blue;
+        &:hover {
+            .edit-item {display: inline-block}
+        }
+    }
+    .edit-item {display: none; cursor: pointer}
+    .table {
+        color: #000;
+        input {
+            color: #000;
+        }
+        th {
+            color: #000;
+        }
+        td {
+            color: #000;
+        }
+    }
+    .input-group-prepend {
+        width: 50%;
+        color: #000;
+        .input-group-text {
+            width: 100%;
+            color: #fff;
+            background-color: #4881ea;
+            border: 1px solid #4881ea;
+        }
+        input {
+            color: #000;
+        }
+    }
+    .form-control {
+        color: #000;
+    }
+    .form-group {
+        margin-bottom: 0.5rem;
+    }
+    .total-block {
+        width: 20%;
+        margin-left: 150px;
+        .input-group-text {
+            background-color: #006400;
+            border: 1px solid #006400;
+        }
+        .form-control:disabled, .form-control[readonly] {
+            font-weight: 600;
+        }
+    }
+}
+@media screen and (max-width: 600px) {
+    .frontendPage {
+        .total-block {
+            width: 100%;
+            margin-left: 0
+        }
+    }
 }

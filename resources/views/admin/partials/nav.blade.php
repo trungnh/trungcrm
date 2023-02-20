@@ -18,9 +18,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('order.index')}}">
+                        <a class="nav-link" href="{{route('report.index')}}">
                             <i class="ni ni-cart text-orange"></i>
-                            <span class="nav-link-text">Đơn hàng</span>
+                            <span class="nav-link-text">Báo cáo</span>
                         </a>
                     </li>
                     <li class="nav-item">

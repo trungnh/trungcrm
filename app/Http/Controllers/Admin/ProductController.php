@@ -45,14 +45,17 @@ class ProductController extends Controller
         try {
             $product = $this->productService->create($attributes);
         } catch (\Exception $e) {
-            return response()->json(['message' => trans('messages.admin.errors.create', [], 'vi')], 202);
+            return response()->json(['message' => trans('messages.admin.errors.create', [], 'vi') . $e->getMessage()], 202);
         }
 
         if ($product->id) {
             $response = [
                 'name' => $product->name,
+                'keyword' => $product->keyword,
                 'price' => $product->price,
-                'fields' => $product->custom_fields,
+                'unit_price' => $product->unit_price,
+                'shipping_price' => $product->shipping_price,
+                'return_rate' => $product->return_rate,
             ];
 
             return response()->json(

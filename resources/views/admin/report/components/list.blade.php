@@ -11,39 +11,30 @@
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col" class="sort" data-sort="name">Tên sản phẩm</th>
-                        <th scope="col" class="sort" data-sort="name">Từ khóa</th>
-                        <th scope="col" class="sort" data-sort="budget">Giá nhập</th>
-                        <th scope="col" class="sort" data-sort="budget">Giá bán</th>
-                        <th scope="col" class="sort" data-sort="budget">Giá ship</th>
-                        <th scope="col" class="sort" data-sort="budget">Hoàn</th>
+                        <th scope="col" class="sort" data-sort="name">Tháng</th>
+                        <th scope="col" class="sort" data-sort="name">Sản phẩm</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody class="list">
                     @verbatim
-                    <tr v-for="item in products">
+                    <tr v-for="item in reports">
+                        <th scope="row">
+                            <a :href="getEditLink(item.id)" class="text-green">{{buildNameReport(item.source, item.product.name, item.month)}}</a>
+                        </th>
                         <th scope="row">
                             <div class="media align-items-center">
                                 <div class="media-body">
-                                    <span class="name mb-0 text-sm">{{item.name}}</span>
+                                    <span class="name mb-0 text-sm">
+                                        <a :href="getEditLink(item.id)">{{item.month}}</a>
+                                    </span>
                                 </div>
                             </div>
                         </th>
                         <td scope="row">
-                            <span class="name mb-0 text-sm">{{item.keyword}}</span>
-                        </td>
-                        <td class="budget">
-                            {{item.unit_price}}
-                        </td>
-                        <td class="budget">
-                            {{item.price}}
-                        </td>
-                        <td class="budget">
-                            {{item.shipping_price}}
-                        </td>
-                        <td class="budget">
-                            {{item.return_rate}}
+                            <span class="name mb-0 text-sm">
+                                <a :href="getEditLink(item.id)">{{item.product.name}}</a>
+                            </span>
                         </td>
 
                         <td class="text-right">
@@ -52,9 +43,7 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <a class="dropdown-item" :href="getEditLink(item.id)">Sửa</a>
                                 </div>
                             </div>
                         </td>

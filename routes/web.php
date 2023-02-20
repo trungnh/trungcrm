@@ -27,10 +27,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/', 'Admin\HomeController@index')->name('admin.index');
     Route::get('/product', 'Admin\ProductController@index')->name('product.index');
     Route::post('/addProduct', 'Admin\ProductController@addProduct')->name('product.addProduct');
-    Route::get('/order', 'Admin\OrderController@index')->name('order.index');
-    Route::post('/addOrder', 'Admin\OrderController@addOrder')->name('order.addOrder');
     Route::post('/getCustomer', 'Admin\CustomerController@getCustomer')->name('customer.getCustomer');
     Route::get('/sample', 'Admin\SampleController@index')->name('sample.index');
+
+    Route::get('/report', 'Admin\ReportController@index')->name('report.index');
+    Route::get('/report/edit/{id}', 'Admin\ReportController@edit')->name('report.edit');
+    Route::post('/report/addReport', 'Admin\ReportController@addReport')->name('report.addReport');
+    Route::post('/report/saveReport/{id}', 'Admin\ReportController@saveReport')->name('report.saveReport');
 });
 
 

@@ -10,14 +10,11 @@ export default {
         PageModule.default,
     ],
     data: {
+        reports: [],
         products: [],
-        product: {
-            name: '',
-            keyword: '',
-            unit_price: 0,
-            price: 0,
-            shipping_price: 0,
-            return_rate: 0,
+        report: {
+            month: '',
+            product_id: '',
             // fields: []
         },
         message: {},
@@ -32,37 +29,31 @@ export default {
 
     },
     methods: {
-        addField() {
-            let fieldCount = this.product.fields.length;
-            this.product.fields.push({
-                label: 'Label ' + (fieldCount+1),
-                value: '',
-            });
-        },
-        removeField(item) {
-            this.product.fields.splice(this.product.fields.indexOf(item), 1);
-        },
-        addProduct() {
-            axios.post('/addProduct', this.product).then(response => {
+        addReport() {
+            axios.post('/report/addReport', this.report).then(response => {
                 if (response.status == 200) {
                     return {data: response.data, success: true};
                 } else {
                     return {data: response.data, success: false};
                 }
             }).then(res => {
-                this.product = {
-                    name: '',
-                    keyword: '',
-                    unit_price: 0,
-                    price: 0,
-                    shipping_price: 0,
-                    return_rate: 0,
+                this.report = {
+                    month: '',
+                    product_id: '',
                 };
                 let type = res.success ? 'success' : 'danger';
-                this.products.push(res.data.product);
+                this.reports.push(res.data.report);
                 this.setMessage(type, res.data.message);
             });
 
+        },
+        buildNameReport (source, productName, month) {
+            let monthPath = month.split('-');
+
+            return source + ' - ' + productName + ' Tháng ' + monthPath[1];
+        },
+        getEditLink(id) {
+            return '/report/edit/' + id;
         },
         parseCustomFields(field) {
             return JSON.parse(field);
@@ -76,35 +67,12 @@ export default {
             return;
         },
         setItems: function () {
-            if (global.products) {
+            if (global.reports) {
+                this.reports = global.reports.data;
                 this.products = global.products.data;
-                this.pagination = global.products.pagination;
+                this.pagination = global.reports.pagination;
             }
         },
-        // changePage: function (page=1) {
-        //     this.pagination.current_page = page;
-        //     this.getItems(page);
-        // },
-        // getItems: function (page) {
-        //     this.loading = true;
-        //     let params = {
-        //         page: page
-        //     };
-        //     axios.post(this.getListUrl, params)
-        //         .then(function ( response) {
-        //             if (response.status == 200) {
-        //                 return {data: response.data, success: true};
-        //             } else {
-        //                 return {data: response.data, success: false};
-        //             }
-        //         }).then(res => {
-        //         if (res.success) {
-        //             this.items = res.data.data;
-        //             this.pagination = res.data.pagination;
-        //         }
-        //         this.loading = false;
-        //     });
-        // },
 
     },
     computed: {
