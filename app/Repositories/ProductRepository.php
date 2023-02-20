@@ -20,7 +20,7 @@ class ProductRepository extends Repository
      */
     public function getTop($fields = ['*'])
     {
-        return $this->model()->limit(10)->get($fields);
+        return $this->model()->limit(20)->get($fields);
     }
 
     public function getList()
@@ -29,7 +29,7 @@ class ProductRepository extends Repository
             ['*']
         );
 
-        return $collection->paginate(5);
+        return $collection->paginate(20);
     }
 
     public function getAllProducts()
