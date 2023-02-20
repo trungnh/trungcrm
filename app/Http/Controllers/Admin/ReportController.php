@@ -72,6 +72,7 @@ class ReportController extends Controller
             $attributes['return_rate'] = $product->return_rate;
             $attributes['shipping_rate'] = $product->shipping_price;
             $attributes['product_unit_price'] = $product->unit_price;
+            $attributes['name'] = $attributes['source'] . ' - ' . $product->name . ' Tháng ' . date('m', strtotime($attributes['month'] . '-1'));
             //Create all item in month
             $items = [];
             $currentMonth = date('Y-m', strtotime($attributes['month'] . '-1'));

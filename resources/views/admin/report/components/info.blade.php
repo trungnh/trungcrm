@@ -5,11 +5,11 @@
                 <div v-bind:class="[message.messageClass]">
                     {{ message.messageText }}
                 </div>
-             @endverbatim
             <!-- Card header -->
             <div class="card-header border-0">
-                <h3 class="mb-0">Sửa Báo cáo</h3>
+                <h3 class="mb-0">Sửa Báo cáo <span class="text-green">{{ report.name }}</span></h3>
             </div>
+            @endverbatim
             <!-- Light table -->
 
             <!-- Card footer -->

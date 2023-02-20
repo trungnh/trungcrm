@@ -20,7 +20,7 @@
                     @verbatim
                     <tr v-for="item in reports">
                         <th scope="row">
-                            <a :href="getEditLink(item.id)" class="text-green">{{buildNameReport(item.source, item.product.name, item.month)}}</a>
+                            <a :href="getEditLink(item.id)" class="text-green">{{ item.name }}</a>
                         </th>
                         <th scope="row">
                             <div class="media align-items-center">
