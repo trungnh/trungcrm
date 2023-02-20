@@ -43,6 +43,9 @@ class ReportController extends Controller
 
         $months = $this->reportService->getMonths();
         $reports = $this->reportService->getList($loggedUser);
+        foreach ($reports as &$report) {
+            $report['items'] = unserialize($report['items']);
+        }
         $products = $this->productService->getList();
         $sources = Constant::SOURCE;
 

@@ -46,7 +46,8 @@ export default {
             newItem.totalUnitPrice = this.report.product_unit_price * newItem.product_qty;
             newItem.totalShippingPrice = this.report.shipping_rate * newItem.orders;
             newItem.totalReturnPrice = ((newItem.revenue - newItem.totalUnitPrice) * this.report.return_rate) + (newItem.orders * this.report.return_rate * (this.report.shipping_rate/2));
-            newItem.totalSpent = newItem.totalUnitPrice + newItem.totalShippingPrice + newItem.totalReturnPrice + parseFloat(newItem.ads_amount);
+            let adsTax = parseFloat(newItem.ads_amount) * this.report.ads_tax_rate;
+            newItem.totalSpent = newItem.totalUnitPrice + newItem.totalShippingPrice + newItem.totalReturnPrice + parseFloat(newItem.ads_amount) + adsTax;
             newItem.profit = newItem.revenue - newItem.totalSpent;
             newItem.cpa = parseFloat(newItem.ads_amount) / newItem.orders;
             newItem.profitPerOrder = newItem.profit / newItem.orders;

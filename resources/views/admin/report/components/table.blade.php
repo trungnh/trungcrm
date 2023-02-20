@@ -3,7 +3,7 @@
         <div class="card">
             <!-- Light table -->
             <div class="table-responsive">
-                <table class="table align-items-center table-flush">
+                <table class="table table-striped align-items-center table-flush">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">Ngày</th>
@@ -21,7 +21,7 @@
                         <th scope="col">ROAS</th>
                     </tr>
                     </thead>
-                    <tbody class="list">
+                    <tbody class="list table-striped">
                     @verbatim
                     <tr v-for="item in report.items">
                         <th scope="row">{{ item.date }}</th>

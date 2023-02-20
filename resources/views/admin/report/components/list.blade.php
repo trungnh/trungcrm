@@ -13,6 +13,9 @@
                         <th scope="col">#</th>
                         <th scope="col" class="sort" data-sort="name">Tháng</th>
                         <th scope="col" class="sort" data-sort="name">Sản phẩm</th>
+                        <th scope="col" class="sort" data-sort="name">Tổng đơn</th>
+                        <th scope="col" class="sort" data-sort="name">Tiền ads</th>
+                        <th scope="col" class="sort" data-sort="name">Lợi nhuận</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -36,6 +39,21 @@
                                 <a :href="getEditLink(item.id)">{{item.product.name}}</a>
                             </span>
                         </td>
+                        <td scope="row">
+                            <span class="name mb-0 text-sm">
+                                {{formatNumber(item.orders)}}
+                            </span>
+                        </td>
+                        <td scope="row">
+                            <span class="name mb-0 text-sm">
+                                {{formatNumber(item.totalAds)}}
+                            </span>
+                        </td>
+                        <td scope="row">
+                            <span class="name mb-0 text-sm font-weight-bold text-red">
+                                {{formatNumber(item.totalProfit)}}
+                            </span>
+                        </td>
 
                         <td class="text-right">
                             <div class="dropdown">
@@ -47,6 +65,28 @@
                                 </div>
                             </div>
                         </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"></th>
+                        <th scope="row"></th>
+                        <td scope="row">Tổng: </td>
+                        <td scope="row">
+                            <span class="name mb-0 text-sm font-weight-bold">
+                                {{formatNumber(totalOrders)}}
+                            </span>
+                        </td>
+                        <td scope="row">
+                            <span class="name mb-0 text-sm font-weight-bold">
+                                {{formatNumber(totalAds)}}
+                            </span>
+                        </td>
+                        <td scope="row">
+                            <span class="name mb-0 text-lg text-red font-weight-bold">
+                                {{formatNumber(totalProfit)}}
+                            </span>
+                        </td>
+
+                        <td class="text-right"></td>
                     </tr>
                     @endverbatim
                     </tbody>

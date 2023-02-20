@@ -46,6 +46,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold">Thuế ads</span>
+                                </div>
+                                <input class="form-control" v-model="report.ads_tax_rate" @change="handleRateChange" type="text">
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 

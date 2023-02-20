@@ -17,6 +17,9 @@ export default {
             product_id: '',
             // fields: []
         },
+        totalOrders: 0,
+        totalAds: 0,
+        totalProfit: 0,
         message: {},
         pagination: {
             total: 0,
@@ -47,10 +50,26 @@ export default {
             });
 
         },
-        buildNameReport (source, productName, month) {
-            let monthPath = month.split('-');
+        calculate (report) {
+            let orders = 0;
+            let totalProfit = 0;
+            let totalAds = 0;
+            report.items.forEach((val) => {
+                orders += parseFloat(val.orders);
+                totalProfit += parseFloat(val.profit);
+                totalAds += parseFloat(val.ads_amount);
+            });
 
-            return source + ' - ' + productName + ' Tháng ' + monthPath[1];
+            report.orders = orders;
+            report.totalProfit = totalProfit;
+            report.totalAds = totalAds;
+
+            this.totalOrders += orders;
+            this.totalAds += totalAds;
+            this.totalProfit += totalProfit;
+        },
+        formatNumber(number) {
+            return (isNaN(number) || number == 0) ? '-' : new Intl.NumberFormat('vi-VN', { maximumSignificantDigits: 2 }).format(number);
         },
         getEditLink(id) {
             return '/report/edit/' + id;
@@ -71,6 +90,10 @@ export default {
                 this.reports = global.reports.data;
                 this.products = global.products.data;
                 this.pagination = global.reports.pagination;
+
+                this.reports.forEach((report) => {
+                    this.calculate(report);
+                });
             }
         },
 
