@@ -54,6 +54,53 @@
     .table-striped>tr:nth-child(odd){
         background-color:#F0F8FF;
     }
+    .list {
+        tr {
+            input {
+                display: none;
+            }
+        }
+    }
+    .editing-orders {
+        .row-orders {
+            .editable {
+                display: none;
+            }
+            input {
+                display: inherit;
+            }
+        }
+    }
+    .editing-qty, .editing-ads, .editing-revenue {
+        .row-qty {
+            .editable {
+                display: none;
+            }
+            input {
+                display: inherit;
+            }
+        }
+    }
+    .editing-ads, .editing-revenue {
+        .row-ads {
+            .editable {
+                display: none;
+            }
+            input {
+                display: inherit;
+            }
+        }
+    }
+    .editing-revenue {
+        .row-revenue {
+            .editable {
+                display: none;
+            }
+            input {
+                display: inherit;
+            }
+        }
+    }
 }
 @media screen and (max-width: 600px) {
     .frontendPage {

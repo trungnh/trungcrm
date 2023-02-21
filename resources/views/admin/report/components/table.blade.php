@@ -23,52 +23,52 @@
                     </thead>
                     <tbody class="list table-striped">
                     @verbatim
-                    <tr v-for="item in report.items">
+                    <tr v-for="(item, index) in report.items">
                         <th scope="row">{{ item.date }}</th>
-                        <th scope="row">
-                            <span class="editable" @click="enableEditOrder" v-show="!editOrders">
+                        <th scope="row" class="row-orders">
+                            <span class="editable" @click="enableEditOrder(index)">
                                 {{ item.orders || 0}}
                             </span>
-                            <input @blur="resetEditFields" v-show="editOrders" type="text" v-model="item.orders" class="form-control" aria-describedby="basic-addon3">
+                            <input @blur="resetEditFields(index)" type="text" v-model="item.orders" class="form-control" aria-describedby="basic-addon3">
                         </th>
-                        <td scope="row">
-                            <span class="editable" @click="enableEditQty" v-show="!editQty">
+                        <td scope="row" class="row-qty">
+                            <span class="editable" @click="enableEditQty(index)">
                                 {{ item.product_qty || 0}}
                             </span>
-                            <input @blur="resetEditFields" v-show="editQty" type="text" v-model="item.product_qty" class="form-control" aria-describedby="basic-addon3">
+                            <input @blur="resetEditFields(index)" type="text" v-model="item.product_qty" class="form-control" aria-describedby="basic-addon3">
                         </td>
-                        <td scope="row">
+                        <td scope="row" @click="resetEditFields(index)">
                             <span>{{ formatNumber(item.totalUnitPrice) }}</span>
                         </td>
-                        <td scope="row">
-                            <span class="editable" @click="enableEditAds" v-show="!editAds">{{ formatNumber(item.ads_amount)}}
+                        <td scope="row" class="row-ads">
+                            <span class="editable" @click="enableEditAds(index)">{{ formatNumber(item.ads_amount)}}
                             </span>
-                            <input @blur="resetEditFields" v-show="editAds" type="text" v-model="item.ads_amount" class="form-control" aria-describedby="basic-addon3">
+                            <input @blur="resetEditFields(index)" type="text" v-model="item.ads_amount" class="form-control" aria-describedby="basic-addon3">
                         </td>
-                        <td scope="row">
+                        <td scope="row" @click="resetEditFields(index)">
                             <span>{{ formatNumber(item.totalShippingPrice) }}</span>
                         </td>
-                        <td scope="row">
+                        <td scope="row" @click="resetEditFields(index)">
                             <span>{{ formatNumber(item.totalReturnPrice) }}</span>
                         </td>
-                        <td scope="row">
+                        <td scope="row" @click="resetEditFields(index)">
                             <span>{{ formatNumber(item.totalSpent) }}</span>
                         </td>
-                        <td scope="row">
-                            <span class="editable text-green font-weight-bold" @click="enableEditRevenue" v-show="!editRevenue">{{ formatNumber(item.revenue)}}
+                        <td scope="row" class="row-revenue">
+                            <span class="editable text-green font-weight-bold" @click="enableEditRevenue(index)">{{ formatNumber(item.revenue)}}
                             </span>
-                            <input @blur="resetEditFields" v-show="editRevenue" type="text" v-model="item.revenue" class="form-control" aria-describedby="basic-addon3">
+                            <input @blur="resetEditFields(index)"type="text" v-model="item.revenue" class="form-control" aria-describedby="basic-addon3">
                         </td>
-                        <td scope="row">
+                        <td scope="row" @click="resetEditFields(index)">
                             <span class="text-red font-weight-bold">{{ formatNumber(item.profit) }}</span>
                         </td>
-                        <td scope="row">
+                        <td scope="row" @click="resetEditFields(index)">
                             <span>{{ formatNumber(item.cpa) }}</span>
                         </td>
-                        <td scope="row">
+                        <td scope="row" @click="resetEditFields(index)">
                             <span>{{ formatNumber(item.adsRate) }}</span>
                         </td>
-                        <td scope="row">
+                        <td scope="row" @click="resetEditFields(index)">
                             <span>{{ formatNumber(item.roas) }}</span>
                         </td>
                     </tr>
