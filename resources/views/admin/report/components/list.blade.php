@@ -72,7 +72,7 @@
                         <td scope="row">Tổng: </td>
                         <td scope="row">
                             <span class="name mb-0 text-sm font-weight-bold">
-                                {{formatNumber(totalOrders)}}
+                                {{totalOrders}}
                             </span>
                         </td>
                         <td scope="row">

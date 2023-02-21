@@ -27,13 +27,13 @@
                         <th scope="row">{{ item.date }}</th>
                         <th scope="row" class="row-orders">
                             <span class="editable" @click="enableEditOrder(index)">
-                                {{ formatNumber(item.orders) || 0}}
+                                {{ item.orders || 0}}
                             </span>
                             <input @blur="resetEditFields(index)" type="text" v-model="item.orders" class="form-control" aria-describedby="basic-addon3">
                         </th>
                         <td scope="row" class="row-qty">
                             <span class="editable" @click="enableEditQty(index)">
-                                {{ formatNumber(item.product_qty) || 0}}
+                                {{ item.product_qty || 0}}
                             </span>
                             <input @blur="resetEditFields(index)" type="text" v-model="item.product_qty" class="form-control" aria-describedby="basic-addon3">
                         </td>
