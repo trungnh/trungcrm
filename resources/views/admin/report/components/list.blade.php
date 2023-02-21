@@ -46,12 +46,12 @@
                         </td>
                         <td scope="row">
                             <span class="name mb-0 text-sm">
-                                {{formatNumber(item.totalAds)}}
+                                {{formatCurrencyNumber(item.totalAds)}}
                             </span>
                         </td>
                         <td scope="row">
                             <span class="name mb-0 text-sm font-weight-bold text-red">
-                                {{formatNumber(item.totalProfit)}}
+                                {{formatCurrencyNumber(item.totalProfit)}}
                             </span>
                         </td>
 
@@ -77,12 +77,12 @@
                         </td>
                         <td scope="row">
                             <span class="name mb-0 text-sm font-weight-bold">
-                                {{formatNumber(totalAds)}}
+                                {{formatCurrencyNumber(totalAds)}}
                             </span>
                         </td>
                         <td scope="row">
                             <span class="name mb-0 text-lg text-red font-weight-bold">
-                                {{formatNumber(totalProfit)}}
+                                {{formatCurrencyNumber(totalProfit)}}
                             </span>
                         </td>
 

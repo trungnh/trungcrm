@@ -71,6 +71,9 @@ export default {
         formatNumber(number) {
             return (isNaN(number) || number == 0) ? '-' : new Intl.NumberFormat('vi-VN', { maximumSignificantDigits: 2 }).format(number);
         },
+        formatCurrencyNumber(number) {
+            return (isNaN(number) || number == 0) ? '-' : new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
+        },
         getEditLink(id) {
             return '/report/edit/' + id;
         },

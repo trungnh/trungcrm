@@ -85,6 +85,9 @@ export default {
             $('.list').children('tr').eq(index).removeClass('editing-revenue');
         },
         formatNumber(number) {
+            return (isNaN(number) || number == 0) ? '-' : new Intl.NumberFormat('vi-VN', { maximumSignificantDigits: 2 }).format(number);
+        },
+        formatCurrencyNumber(number) {
             return (isNaN(number) || number == 0) ? '-' : new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
         },
         parseCustomFields(field) {

@@ -27,43 +27,43 @@
                         <th scope="row">{{ item.date }}</th>
                         <th scope="row" class="row-orders">
                             <span class="editable" @click="enableEditOrder(index)">
-                                {{ item.orders || 0}}
+                                {{ formatNumber(item.orders) || 0}}
                             </span>
                             <input @blur="resetEditFields(index)" type="text" v-model="item.orders" class="form-control" aria-describedby="basic-addon3">
                         </th>
                         <td scope="row" class="row-qty">
                             <span class="editable" @click="enableEditQty(index)">
-                                {{ item.product_qty || 0}}
+                                {{ formatNumber(item.product_qty) || 0}}
                             </span>
                             <input @blur="resetEditFields(index)" type="text" v-model="item.product_qty" class="form-control" aria-describedby="basic-addon3">
                         </td>
                         <td scope="row" @click="resetEditFields(index)">
-                            <span>{{ formatNumber(item.totalUnitPrice) }}</span>
+                            <span>{{ formatCurrencyNumber(item.totalUnitPrice) }}</span>
                         </td>
                         <td scope="row" class="row-ads">
-                            <span class="editable" @click="enableEditAds(index)">{{ formatNumber(item.ads_amount)}}
+                            <span class="editable" @click="enableEditAds(index)">{{ formatCurrencyNumber(item.ads_amount)}}
                             </span>
                             <input @blur="resetEditFields(index)" type="text" v-model="item.ads_amount" class="form-control" aria-describedby="basic-addon3">
                         </td>
                         <td scope="row" @click="resetEditFields(index)">
-                            <span>{{ formatNumber(item.totalShippingPrice) }}</span>
+                            <span>{{ formatCurrencyNumber(item.totalShippingPrice) }}</span>
                         </td>
                         <td scope="row" @click="resetEditFields(index)">
-                            <span>{{ formatNumber(item.totalReturnPrice) }}</span>
+                            <span>{{ formatCurrencyNumber(item.totalReturnPrice) }}</span>
                         </td>
                         <td scope="row" @click="resetEditFields(index)">
-                            <span>{{ formatNumber(item.totalSpent) }}</span>
+                            <span>{{ formatCurrencyNumber(item.totalSpent) }}</span>
                         </td>
                         <td scope="row" class="row-revenue">
-                            <span class="editable text-green font-weight-bold" @click="enableEditRevenue(index)">{{ formatNumber(item.revenue)}}
+                            <span class="editable text-green font-weight-bold" @click="enableEditRevenue(index)">{{ formatCurrencyNumber(item.revenue)}}
                             </span>
                             <input @blur="resetEditFields(index)"type="text" v-model="item.revenue" class="form-control" aria-describedby="basic-addon3">
                         </td>
                         <td scope="row" @click="resetEditFields(index)">
-                            <span class="text-red font-weight-bold">{{ formatNumber(item.profit) }}</span>
+                            <span class="text-red font-weight-bold">{{ formatCurrencyNumber(item.profit) }}</span>
                         </td>
                         <td scope="row" @click="resetEditFields(index)">
-                            <span>{{ formatNumber(item.cpa) }}</span>
+                            <span>{{ formatCurrencyNumber(item.cpa) }}</span>
                         </td>
                         <td scope="row" @click="resetEditFields(index)">
                             <span>{{ formatNumber(item.adsRate) }}</span>

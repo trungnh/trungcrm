@@ -66,7 +66,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold">Tiền hàng</span>
                                 </div>
-                                <span class="form-control font-weight-bold text-lg text-red">{{formatNumber(totalUnitPrice)}}</span>
+                                <span class="form-control font-weight-bold text-lg text-red">{{formatCurrencyNumber(totalUnitPrice)}}</span>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold">Tiền Ads</span>
                                 </div>
-                                <span class="form-control font-weight-bold text-lg text-red">{{formatNumber(totalAds)}}</span>
+                                <span class="form-control font-weight-bold text-lg text-red">{{formatCurrencyNumber(totalAds)}}</span>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold">Doanh thu</span>
                                 </div>
-                                <span class="form-control font-weight-bold text-lg text-red">{{formatNumber(totalRevenue)}}</span>
+                                <span class="form-control font-weight-bold text-lg text-red">{{formatCurrencyNumber(totalRevenue)}}</span>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold">Lợi nhuận</span>
                                 </div>
-                                <span class="form-control font-weight-bold text-red text-lg bg-yellow">{{formatNumber(totalProfit)}} ({{formatNumber(totalProfitRate)}}%)</span>
+                                <span class="form-control font-weight-bold text-red text-lg bg-yellow">{{formatCurrencyNumber(totalProfit)}} ({{formatCurrencyNumber(totalProfitRate)}}%)</span>
                             </div>
                         </div>
                     </div>
