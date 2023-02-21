@@ -11,10 +11,6 @@ export default {
     ],
     data: {
         report: [],
-        editOrders: false,
-        editQty: false,
-        editAds: false,
-        editRevenue: false,
         totalRevenue: 0,
         totalProfit: 0,
         totalUnitPrice: 0,
@@ -70,26 +66,26 @@ export default {
             });
             this.totalProfitRate = (this.totalProfit / this.totalRevenue) * 100;
         },
-        enableEditOrder () {
-            this.editOrders = true;
+        enableEditOrder (index) {
+            $('.list').children('tr').eq(index).addClass('editing-orders');
         },
-        enableEditQty () {
-            this.editQty = true;
+        enableEditQty (index) {
+            $('.list').children('tr').eq(index).addClass('editing-qty');
         },
-        enableEditAds () {
-            this.editAds = true;
+        enableEditAds (index) {
+            $('.list').children('tr').eq(index).addClass('editing-ads');
         },
-        enableEditRevenue () {
-            this.editRevenue = true;
+        enableEditRevenue (index) {
+            $('.list').children('tr').eq(index).addClass('editing-revenue');
         },
-        resetEditFields() {
-            this.editOrders = false;
-            this.editQty = false;
-            this.editAds = false;
-            this.editRevenue = false;
+        resetEditFields(index) {
+            $('.list').children('tr').eq(index).removeClass('editing-orders');
+            $('.list').children('tr').eq(index).removeClass('editing-qty');
+            $('.list').children('tr').eq(index).removeClass('editing-ads');
+            $('.list').children('tr').eq(index).removeClass('editing-revenue');
         },
         formatNumber(number) {
-            return (isNaN(number) || number == 0) ? '-' : new Intl.NumberFormat('vi-VN', { maximumSignificantDigits: 2 }).format(number);
+            return (isNaN(number) || number == 0) ? '-' : new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
         },
         parseCustomFields(field) {
             return JSON.parse(field);

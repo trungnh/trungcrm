@@ -22,7 +22,7 @@
         }
     }
     .input-group-prepend {
-        width: 50%;
+        width: 36%;
         color: #000;
         .input-group-text {
             width: 100%;
@@ -41,7 +41,7 @@
         margin-bottom: 0.5rem;
     }
     .total-block {
-        width: 20%;
+        width: 28%;
         margin-left: 150px;
         .input-group-text {
             background-color: #006400;
@@ -71,7 +71,7 @@
             }
         }
     }
-    .editing-qty, .editing-ads, .editing-revenue {
+    .editing-qty {
         .row-qty {
             .editable {
                 display: none;
@@ -81,7 +81,7 @@
             }
         }
     }
-    .editing-ads, .editing-revenue {
+    .editing-ads {
         .row-ads {
             .editable {
                 display: none;
