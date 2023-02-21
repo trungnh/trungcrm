@@ -41,7 +41,7 @@
                         </td>
                         <td scope="row">
                             <span class="name mb-0 text-sm">
-                                {{formatNumber(item.orders)}}
+                                {{item.orders}}
                             </span>
                         </td>
                         <td scope="row">
