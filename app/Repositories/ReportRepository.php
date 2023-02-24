@@ -32,6 +32,8 @@ class ReportRepository extends Repository
             $collection = $this->model()->where('user_id', $loggedUser->id)->with('product');
         }
 
+        $collection->orderBy('month', 'desc');
+
         return $collection->paginate(50);
     }
 

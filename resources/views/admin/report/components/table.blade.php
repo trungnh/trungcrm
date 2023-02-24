@@ -4,21 +4,21 @@
             <!-- Light table -->
             <div class="table-responsive">
                 <table class="table table-striped align-items-center table-flush">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Ngày</th>
-                        <th scope="col">Đơn</th>
-                        <th scope="col">SL</th>
-                        <th scope="col">Tiền hàng</th>
-                        <th scope="col">Tiền ads</th>
-                        <th scope="col">Vận chuyển</th>
-                        <th scope="col">Tiền Hoàn</th>
-                        <th scope="col">Tổng chi</th>
-                        <th scope="col">Tiền COD</th>
-                        <th scope="col">Lợi nhuận</th>
-                        <th scope="col">CPA</th>
-                        <th scope="col">% ads</th>
-                        <th scope="col">ROAS</th>
+                    <thead class="table-dark" style="position: sticky;top: 0">
+                    <tr class="">
+                        <th class="header" scope="col">Ngày</th>
+                        <th class="header" scope="col">Đơn</th>
+                        <th class="header" scope="col">SL</th>
+                        <th class="header" scope="col">Tiền hàng</th>
+                        <th class="header" scope="col">Tiền ads</th>
+                        <th class="header" scope="col">Vận chuyển</th>
+                        <th class="header" scope="col">Tiền Hoàn</th>
+                        <th class="header" scope="col">Tổng chi</th>
+                        <th class="header" scope="col">Tiền COD</th>
+                        <th class="header" scope="col">Lợi nhuận</th>
+                        <th class="header" scope="col">CPA</th>
+                        <th class="header" scope="col">% ads</th>
+                        <th class="header" scope="col">ROAS</th>
                     </tr>
                     </thead>
                     <tbody class="list table-striped">

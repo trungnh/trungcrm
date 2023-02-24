@@ -9,16 +9,33 @@
         }
     }
     .edit-item {display: none; cursor: pointer}
-    .table {
-        color: #000;
-        input {
+    .table-responsive {
+        height: 768px;
+        overflow-y: scroll;
+        .table {
             color: #000;
-        }
-        th {
-            color: #000;
-        }
-        td {
-            color: #000;
+            input {
+                color: #000;
+            }
+            th {
+                color: #000;
+            }
+            td {
+                color: #000;
+            }
+            thead {
+                tr {
+                    th {
+                        font-size: 0.75em;
+                        line-height: 2.75em;
+                        color: #fff;
+                    }
+                }
+            }
+            .header {
+                position: sticky;
+                top:0;
+            }
         }
     }
     .input-group-prepend {
