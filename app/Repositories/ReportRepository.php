@@ -21,7 +21,7 @@ class ReportRepository extends Repository
      */
     public function getTop($fields = ['*'])
     {
-        return $this->model()->limit(10)->get($fields);
+        return $this->model()->get($fields);
     }
 
     public function getList($loggedUser)
@@ -32,7 +32,7 @@ class ReportRepository extends Repository
             $collection = $this->model()->where('user_id', $loggedUser->id)->with('product');
         }
 
-        return $collection->paginate(5);
+        return $collection->paginate(50);
     }
 
     public function getAllReports()
