@@ -36,7 +36,7 @@
             @include('admin.partials.nav')
             <!-- Main content -->
                 <div class="main-content" id="panel">
-                    <div class="header bg-primary pb-6">
+                    <div class="header bg-primary">
                         <div class="container-fluid">
                             @include('admin.partials.top_navbar')
                             @yield('content')

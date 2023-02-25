@@ -4,7 +4,7 @@
             <!-- Light table -->
             <div class="table-responsive">
                 <table class="table table-striped align-items-center table-flush">
-                    <thead class="table-dark" style="position: sticky;top: 0">
+                    <thead class="table-dark" style="position: sticky;top: 0 ">
                     <tr class="">
                         <th class="header" scope="col">Ngày</th>
                         <th class="header" scope="col">Đơn</th>
