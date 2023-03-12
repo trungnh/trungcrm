@@ -43,7 +43,7 @@
                         <td scope="row" class="row-ads">
                             <span class="editable" @click="enableEditAds(index)">{{ formatCurrencyNumber(item.ads_amount)}}
                             </span>
-                            <input @blur="resetEditFields(index)" type="text" v-model="item.ads_amount" class="form-control" aria-describedby="basic-addon3">
+                            <input @blur="calculateAdsAmount(index, this)" type="text" class="form-control" aria-describedby="basic-addon3">
                         </td>
                         <td scope="row" @click="resetEditFields(index)">
                             <span>{{ formatCurrencyNumber(item.totalShippingPrice) }}</span>
@@ -57,7 +57,7 @@
                         <td scope="row" class="row-revenue">
                             <span class="editable text-green font-weight-bold" @click="enableEditRevenue(index)">{{ formatCurrencyNumber(item.revenue)}}
                             </span>
-                            <input @blur="resetEditFields(index)"type="text" v-model="item.revenue" class="form-control" aria-describedby="basic-addon3">
+                            <input @blur="resetEditFields(index)" type="text" v-model="item.revenue" class="form-control" aria-describedby="basic-addon3">
                         </td>
                         <td scope="row" @click="resetEditFields(index)">
                             <span class="text-red font-weight-bold">{{ formatCurrencyNumber(item.profit) }}</span>

@@ -27,9 +27,9 @@ class ReportRepository extends Repository
     public function getList($loggedUser)
     {
         if ($loggedUser->role == Constant::ROLE_ADMIN) {
-            $collection = $this->model()->with('product');
+            $collection = $this->model()->with('product', 'user');
         } else {
-            $collection = $this->model()->where('user_id', $loggedUser->id)->with('product');
+            $collection = $this->model()->where('user_id', $loggedUser->id)->with('product', 'user');
         }
 
         $collection->orderBy('month', 'desc');

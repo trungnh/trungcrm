@@ -68,21 +68,36 @@ export default {
         },
         enableEditOrder (index) {
             $('.list').children('tr').eq(index).addClass('editing-orders');
+            $('.editing-orders input').focus();
         },
         enableEditQty (index) {
             $('.list').children('tr').eq(index).addClass('editing-qty');
+            $('.editing-qty input').focus();
         },
         enableEditAds (index) {
             $('.list').children('tr').eq(index).addClass('editing-ads');
+            $('.editing-ads input').focus();
         },
         enableEditRevenue (index) {
             $('.list').children('tr').eq(index).addClass('editing-revenue');
+            $('.editing-revenue input').focus();
         },
         resetEditFields(index) {
             $('.list').children('tr').eq(index).removeClass('editing-orders');
             $('.list').children('tr').eq(index).removeClass('editing-qty');
             $('.list').children('tr').eq(index).removeClass('editing-ads');
             $('.list').children('tr').eq(index).removeClass('editing-revenue');
+        },
+        calculateAdsAmount(index) {
+            let ads_amount_string = $('.editing-ads .row-ads input').val();
+            let ads_amount_string_path_add = ads_amount_string.split('+');
+            let totalAmount = 0;
+            ads_amount_string_path_add.forEach((val) => {
+                totalAmount += parseFloat(val.trim());
+            });
+
+            this.report.items[index].ads_amount = totalAmount;
+            this.resetEditFields(index);
         },
         formatNumber(number) {
             return (isNaN(number) || number == 0) ? '-' : new Intl.NumberFormat('vi-VN', { maximumSignificantDigits: 2 }).format(number);

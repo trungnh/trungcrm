@@ -22,4 +22,9 @@ class Report extends Model
     {
         return $this->hasOne(Product::class, 'id', 'product_id');
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }
