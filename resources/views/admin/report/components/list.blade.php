@@ -13,6 +13,7 @@
                             <div class="input-group">
                                 @verbatim
                                     <select v-model="filterMonth" class="form-select form-select-lg custom-select" aria-label="Default select example">
+                                        <option></option>
                                         <option v-for="item in global.monthsInFilter" :value="item">
                                             {{item}}
                                         </option>
@@ -27,6 +28,7 @@
                             <div class="input-group">
                                 @verbatim
                                     <select v-model="filterUser" class="form-select form-select-lg custom-select" aria-label="Default select example">
+                                        <option></option>
                                         <option v-for="item in global.usersInFilter" :value="item">
                                             {{item}}
                                         </option>
@@ -41,6 +43,7 @@
                             <div class="input-group">
                                 @verbatim
                                     <select v-model="filterProduct" class="form-select form-select-lg custom-select" aria-label="Default select example">
+                                        <option></option>
                                         <option v-for="item in global.productsInFilter" :value="item">
                                             {{item}}
                                         </option>
