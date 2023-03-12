@@ -43,13 +43,19 @@ class ReportController extends Controller
 
         $months = $this->reportService->getMonths();
         $reports = $this->reportService->getList($loggedUser);
+        $monthsInFilter = [];
+        $usersInFilter = [];
+        $productsInFilter = [];
         foreach ($reports as &$report) {
             $report['items'] = unserialize($report['items']);
+            $monthsInFilter[$report['month']] = $report['month'];
+            $productsInFilter[$report['product']['name']] = $report['product']['name'];
+            $usersInFilter[$report['user']['name']] = $report['user']['name'];
         }
         $products = $this->productService->getList();
         $sources = Constant::SOURCE;
 
-        return view('admin.report.index', compact('reports', 'products', 'months', 'sources'));
+        return view('admin.report.index', compact('reports', 'products', 'months', 'sources', 'loggedUser', 'monthsInFilter', 'usersInFilter', 'productsInFilter'));
     }
 
     public function edit($id)

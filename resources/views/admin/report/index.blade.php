@@ -14,5 +14,9 @@
     'products' => $products,
     'months' => $months,
     'sources' => $sources,
+    'loggedUser' => $loggedUser,
+    'monthsInFilter' => $monthsInFilter,
+    'usersInFilter' => $usersInFilter,
+    'productsInFilter' => $productsInFilter,
     ])
 @endsection

@@ -17,6 +17,9 @@ export default {
             product_id: '',
             // fields: []
         },
+        filterMonth: null,
+        filterUser: null,
+        filterProduct: null,
         totalOrders: 0,
         totalAds: 0,
         totalProfit: 0,
@@ -68,6 +71,16 @@ export default {
             this.totalAds += totalAds;
             this.totalProfit += totalProfit;
         },
+        getReportName (reportName, userName) {
+            if (global.loggedUser.role == 'admin') {
+                return reportName + ' - ' + userName;
+            }
+
+            return reportName;
+        },
+        showFilter() {
+            return global.loggedUser.role == 'admin';
+        },
         formatNumber(number) {
             return (isNaN(number) || number == 0) ? '-' : new Intl.NumberFormat('vi-VN', { maximumSignificantDigits: 2 }).format(number);
         },
@@ -93,15 +106,39 @@ export default {
                 this.reports = global.reports.data;
                 this.products = global.products.data;
                 this.pagination = global.reports.pagination;
-
-                this.reports.forEach((report) => {
-                    this.calculate(report);
-                });
             }
         },
 
     },
     computed: {
+        filteredReports() {
+            let filtered = this.reports;
+            if (this.filterMonth != null) {
+                filtered = filtered.filter(item => {
+                    return item.month.toLowerCase().indexOf(this.filterMonth.toLowerCase()) > -1
+                })
+            }
+            if (this.filterUser != null) {
+                filtered = filtered.filter(item => {
+                    return item.user.name.toLowerCase().indexOf(this.filterUser.toLowerCase()) > -1
+                })
+            }
+            if (this.filterProduct != null) {
+                filtered = filtered.filter(item => {
+                    return item.product.name.toLowerCase().indexOf(this.filterProduct.toLowerCase()) > -1
+                })
+            }
+
+            this.totalOrders = 0;
+            this.totalAds = 0;
+            this.totalProfit = 0;
+            filtered.forEach((report) => {
+                this.calculate(report);
+            });
+
+            return filtered;
+        },
+
         isActived: function () {
             return this.pagination.current_page;
         },

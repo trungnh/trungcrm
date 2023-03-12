@@ -1,9 +1,65 @@
+<div class="row" v-if="showFilter()">
+    <div class="col">
+        <div class="card">
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <h3 class="mb-0">Bộ lọc</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col col-md-2">
+                        <div class="form-group">
+                            <label class="form-control-label" for="basic-url">Tháng</label>
+                            <div class="input-group">
+                                @verbatim
+                                    <select v-model="filterMonth" class="form-select form-select-lg custom-select" aria-label="Default select example">
+                                        <option v-for="item in global.monthsInFilter" :value="item">
+                                            {{item}}
+                                        </option>
+                                    </select>
+                                @endverbatim
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-2">
+                        <div class="form-group">
+                            <label class="form-control-label" for="basic-url">Người tạo</label>
+                            <div class="input-group">
+                                @verbatim
+                                    <select v-model="filterUser" class="form-select form-select-lg custom-select" aria-label="Default select example">
+                                        <option v-for="item in global.usersInFilter" :value="item">
+                                            {{item}}
+                                        </option>
+                                    </select>
+                                @endverbatim
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-2">
+                        <div class="form-group">
+                            <label class="form-control-label" for="basic-url">Sản phẩm</label>
+                            <div class="input-group">
+                                @verbatim
+                                    <select v-model="filterProduct" class="form-select form-select-lg custom-select" aria-label="Default select example">
+                                        <option v-for="item in global.productsInFilter" :value="item">
+                                            {{item}}
+                                        </option>
+                                    </select>
+                                @endverbatim
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col">
         <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-                <h3 class="mb-0">Danh sách sản phẩm</h3>
+                <h3 class="mb-0">Danh sách báo cáo</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -21,9 +77,9 @@
                     </thead>
                     <tbody class="list">
                     @verbatim
-                    <tr v-for="item in reports">
+                    <tr v-for="item in filteredReports">
                         <th scope="row">
-                            <a :href="getEditLink(item.id)" class="text-green">{{ item.name }} - {{ item.user.name }}</a>
+                            <a :href="getEditLink(item.id)" class="text-green">{{getReportName(item.name, item.user.name)}}</a>
                         </th>
                         <th scope="row">
                             <div class="media align-items-center">
