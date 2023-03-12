@@ -1,4 +1,4 @@
-<div class="row" v-if="showFilter()">
+<div class="row">
     <div class="col">
         <div class="card">
             <!-- Card header -->
@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col col-md-2">
+                    <div class="col col-md-2" v-if="showFilter()">
                         <div class="form-group">
                             <label class="form-control-label" for="basic-url">Người tạo</label>
                             <div class="input-group">
