@@ -16,7 +16,7 @@ class Report extends Model
      *
      * @var array
      */
-    protected $fillable = ['product_id', 'user_id', 'name', 'month', 'return_rate', 'shipping_rate', 'product_unit_price', 'ads_tax_rate', 'source', 'items'];
+    protected $fillable = ['product_id', 'user_id', 'name', 'month', 'return_rate', 'shipping_rate', 'product_unit_price', 'ads_tax_rate', 'tax_rate', 'source', 'items'];
 
     public function product()
     {

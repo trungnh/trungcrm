@@ -23,6 +23,7 @@ class CreateReportTable extends Migration
             $table->decimal('shipping_rate')->nullable();
             $table->decimal('product_unit_price')->nullable();
             $table->double('ads_tax_rate')->default(0);
+            $table->double('tax_rate')->default(0);
             $table->string('source')->nullable();
             $table->text('items')->nullable();
             $table->timestamps();
