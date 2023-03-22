@@ -11,4 +11,5 @@ class Constant {
     const ROLE_ADMIN = 'admin';
     const ROLE_MOD = 'mod';
     const ROLE_USER = 'user';
+    const TAX_RATE = 0.02;
 }
