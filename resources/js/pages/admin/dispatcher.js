@@ -5,4 +5,5 @@ export default {
     reportIndex: require('admin/report/index'),
     reportEdit: require('admin/report/edit'),
     orderIndex: require('admin/order/index'),
+    homeIndex: require('admin/home/index'),
 };

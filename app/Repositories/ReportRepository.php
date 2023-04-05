@@ -37,6 +37,22 @@ class ReportRepository extends Repository
         return $collection->paginate(50);
     }
 
+    public function getListByMonth($month, $loggedUser)
+    {
+        if ($loggedUser->role == Constant::ROLE_ADMIN) {
+            $collection = $this->model()
+                ->where('month', $month)
+                ->with('product', 'user');
+        } else {
+            $collection = $this->model()
+                ->where('user_id', $loggedUser->id)
+                ->where('month', $month)
+                ->with('product', 'user');
+        }
+
+        return $collection->paginate(50);
+    }
+
     public function getAllReports()
     {
         return $this->all();

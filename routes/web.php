@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/report/edit/{id}', 'Admin\ReportController@edit')->name('report.edit');
     Route::post('/report/addReport', 'Admin\ReportController@addReport')->name('report.addReport');
     Route::post('/report/saveReport/{id}', 'Admin\ReportController@saveReport')->name('report.saveReport');
+    Route::get('/home/changeReportMonth/{month}', 'Admin\HomeController@changeReportMonth')->name('home.changeReportMonth');
 });
 
 

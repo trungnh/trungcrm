@@ -51,6 +51,11 @@ class ReportService extends Service
         return $this->reportRepository->getList($loggedUser);
     }
 
+    public function getListByMonth($month, $loggedUser)
+    {
+        return $this->reportRepository->getListByMonth($month, $loggedUser);
+    }
+
     public function getAllReports()
     {
         return $this->reportRepository->getAllReports();

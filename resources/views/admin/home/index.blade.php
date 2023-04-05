@@ -7,3 +7,10 @@
     @include('admin.home.content.main')
 @endsection
 
+@section('head')
+    @jsData([
+    'reportsOfLastMonth' => $reportsOfLastMonth,
+    'reportsOfThisMonth' => $reportsOfThisMonth,
+    'monthsInFilter' => $monthsInFilter,
+    ])
+@endsection
