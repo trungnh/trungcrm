@@ -17,6 +17,7 @@ export default {
         totalRevenue: 0,
         totalAds: 0,
         totalProfit: 0,
+        totalProfitRate: 0,
         totalLastMonthOrders: 0,
         totalLastMonthRevenue: 0,
         totalLastMonthAds: 0,
@@ -44,6 +45,8 @@ export default {
             this.totalRevenue += totalRevenue;
             this.totalAds += totalAds;
             this.totalProfit += totalProfit;
+
+            this.totalProfitRate  = this.formatNumber((this.totalProfit / this.totalRevenue) * 100);
         },
         calculateLastMonth (report) {
             let orders = 0;

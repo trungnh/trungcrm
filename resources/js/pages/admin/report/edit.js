@@ -94,7 +94,8 @@ export default {
             let ads_amount_string_path_add = ads_amount_string.split('+');
             let totalAmount = 0;
             ads_amount_string_path_add.forEach((val) => {
-                totalAmount += parseFloat(val.trim());
+                let valTml = val.replace(/[., ]/g, "");
+                totalAmount += parseFloat(valTml.trim());
             });
 
             this.report.items[index].ads_amount = totalAmount;
