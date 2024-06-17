@@ -43,7 +43,7 @@ export default {
             newItem.totalShippingPrice = this.report.shipping_rate * newItem.orders;
             newItem.totalReturnPrice = ((newItem.revenue - newItem.totalUnitPrice) * this.report.return_rate) + (newItem.orders * this.report.return_rate * (this.report.shipping_rate/2));
 			
-			let adsPayFee = parseFloat(parseFloat(newItem.ads_amount) * 0.012);	// Phí thẻ visa	
+			let adsPayFee = parseFloat(parseFloat(newItem.ads_amount) * this.report.ads_payment_fee);	// Phí thẻ visa	
             let adsTax = parseFloat(newItem.ads_amount) * this.report.ads_tax_rate;
 
             let revenueTax = parseFloat(newItem.revenue) * this.report.tax_rate;

@@ -12,4 +12,5 @@ class Constant {
     const ROLE_MOD = 'mod';
     const ROLE_USER = 'user';
     const TAX_RATE = 0.02;
+    const ADS_PAYMENT_FEE = 0.012;
 }
