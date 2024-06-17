@@ -15,7 +15,7 @@
             <!-- Card footer -->
             <div class="card-body py-4">
                 @verbatim
-                <div class="float-left">
+                <div class="float-left" :class="{'invisible': hideByRole}">
                     <div class="row">
                         <div class="col">
                             <div class="form-group input-group">
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" :class="{'invisible': hideByRole}">
                         <div class="col">
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">

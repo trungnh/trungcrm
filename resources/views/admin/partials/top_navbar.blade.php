@@ -70,7 +70,9 @@
                     <img alt="Image placeholder" src="/assets/img/trung.jpg">
                   </span>
                             <div class="media-body  ml-2  d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">Anh Trung</span>
+                                @verbatim
+                                    <span class="mb-0 text-sm  font-weight-bold">{{global.loggedUser.name}}</span>
+                                @endverbatim
                             </div>
                         </div>
                     </a>

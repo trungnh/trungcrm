@@ -74,7 +74,9 @@
                         <th scope="col" class="sort" data-sort="name">Sản phẩm</th>
                         <th scope="col" class="sort" data-sort="name">Tổng đơn</th>
                         <th scope="col" class="sort" data-sort="name">Tiền ads</th>
-                        <th scope="col" class="sort" data-sort="name">Lợi nhuận</th>
+                        <th scope="col" class="sort" data-sort="name" :class="{'invisible': hideByRole}">Lợi nhuận</th>
+                        <th scope="col" class="sort" data-sort="name" :class="{'invisible': hideByRole}">Doanh thu</th>
+                        <th scope="col" class="sort" data-sort="name" :class="{'invisible': hideByRole}">ROAS</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -108,9 +110,19 @@
                                 {{formatCurrencyNumber(item.totalAds)}}
                             </span>
                         </td>
-                        <td scope="row">
-                            <span class="name mb-0 text-sm font-weight-bold text-red">
+                        <td scope="row" :class="{'invisible': hideByRole}">
+                            <span class="name mb-0 text-sm font-weight-bold text-green">
                                 {{formatCurrencyNumber(item.totalProfit)}}
+                            </span>
+                        </td>
+                        <td scope="row" :class="{'invisible': hideByRole}">
+                            <span class="name mb-0 text-sm font-weight-bold text-red">
+                                {{formatCurrencyNumber(item.totalRevenue)}}
+                            </span>
+                        </td>
+                        <td scope="row" :class="{'invisible': hideByRole}">
+                            <span class="name mb-0 text-sm font-weight-bold">
+                                {{formatNumber(item.roas)}}
                             </span>
                         </td>
 
@@ -139,9 +151,19 @@
                                 {{formatCurrencyNumber(totalAds)}}
                             </span>
                         </td>
-                        <td scope="row">
+                        <td scope="row" :class="{'invisible': hideByRole}">
                             <span class="name mb-0 text-lg text-red font-weight-bold">
                                 {{formatCurrencyNumber(totalProfit)}}
+                            </span>
+                        </td>
+                        <td scope="row" :class="{'invisible': hideByRole}">
+                            <span class="name mb-0 text-lg text-red font-weight-bold">
+                                {{formatCurrencyNumber(totalRevenue)}}
+                            </span>
+                        </td>
+                        <td scope="row" :class="{'invisible': hideByRole}">
+                            <span class="name mb-0 text-lg font-weight-bold">
+                                {{formatNumber(totalRevenue / totalAds)}}
                             </span>
                         </td>
 

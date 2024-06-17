@@ -32,6 +32,7 @@ export default {
             current_page: 1
         },
         offset: 4,
+        hideByRole: false
 
     },
     methods: {
@@ -57,19 +58,27 @@ export default {
             let orders = 0;
             let totalProfit = 0;
             let totalAds = 0;
+            let totalRevenue = 0;
             report.items.forEach((val) => {
                 orders += parseFloat(val.orders);
                 totalProfit += parseFloat(val.profit);
                 totalAds += parseFloat(val.ads_amount);
+                totalRevenue += parseFloat(val.revenue);
             });
 
             report.orders = orders;
             report.totalProfit = totalProfit;
             report.totalAds = totalAds;
+            report.totalRevenue = totalRevenue;
+
+            report.roas = totalRevenue / totalAds;
 
             this.totalOrders += orders;
             this.totalAds += totalAds;
             this.totalProfit += totalProfit;
+            this.totalRevenue += totalRevenue;
+
+            this.roas += this.totalRevenue / this.totalAds;
         },
         getReportName (reportName, userName) {
             if (global.loggedUser.role == 'admin') {
@@ -132,6 +141,8 @@ export default {
             this.totalOrders = 0;
             this.totalAds = 0;
             this.totalProfit = 0;
+            this.totalRevenue = 0;
+            this.roas = 0;
             filtered.forEach((report) => {
                 this.calculate(report);
             });
@@ -164,6 +175,10 @@ export default {
 
     },
     mounted () {
+        if (global.loggedUser.role != 'admin') {
+            this.hideByRole = true;
+        }
+
         this.setItems();
     }
 }

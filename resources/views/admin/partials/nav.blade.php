@@ -23,7 +23,7 @@
                             <span class="nav-link-text">Báo cáo</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="global.loggedUser.role == 'admin'">
                         <a class="nav-link" href="{{route('product.index')}}">
                             <i class="ni ni-shop text-primary"></i>
                             <span class="nav-link-text">Sản phẩm</span>

@@ -29,9 +29,10 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $loggedUser = auth()->user();
         $products = $this->productService->getList();
 
-        return view('admin.product.index', compact('products'));
+        return view('admin.product.index', compact('products', 'loggedUser'));
     }
 
     /**

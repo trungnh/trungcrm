@@ -17,7 +17,7 @@ export default {
         totalAds: 0,
         totalProfitRate: 0,
         message: {},
-
+        hideByRole: false
     },
     methods: {
         saveReport() {
@@ -136,6 +136,9 @@ export default {
         });
     },
     mounted () {
+        if (global.loggedUser.role != 'admin') {
+            this.hideByRole = true;
+        }
         this.setData();
     }
 }

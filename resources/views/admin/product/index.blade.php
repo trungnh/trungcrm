@@ -11,5 +11,6 @@
 @section('head')
     @jsData([
     'products' => $products,
+    'loggedUser' => $loggedUser
     ])
 @endsection

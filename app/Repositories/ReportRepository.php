@@ -32,6 +32,7 @@ class ReportRepository extends Repository
             $collection = $this->model()->where('user_id', $loggedUser->id)->with('product', 'user');
         }
 
+        $collection->orderBy('id', 'desc');
         $collection->orderBy('month', 'desc');
 
         return $collection->paginate(50);
@@ -49,7 +50,8 @@ class ReportRepository extends Repository
                 ->where('month', $month)
                 ->with('product', 'user');
         }
-
+        
+        $collection->orderBy('id', 'desc');
         return $collection->paginate(50);
     }
 

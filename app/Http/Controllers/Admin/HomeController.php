@@ -49,7 +49,7 @@ class HomeController extends Controller
             $report1['items'] = unserialize($report1['items']);
         }
 
-        return view('admin.home.index', compact('reportsOfLastMonth', 'reportsOfThisMonth', 'monthsInFilter'));
+        return view('admin.home.index', compact('reportsOfLastMonth', 'reportsOfThisMonth', 'monthsInFilter', 'loggedUser'));
     }
 
     /**

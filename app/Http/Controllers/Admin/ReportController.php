@@ -60,9 +60,10 @@ class ReportController extends Controller
 
     public function edit($id)
     {
+        $loggedUser = auth()->user();
         $report = $this->reportService->getById($id);
 
-        return view('admin.report.edit', compact('report'));
+        return view('admin.report.edit', compact('report', 'loggedUser'));
     }
 
     /**

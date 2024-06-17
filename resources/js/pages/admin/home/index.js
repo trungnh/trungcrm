@@ -22,6 +22,7 @@ export default {
         totalLastMonthRevenue: 0,
         totalLastMonthAds: 0,
         totalLastMonthProfit: 0,
+        hideByRole: false
     },
     methods: {
         calculateThisMonth (report) {
@@ -142,6 +143,9 @@ export default {
 
     },
     mounted () {
+        if (global.loggedUser.role != 'admin') {
+            this.hideByRole = true;
+        }
         this.setItems();
     }
 }
