@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div class="float-left total-block">
+                <div class="float-left total-block" :class="{'margin-0': hideByRole}">
                     <div class="row">
                         <div class="col">
                             <div class="form-group input-group">
