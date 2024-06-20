@@ -82,9 +82,16 @@ class ReportController extends Controller
             $attributes['return_rate'] = $product->return_rate;
             $attributes['shipping_rate'] = $product->shipping_price;
             $attributes['product_unit_price'] = $product->unit_price;
+
+            if ($attributes['source'] == 'Google') {
+                $attributes['ads_tax_rate'] = Constant::GG_ADS_TAX_RATE;
+            } else if ($attributes['source'] == 'Tiktok') {
+                $attributes['ads_tax_rate'] = Constant::TT_ADS_TAX_RATE;
+            }
+
             $attributes['tax_rate'] = Constant::TAX_RATE;
             $attributes['ads_payment_fee'] = Constant::ADS_PAYMENT_FEE;
-            
+
             $attributes['name'] = $attributes['source'] . ' - ' . $product->name . ' Tháng ' . date('m', strtotime($attributes['month'] . '-1'));
             //Create all item in month
             $items = [];
