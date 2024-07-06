@@ -11,6 +11,7 @@
 @section('head')
     @jsData([
     'reports' => $reports,
+    'month' => $month,
     'products' => $products,
     'months' => $months,
     'sources' => $sources,

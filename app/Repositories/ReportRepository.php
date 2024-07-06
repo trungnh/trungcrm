@@ -52,6 +52,7 @@ class ReportRepository extends Repository
         }
         
         $collection->orderBy('id', 'desc');
+        $collection->orderBy('month', 'desc');
         return $collection->paginate(50);
     }
 

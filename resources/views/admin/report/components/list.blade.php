@@ -12,7 +12,7 @@
                             <label class="form-control-label" for="basic-url">Tháng</label>
                             <div class="input-group">
                                 @verbatim
-                                    <select v-model="filterMonth" class="form-select form-select-lg custom-select" aria-label="Default select example">
+                                    <select v-model="filterMonth" class="form-select form-select-lg custom-select" aria-label="Default select example" @change="changeMonth">
                                         <option></option>
                                         <option v-for="item in global.monthsInFilter" :value="item">
                                             {{item}}
@@ -27,7 +27,7 @@
                             <label class="form-control-label" for="basic-url">Người tạo</label>
                             <div class="input-group">
                                 @verbatim
-                                    <select v-model="filterUser" class="form-select form-select-lg custom-select" aria-label="Default select example">
+                                    <select v-model="filterUser" class="form-select form-select-lg custom-select" aria-label="Default select example" @>
                                         <option></option>
                                         <option v-for="item in global.usersInFilter" :value="item">
                                             {{item}}

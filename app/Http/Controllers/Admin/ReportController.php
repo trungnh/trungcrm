@@ -40,22 +40,13 @@ class ReportController extends Controller
     public function index()
     {
         $loggedUser = auth()->user();
+        $month = request()->query('month');
+        extract($this->getListReports($month));
 
-        $months = $this->reportService->getMonths();
-        $reports = $this->reportService->getList($loggedUser);
-        $monthsInFilter = [];
-        $usersInFilter = [];
-        $productsInFilter = [];
-        foreach ($reports as &$report) {
-            $report['items'] = unserialize($report['items']);
-            $monthsInFilter[$report['month']] = $report['month'];
-            $productsInFilter[$report['product']['name']] = $report['product']['name'];
-            $usersInFilter[$report['user']['name']] = $report['user']['name'];
-        }
         $products = $this->productService->getList();
         $sources = Constant::SOURCE;
 
-        return view('admin.report.index', compact('reports', 'products', 'months', 'sources', 'loggedUser', 'monthsInFilter', 'usersInFilter', 'productsInFilter'));
+        return view('admin.report.index', compact('reports', 'month', 'products', 'months', 'sources', 'loggedUser', 'monthsInFilter', 'usersInFilter', 'productsInFilter'));
     }
 
     public function edit($id)
@@ -124,8 +115,10 @@ class ReportController extends Controller
 
         if ($report->id) {
             $report->product->name = $product->name;
+
+            extract($this->getListReports());
             return response()->json(
-                ['report' => $report, 'message' => trans('messages.admin.success.create', [], 'vi')],
+                ['data' => compact('report', 'reports', 'monthsInFilter', 'usersInFilter', 'productsInFilter'), 'message' => trans('messages.admin.success.create', [], 'vi')],
                 200
             );
         }
@@ -152,5 +145,29 @@ class ReportController extends Controller
             ['message' => trans('messages.admin.success.update', [], 'vi')],
             200
         );
+    }
+
+    protected function getListReports($month)
+    {
+        $loggedUser = auth()->user();
+        if (!is_null($month)) {
+            $reports = $this->reportService->getListByMonth($month, $loggedUser);
+        } else {
+            $reports = $this->reportService->getList($loggedUser);
+        }
+
+        $months = $this->reportService->getMonths();
+
+        $monthsInFilter = $months;
+        $usersInFilter = [];
+        $productsInFilter = [];
+        foreach ($reports as &$report) {
+            $report['items'] = unserialize($report['items']);
+            //$monthsInFilter[$report['month']] = $report['month'];
+            $productsInFilter[$report['product']['name']] = $report['product']['name'];
+            $usersInFilter[$report['user']['name']] = $report['user']['name'];
+        }
+
+        return compact('reports', 'months', 'monthsInFilter', 'usersInFilter', 'productsInFilter');
     }
 }

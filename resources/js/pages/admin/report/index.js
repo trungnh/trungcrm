@@ -17,7 +17,7 @@ export default {
             product_id: '',
             // fields: []
         },
-        filterMonth: null,
+        filterMonth: global.month,
         filterUser: null,
         filterProduct: null,
         totalOrders: 0,
@@ -49,7 +49,12 @@ export default {
                     product_id: '',
                 };
                 let type = res.success ? 'success' : 'danger';
-                this.reports.push(res.data.report);
+
+                this.reports = res.data.data.reports.data;
+                this.filterMonth = res.data.data.filterMonth;
+                this.filterUser = res.data.data.filterUser;
+                this.filterProduct = res.data.data.filterProduct;
+
                 this.setMessage(type, res.data.message);
             });
 
@@ -79,6 +84,9 @@ export default {
             this.totalRevenue += totalRevenue;
 
             this.roas += this.totalRevenue / this.totalAds;
+        },
+        changeMonth(event) {
+            window.location.href = "/report?month=" + event.target.value;
         },
         getReportName (reportName, userName) {
             if (global.loggedUser.role == 'admin') {
@@ -122,11 +130,12 @@ export default {
     computed: {
         filteredReports() {
             let filtered = this.reports;
+            /*
             if (this.filterMonth != null) {
                 filtered = filtered.filter(item => {
                     return item.month.toLowerCase().indexOf(this.filterMonth.toLowerCase()) > -1
                 })
-            }
+            }*/
             if (this.filterUser != null) {
                 filtered = filtered.filter(item => {
                     return item.user.name.toLowerCase().indexOf(this.filterUser.toLowerCase()) > -1
