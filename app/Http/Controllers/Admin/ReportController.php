@@ -147,7 +147,7 @@ class ReportController extends Controller
         );
     }
 
-    protected function getListReports($month)
+    protected function getListReports($month = null)
     {
         $loggedUser = auth()->user();
         if (!is_null($month)) {
