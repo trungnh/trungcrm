@@ -8,7 +8,7 @@
             <!-- Light table -->
             <div class="table-responsive">
                 <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
+                    <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col" class="sort" data-sort="name">Tên sản phẩm</th>
@@ -26,7 +26,7 @@
                         <th scope="row">
                             <div class="media align-items-center">
                                 <div class="media-body">
-                                    <span class="name mb-0 text-sm">{{item.name}}</span>
+                                    <a :href="getEditLink(item.id)" class="text-green">{{item.name}}</a>
                                 </div>
                             </div>
                         </th>
@@ -52,9 +52,7 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <a class="dropdown-item" :href="getEditLink(item.id)">Sửa</a>
                                 </div>
                             </div>
                         </td>

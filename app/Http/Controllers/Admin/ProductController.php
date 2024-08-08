@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\ProductRequest;
 use App\Services\ProductService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -66,5 +67,33 @@ class ProductController extends Controller
         }
 
         return response()->json(['message' => trans('messages.admin.errors.create', [], 'vi')], 202);
+    }
+
+    public function edit($id)
+    {
+        $loggedUser = auth()->user();
+        $product = $this->productService->getById($id);
+
+        return view('admin.product.edit', compact('product', 'loggedUser'));
+    }
+
+    /**
+     * @param ProductRequest $request
+     * @param int $id
+     * @return Factory|View
+     */
+    public function saveProduct(ProductRequest $request, $id)
+    {
+        $attributes = $request->all();
+
+        $product = Product::find($id);
+        $product->fill($attributes);
+
+        $product->save();
+
+        return response()->json(
+            ['message' => trans('messages.admin.success.update', [], 'vi')],
+            200
+        );
     }
 }

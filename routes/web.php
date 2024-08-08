@@ -26,6 +26,8 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::middleware('auth')->group(function () {
     Route::get('/', 'Admin\HomeController@index')->name('admin.index');
     Route::get('/product', 'Admin\ProductController@index')->name('product.index');
+    Route::get('/product/edit/{id}', 'Admin\ProductController@edit')->name('product.edit');
+    Route::post('/saveProduct/{id}', 'Admin\ProductController@saveProduct')->name('product.saveProduct');
     Route::post('/addProduct', 'Admin\ProductController@addProduct')->name('product.addProduct');
     Route::post('/getCustomer', 'Admin\CustomerController@getCustomer')->name('customer.getCustomer');
     Route::get('/sample', 'Admin\SampleController@index')->name('sample.index');

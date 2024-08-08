@@ -81,6 +81,9 @@ export default {
                 this.pagination = global.products.pagination;
             }
         },
+        getEditLink(id) {
+            return '/product/edit/' + id;
+        },
         // changePage: function (page=1) {
         //     this.pagination.current_page = page;
         //     this.getItems(page);
