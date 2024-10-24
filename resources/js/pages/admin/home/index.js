@@ -12,6 +12,7 @@ export default {
     data: {
         reportsOfLastMonth: [],
         reportsOfThisMonth: [],
+        thisMonthReportItemsTable: [],
         filterMonth: null,
         totalOrders: 0,
         totalRevenue: 0,
@@ -87,6 +88,7 @@ export default {
             }).then(res => {
                 this.reportsOfLastMonth = res.data.reportsOfLastMonth.data;
                 this.reportsOfThisMonth = res.data.reportsOfThisMonth.data;
+                this.thisMonthReportItemsTable = res.data.thisMonthReportItemsTable;
 
                 this.totalOrders = 0;
                 this.totalRevenue = 0;
@@ -131,6 +133,7 @@ export default {
             if (global.reportsOfLastMonth) {
                 this.reportsOfLastMonth = global.reportsOfLastMonth.data;
                 this.reportsOfThisMonth = global.reportsOfThisMonth.data;
+                this.thisMonthReportItemsTable = global.thisMonthReportItemsTable;
 
                 this.reportsOfLastMonth.forEach((report) => {
                     this.calculateLastMonth(report);

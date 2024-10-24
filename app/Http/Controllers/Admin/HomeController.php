@@ -44,12 +44,14 @@ class HomeController extends Controller
         foreach ($reportsOfLastMonth as &$report) {
             $report['items'] = unserialize($report['items']);
         }
+
+        $thisMonthReportItemsTable = [];
         $reportsOfThisMonth = $this->reportService->getListByMonth($thisMonth, $loggedUser);
         foreach ($reportsOfThisMonth as &$report1) {
             $report1['items'] = unserialize($report1['items']);
         }
 
-        return view('admin.home.index', compact('reportsOfLastMonth', 'reportsOfThisMonth', 'monthsInFilter', 'loggedUser'));
+        return view('admin.home.index', compact('reportsOfLastMonth', 'reportsOfThisMonth', 'thisMonthReportItemsTable', 'monthsInFilter', 'loggedUser'));
     }
 
     /**
@@ -71,13 +73,45 @@ class HomeController extends Controller
         foreach ($reportsOfLastMonth as &$report) {
             $report['items'] = unserialize($report['items']);
         }
+
+        $thisMonthReportItemsTable = [];
         $reportsOfThisMonth = $this->reportService->getListByMonth($thisMonth, $loggedUser);
         foreach ($reportsOfThisMonth as &$report1) {
-            $report1['items'] = unserialize($report1['items']);
+            $reportItemTmp = unserialize($report1['items']);
+            $report1['items'] = $reportItemTmp;
+
+            foreach($reportItemTmp as $item) {
+                if (!isset($thisMonthReportItemsTable[$item['date']])) {
+                    $thisMonthReportItemsTable[$item['date']] = [
+                        "date" => $item['date'],
+                        "orders" => $item['orders'],
+                        "product_qty" => $item['product_qty'],
+                        "ads_amount" => $item['ads_amount'],
+                        "revenue" => $item['revenue'],
+                        "totalUnitPrice" => $item['totalUnitPrice'],
+                        "totalShippingPrice" => $item['totalShippingPrice'],
+                        "totalReturnPrice" => $item['totalReturnPrice'],
+                        "totalSpent" => $item['totalSpent'],
+                        "profit" => $item['profit']
+                    ];
+                } else {
+                    if ($thisMonthReportItemsTable[$item['date']]['date'] ==  $item['date']) {
+                        $thisMonthReportItemsTable[$item['date']]['orders'] += $item['orders'];
+                        $thisMonthReportItemsTable[$item['date']]['product_qty'] += $item['product_qty'];
+                        $thisMonthReportItemsTable[$item['date']]['ads_amount'] += $item['ads_amount'];
+                        $thisMonthReportItemsTable[$item['date']]['revenue'] += $item['revenue'];
+                        $thisMonthReportItemsTable[$item['date']]['totalUnitPrice'] += $item['totalUnitPrice'];
+                        $thisMonthReportItemsTable[$item['date']]['totalShippingPrice'] += $item['totalShippingPrice'];
+                        $thisMonthReportItemsTable[$item['date']]['totalReturnPrice'] += $item['totalReturnPrice'];
+                        $thisMonthReportItemsTable[$item['date']]['totalSpent'] += $item['totalSpent'];
+                        $thisMonthReportItemsTable[$item['date']]['profit'] += $item['profit'];
+                    }
+                }
+            }
         }
 
         return response()->json(
-            ['reportsOfThisMonth' => $reportsOfThisMonth, 'reportsOfLastMonth' => $reportsOfLastMonth],
+            ['reportsOfThisMonth' => $reportsOfThisMonth, 'reportsOfLastMonth' => $reportsOfLastMonth, 'thisMonthReportItemsTable' => $thisMonthReportItemsTable],
             200
         );
     }
