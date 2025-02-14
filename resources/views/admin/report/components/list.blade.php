@@ -114,6 +114,7 @@
                             <span class="name mb-0 text-sm font-weight-bold text-green">
                                 {{formatCurrencyNumber(item.totalProfit)}}
                             </span>
+                            &nbsp;<span class="text-green"><small>({{formatNumber((item.totalProfit / item.totalRevenue)*100)}}%)</small></span>
                         </td>
                         <td scope="row" :class="{'invisible': hideByRole}">
                             <span class="name mb-0 text-sm font-weight-bold text-red">

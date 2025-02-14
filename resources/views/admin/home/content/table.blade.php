@@ -58,7 +58,7 @@
                             <span class="editable text-green font-weight-bold">{{ formatCurrencyNumber(item.revenue)}}</span>
                         </td>
                         <td scope="row" :class="{'invisible': hideByRole}">
-                            <span class="text-red font-weight-bold">{{ formatCurrencyNumber(item.profit) }}</span>
+                            <span class="text-red font-weight-bold">{{ formatCurrencyNumber(item.profit) }}</span>&nbsp;<span class="text-green"><small>({{formatNumber((item.profit / item.revenue)*100)}}%)</small></span>
                         </td>
                         <td scope="row" :class="{'invisible': hideByRole}">
                             <span>{{ formatNumber((item.ads_amount/item.revenue)*100) }}</span>

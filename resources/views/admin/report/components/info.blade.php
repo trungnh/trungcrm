@@ -115,7 +115,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold">Lợi nhuận</span>
                                 </div>
-                                <span class="form-control font-weight-bold text-red text-lg bg-yellow">{{formatCurrencyNumber(totalProfit)}} ({{formatCurrencyNumber(totalProfitRate)}}%)</span>
+                                <span class="form-control font-weight-bold text-red text-lg bg-yellow">{{formatCurrencyNumber(totalProfit)}} ({{formatNumber(totalProfitRate)}}%)</span>
                             </div>
                         </div>
                     </div>
