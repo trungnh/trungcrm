@@ -52,6 +52,65 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col col-md-2">
+                        <div class="form-group">
+                            <label class="form-control-label" for="basic-url">Báo cáo theo thời gian</label>
+                            <div class="input-group">
+                                @verbatim
+                                    <input type="checkbox" v-model="rangeReport"/>
+                                @endverbatim
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" v-if="rangeReport">
+    <div class="col">
+        <div class="card">
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <h3 class="mb-0">Chọn thời gian</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col col-md-2">
+                        <div class="form-group">
+                            <label class="form-control-label" for="basic-url">Bắt đầu</label>
+                            <div class="input-group">
+                                @verbatim
+                                    <select v-model="fromMonth" class="form-select form-select-lg custom-select" aria-label="Default select example">
+                                        <option></option>
+                                        <option v-for="item in global.monthsInFilter" :value="item">
+                                            {{item}}
+                                        </option>
+                                    </select>
+                                @endverbatim
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-2">
+                        <div class="form-group">
+                            <label class="form-control-label" for="basic-url">Kết thúc</label>
+                            <div class="input-group">
+                                @verbatim
+                                    <select v-model="toMonth" class="form-select form-select-lg custom-select" aria-label="Default select example">
+                                        <option></option>
+                                        <option v-for="item in global.monthsInFilter" :value="item">
+                                            {{item}}
+                                        </option>
+                                    </select>
+                                @endverbatim
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <button class="btn btn-success" type="button" @click="reportByRange">Xem báo cáo</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,9 +133,9 @@
                         <th scope="col" class="sort" data-sort="name">Sản phẩm</th>
                         <th scope="col" class="sort" data-sort="name">Tổng đơn</th>
                         <th scope="col" class="sort" data-sort="name">Tiền ads</th>
-                        <th scope="col" class="sort" data-sort="name" :class="{'invisible': hideByRole}">Lợi nhuận</th>
-                        <th scope="col" class="sort" data-sort="name" :class="{'invisible': hideByRole}">Doanh thu</th>
-                        <th scope="col" class="sort" data-sort="name" :class="{'invisible': hideByRole}">ROAS</th>
+                        <th scope="col" class="sort" data-sort="name">Lợi nhuận</th>
+                        <th scope="col" class="sort" data-sort="name">Doanh thu</th>
+                        <th scope="col" class="sort" data-sort="name">ROAS</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -110,18 +169,18 @@
                                 {{formatCurrencyNumber(item.totalAds)}}
                             </span>
                         </td>
-                        <td scope="row" :class="{'invisible': hideByRole}">
+                        <td scope="row">
                             <span class="name mb-0 text-sm font-weight-bold text-green">
                                 {{formatCurrencyNumber(item.totalProfit)}}
                             </span>
-                            &nbsp;<span class="text-green"><small>({{formatNumber((item.totalProfit / item.totalRevenue)*100)}}%)</small></span>
+                            &nbsp;<span class="text-green" :class="{'invisible': hideByRole}"><small>({{formatNumber((item.totalProfit / item.totalRevenue)*100)}}%)</small></span>
                         </td>
-                        <td scope="row" :class="{'invisible': hideByRole}">
+                        <td scope="row">
                             <span class="name mb-0 text-sm font-weight-bold text-red">
                                 {{formatCurrencyNumber(item.totalRevenue)}}
                             </span>
                         </td>
-                        <td scope="row" :class="{'invisible': hideByRole}">
+                        <td scope="row">
                             <span class="name mb-0 text-sm font-weight-bold">
                                 {{formatNumber(item.roas)}}
                             </span>

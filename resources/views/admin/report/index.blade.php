@@ -12,6 +12,8 @@
     @jsData([
     'reports' => $reports,
     'month' => $month,
+    'from' => $from,
+    'to' => $to,
     'products' => $products,
     'months' => $months,
     'sources' => $sources,

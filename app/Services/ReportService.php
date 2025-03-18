@@ -24,8 +24,14 @@ class ReportService extends Service
 
     public function getMonths()
     {
+        $prevY = date('Y', strtotime('-1 year'));
         $currentY = date('Y');
         $months = [];
+
+        foreach(['10', '11', '12'] as $m) {
+            $months[] = $prevY . '-' . $m;
+        }
+
         for ($i=1; $i<=12; $i++) {
             $months[] = $currentY . '-' . $i;
         }
@@ -54,6 +60,11 @@ class ReportService extends Service
     public function getListByMonth($month, $loggedUser)
     {
         return $this->reportRepository->getListByMonth($month, $loggedUser);
+    }
+
+    public function getListByRange($from, $to, $loggedUser)
+    {
+        return $this->reportRepository->getListByRange($from, $to, $loggedUser);
     }
 
     public function getAllReports()

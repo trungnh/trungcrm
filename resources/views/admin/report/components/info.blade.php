@@ -15,7 +15,7 @@
             <!-- Card footer -->
             <div class="card-body py-4">
                 @verbatim
-                <div class="float-left" :class="{'invisible': hideByRole}">
+                <div class="float-left">
                     <div class="row">
                         <div class="col">
                             <div class="form-group input-group">
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" :class="{'invisible': hideByRole}">
                         <div class="col">
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
@@ -50,7 +50,7 @@
                         <div class="col">
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-bold">Thuế thu nhập</span>
+                                    <span class="input-group-text font-weight-bold">Thuế</span>
                                 </div>
                                 <input class="form-control" v-model="report.tax_rate" @change="handleRateChange" type="text">
                             </div>
@@ -78,8 +78,8 @@
                     </div>
                 </div>
 
-                <div class="float-left total-block" :class="{'margin-0': hideByRole}">
-                    <div class="row">
+                <div class="float-left total-block">
+                    <div class="row" :class="{'invisible': hideByRole}" >
                         <div class="col">
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" :class="{'invisible': hideByRole}">
+                    <div class="row">
                         <div class="col">
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">

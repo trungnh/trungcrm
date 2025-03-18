@@ -41,12 +41,18 @@ class ReportController extends Controller
     {
         $loggedUser = auth()->user();
         $month = request()->query('month');
-        extract($this->getListReports($month));
+        $from = $month = request()->query('from');
+        $to = $month = request()->query('to');
+        if (!is_null($from)) {
+            extract($this->getListByRange($from, $to));
+        } else {
+            extract($this->getListReports($month));
+        }
 
         $products = $this->productService->getList();
         $sources = Constant::SOURCE;
 
-        return view('admin.report.index', compact('reports', 'month', 'products', 'months', 'sources', 'loggedUser', 'monthsInFilter', 'usersInFilter', 'productsInFilter'));
+        return view('admin.report.index', compact('reports', 'month', 'from', 'to', 'products', 'months', 'sources', 'loggedUser', 'monthsInFilter', 'usersInFilter', 'productsInFilter'));
     }
 
     public function edit($id)
@@ -78,6 +84,9 @@ class ReportController extends Controller
                 $attributes['ads_tax_rate'] = Constant::GG_ADS_TAX_RATE;
             } else if ($attributes['source'] == 'Tiktok') {
                 $attributes['ads_tax_rate'] = Constant::TT_ADS_TAX_RATE;
+            }
+            else if ($attributes['source'] == 'Facebook') {
+                $attributes['ads_tax_rate'] = Constant::FB_ADS_TAX_RATE;
             }
 
             $attributes['tax_rate'] = Constant::TAX_RATE;
@@ -156,6 +165,25 @@ class ReportController extends Controller
             $reports = $this->reportService->getList($loggedUser);
         }
 
+        $months = $this->reportService->getMonths();
+
+        $monthsInFilter = $months;
+        $usersInFilter = [];
+        $productsInFilter = [];
+        foreach ($reports as &$report) {
+            $report['items'] = unserialize($report['items']);
+            //$monthsInFilter[$report['month']] = $report['month'];
+            $productsInFilter[$report['product']['name']] = $report['product']['name'];
+            $usersInFilter[$report['user']['name']] = $report['user']['name'];
+        }
+
+        return compact('reports', 'months', 'monthsInFilter', 'usersInFilter', 'productsInFilter');
+    }
+
+    protected function getListByRange($from, $to)
+    {
+        $loggedUser = auth()->user();
+        $reports = $this->reportService->getListByRange($from, $to, $loggedUser);
         $months = $this->reportService->getMonths();
 
         $monthsInFilter = $months;

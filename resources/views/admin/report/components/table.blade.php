@@ -13,9 +13,9 @@
                         <th class="header" scope="col">Tiền ads</th>
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">Vận chuyển</th>
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">Tiền Hoàn</th>
-                        <th class="header" scope="col" :class="{'invisible': hideByRole}">Tổng chi</th>
+                        <th class="header" scope="col">Tổng chi</th>
                         <th class="header" scope="col">Tiền COD</th>
-                        <th class="header" scope="col" :class="{'invisible': hideByRole}">Lợi nhuận</th>
+                        <th class="header" scope="col">Lợi nhuận</th>
                         <th class="header" scope="col">CPA</th>
                         <th class="header" scope="col">% ads</th>
                         <th class="header" scope="col">ROAS</th>
@@ -51,7 +51,7 @@
                         <td scope="row" @click="resetEditFields(index)" :class="{'invisible': hideByRole}">
                             <span>{{ formatCurrencyNumber(item.totalReturnPrice) }}</span>
                         </td>
-                        <td scope="row" @click="resetEditFields(index)" :class="{'invisible': hideByRole}">
+                        <td scope="row" @click="resetEditFields(index)">
                             <span>{{ formatCurrencyNumber(item.totalSpent) }}</span>
                         </td>
                         <td scope="row" class="row-revenue">
@@ -59,7 +59,7 @@
                             </span>
                             <input @blur="resetEditFields(index)" type="text" v-model="item.revenue" class="form-control" aria-describedby="basic-addon3">
                         </td>
-                        <td scope="row" @click="resetEditFields(index)" :class="{'invisible': hideByRole}">
+                        <td scope="row" @click="resetEditFields(index)">
                             <span class="text-red font-weight-bold">{{ formatCurrencyNumber(item.profit) }}</span>&nbsp;<span class="text-green"><small>({{formatNumber((item.profit / item.revenue)*100)}}%)</small></span>
                         </td>
                         <td scope="row" @click="resetEditFields(index)">

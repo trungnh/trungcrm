@@ -23,6 +23,9 @@ export default {
         totalOrders: 0,
         totalAds: 0,
         totalProfit: 0,
+        rangeReport: false,
+        fromMonth: global.from,
+        toMonth: global.to,
         message: {},
         pagination: {
             total: 0,
@@ -88,6 +91,9 @@ export default {
         changeMonth(event) {
             window.location.href = "/report?month=" + event.target.value;
         },
+        reportByRange(event) {
+            window.location.href = "/report?from=" + this.fromMonth + "&to=" + this.toMonth;
+        },
         getReportName (reportName, userName) {
             if (global.loggedUser.role == 'admin') {
                 return reportName + ' - ' + userName;
@@ -123,6 +129,9 @@ export default {
                 this.reports = global.reports.data;
                 this.products = global.products.data;
                 this.pagination = global.reports.pagination;
+            }
+            if (global.from) {
+                this.rangeReport = true;
             }
         },
 
