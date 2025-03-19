@@ -94,12 +94,16 @@ export default {
         },
         calculateAdsAmount(index) {
             let ads_amount_string = $('.editing-ads .row-ads input').val();
-            let ads_amount_string_path_add = ads_amount_string.split('+');
-            let totalAmount = 0;
-            ads_amount_string_path_add.forEach((val) => {
-                let valTml = val.replace(/[., ]/g, "");
-                totalAmount += parseFloat(valTml.trim());
-            });
+            const numbers = ads_amount_string.split(/[\+\-]/).map(Number);  
+            const operators = ads_amount_string.match(/[\+\-]/g);  
+            let totalAmount = numbers[0];  
+            for (let i = 0; i < operators.length; i++) {  
+                if (operators[i] === '+') {  
+                    totalAmount += numbers[i + 1];  
+                } else if (operators[i] === '-') {  
+                    totalAmount -= numbers[i + 1];  
+                }  
+            }
 
             this.report.items[index].ads_amount = totalAmount;
             this.resetEditFields(index);
