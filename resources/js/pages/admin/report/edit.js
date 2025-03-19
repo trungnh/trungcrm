@@ -97,12 +97,14 @@ export default {
             const numbers = ads_amount_string.split(/[\+\-]/).map(Number);  
             const operators = ads_amount_string.match(/[\+\-]/g);  
             let totalAmount = numbers[0];  
-            for (let i = 0; i < operators.length; i++) {  
-                if (operators[i] === '+') {  
-                    totalAmount += numbers[i + 1];  
-                } else if (operators[i] === '-') {  
-                    totalAmount -= numbers[i + 1];  
-                }  
+            if(operators) {
+                for (let i = 0; i < operators.length; i++) {  
+                    if (operators[i] === '+') {  
+                        totalAmount += numbers[i + 1];  
+                    } else if (operators[i] === '-') {  
+                        totalAmount -= numbers[i + 1];  
+                    }  
+                }
             }
 
             this.report.items[index].ads_amount = totalAmount;
