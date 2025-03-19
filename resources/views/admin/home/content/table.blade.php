@@ -17,9 +17,9 @@
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">Tiền hàng</th>
                         <th class="header" scope="col">Tiền ads</th>
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">Vận chuyển</th>
-                        <th class="header" scope="col" :class="{'invisible': hideByRole}">Tiền Hoàn</th>
+                        <th class="header" scope="col" :class="{'invisible': hideByRole}">Tiền hoàn</th>
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">Tổng chi</th>
-                        <th class="header" scope="col">Tiền COD</th>
+                        <th class="header" scope="col">Doanh thu</th>
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">Lợi nhuận</th>
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">%Ads</th>
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">ROAS</th>

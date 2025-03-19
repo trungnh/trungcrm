@@ -133,7 +133,7 @@
                         <th scope="col" class="sort" data-sort="name">Sản phẩm</th>
                         <th scope="col" class="sort" data-sort="name">Tổng đơn</th>
                         <th scope="col" class="sort" data-sort="name">Tiền ads</th>
-                        <th scope="col" class="sort" data-sort="name">Lợi nhuận</th>
+                        <th scope="col" class="sort" data-sort="name" :class="{'invisible': hideByRole}">Lợi nhuận</th>
                         <th scope="col" class="sort" data-sort="name">Doanh thu</th>
                         <th scope="col" class="sort" data-sort="name">ROAS</th>
                         <th scope="col"></th>
@@ -175,7 +175,7 @@
                             </span>
                             &nbsp;<span class="text-green" :class="{'invisible': hideByRole}"><small>({{formatNumber((item.totalProfit / item.totalRevenue)*100)}}%)</small></span>
                         </td>
-                        <td scope="row">
+                        <td scope="row" :class="{'invisible': hideByRole}">
                             <span class="name mb-0 text-sm font-weight-bold text-red">
                                 {{formatCurrencyNumber(item.totalRevenue)}}
                             </span>
@@ -216,12 +216,12 @@
                                 {{formatCurrencyNumber(totalProfit)}}
                             </span>
                         </td>
-                        <td scope="row" :class="{'invisible': hideByRole}">
+                        <td scope="row">
                             <span class="name mb-0 text-lg text-red font-weight-bold">
                                 {{formatCurrencyNumber(totalRevenue)}}
                             </span>
                         </td>
-                        <td scope="row" :class="{'invisible': hideByRole}">
+                        <td scope="row">
                             <span class="name mb-0 text-lg font-weight-bold">
                                 {{formatNumber(totalRevenue / totalAds)}}
                             </span>
