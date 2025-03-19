@@ -41,8 +41,8 @@ class ReportController extends Controller
     {
         $loggedUser = auth()->user();
         $month = request()->query('month');
-        $from = $month = request()->query('from');
-        $to = $month = request()->query('to');
+        $from = request()->query('from');
+        $to = request()->query('to');
         if (!is_null($from)) {
             extract($this->getListByRange($from, $to));
         } else {
