@@ -94,8 +94,9 @@ export default {
         },
         calculateAdsAmount(index) {
             let ads_amount_string = $('.editing-ads .row-ads input').val();
-            const numbers = ads_amount_string.split(/[\+\-]/).map(Number);  
-            const operators = ads_amount_string.match(/[\+\-]/g);  
+            let valTml = ads_amount_string.replace(/[., ]/g, "");
+            const numbers = valTml.split(/[\+\-]/).map(Number);  
+            const operators = valTml.match(/[\+\-]/g);  
             let totalAmount = numbers[0];  
             if(operators) {
                 for (let i = 0; i < operators.length; i++) {  
