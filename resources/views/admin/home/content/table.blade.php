@@ -20,7 +20,7 @@
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">Tiền hoàn</th>
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">Tổng chi</th>
                         <th class="header" scope="col">Doanh thu</th>
-                        <th class="header" scope="col" :class="{'invisible': hideByRole}">Lợi nhuận</th>
+                        <th class="header" scope="col">Lợi nhuận</th>
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">%Ads</th>
                         <th class="header" scope="col" :class="{'invisible': hideByRole}">ROAS</th>
                     </tr>
@@ -57,8 +57,8 @@
                         <td scope="row" class="row-revenue">
                             <span class="editable text-green font-weight-bold">{{ formatCurrencyNumber(item.revenue)}}</span>
                         </td>
-                        <td scope="row" :class="{'invisible': hideByRole}">
-                            <span class="text-red font-weight-bold">{{ formatCurrencyNumber(item.profit) }}</span>&nbsp;<span class="text-green"><small>({{formatNumber((item.profit / item.revenue)*100)}}%)</small></span>
+                        <td scope="row">
+                            <span class="text-red font-weight-bold">{{ formatCurrencyNumber(item.profit) }}</span>&nbsp;<span class="text-green" :class="{'invisible': hideByRole}"><small>({{formatNumber((item.profit / item.revenue)*100)}}%)</small></span>
                         </td>
                         <td scope="row" :class="{'invisible': hideByRole}">
                             <span>{{ formatNumber((item.ads_amount/item.revenue)*100) }}</span>
