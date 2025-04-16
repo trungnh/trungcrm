@@ -14,6 +14,7 @@
     'reportsOfThisMonth' => $reportsOfThisMonth,
     'thisMonthReportItemsTable' => $thisMonthReportItemsTable,
     'monthsInFilter' => $monthsInFilter,
+    'usersInFilter' => $usersInFilter,
     'loggedUser' => $loggedUser
     ])
 @endsection

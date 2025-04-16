@@ -12,6 +12,16 @@
                 </select>
                 @endverbatim
             </div>
+            <div class="d-none d-md-inline-block ml-md-4">
+                @verbatim
+                <select v-model="filterUser" @change="changeUser" class="form-select form-select-xl custom-select" aria-label="Default select example">
+                    <option></option>
+                    <option v-for="(value,index) in global.usersInFilter" :value="index">
+                        {{value}}
+                    </option>
+                </select>
+                @endverbatim
+            </div>
         </div>
     </div>
     <!-- Card stats -->

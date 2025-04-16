@@ -38,15 +38,32 @@ class HomeController extends Controller
         $loggedUser = auth()->user();
         $monthsInFilter = $this->reportService->getMonths();
 
-        $lastMonth = date('Y-n', strtotime('first day of last month'));
-        $thisMonth = date('Y-n');
-        $reportsOfLastMonth = $this->reportService->getListByMonth($lastMonth, $loggedUser);
+        $month = request()->query('month');
+        $filterUserId = request()->query('user') ?? null;
+        if (is_null($month)) {
+            $lastMonth = date('Y-n', strtotime('first day of last month'));
+            $thisMonth = date('Y-n');
+        } else {
+            $fullThisMonth = date('Y-m-d', strtotime(date($month . '-1')));
+            $lastMonth = date('Y-n', strtotime($fullThisMonth . ' -1 MONTH'));
+            $thisMonth = date('Y-n',  strtotime($fullThisMonth));
+        }
+
+        $usersInFilter = [];
+        $productsInFilter = [];
+        $tmpReportsOfThisMonth = $this->reportService->getListByMonth($thisMonth, $loggedUser);
+        foreach ($tmpReportsOfThisMonth as $tmpReport) {
+            $usersInFilter[$tmpReport['user']['id']] = $tmpReport['user']['name'];
+            $productsInFilter[$tmpReport['product']['name']] = $tmpReport['product']['name'];
+        }
+
+        $reportsOfLastMonth = $this->reportService->getListByMonth($lastMonth, $loggedUser, $filterUserId);
         foreach ($reportsOfLastMonth as &$report) {
             $report['items'] = unserialize($report['items']);
         }
 
         $thisMonthReportItemsTable = [];
-        $reportsOfThisMonth = $this->reportService->getListByMonth($thisMonth, $loggedUser);
+        $reportsOfThisMonth = $this->reportService->getListByMonth($thisMonth, $loggedUser, $filterUserId);
         foreach ($reportsOfThisMonth as &$report1) {
             $reportItemTmp = unserialize($report1['items']);
             $report1['items'] = $reportItemTmp;
@@ -81,7 +98,7 @@ class HomeController extends Controller
             }
         }
 
-        return view('admin.home.index', compact('reportsOfLastMonth', 'reportsOfThisMonth', 'thisMonthReportItemsTable', 'monthsInFilter', 'loggedUser'));
+        return view('admin.home.index', compact('reportsOfLastMonth', 'reportsOfThisMonth', 'thisMonthReportItemsTable', 'monthsInFilter', 'loggedUser', 'usersInFilter', 'productsInFilter'));
     }
 
     /**
@@ -96,9 +113,9 @@ class HomeController extends Controller
     {
         $loggedUser = auth()->user();
         $fullThisMonth = date('Y-m-d', strtotime(date($month . '-1')));
+
         $lastMonth = date('Y-n', strtotime($fullThisMonth . ' -1 MONTH'));
         $thisMonth = date('Y-n',  strtotime($fullThisMonth));
-
         $reportsOfLastMonth = $this->reportService->getListByMonth($lastMonth, $loggedUser);
         foreach ($reportsOfLastMonth as &$report) {
             $report['items'] = unserialize($report['items']);

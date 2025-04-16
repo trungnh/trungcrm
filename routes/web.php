@@ -12,6 +12,7 @@
 */
 
 use \Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GoogleAdsController;
 
 // Refer: \Illuminate\Routing\Router::auth
 // Auth::routes(['register' => false, 'reset' => false, 'confirm' => false, 'verify' => false]);
@@ -30,13 +31,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/saveProduct/{id}', 'Admin\ProductController@saveProduct')->name('product.saveProduct');
     Route::post('/addProduct', 'Admin\ProductController@addProduct')->name('product.addProduct');
     Route::post('/getCustomer', 'Admin\CustomerController@getCustomer')->name('customer.getCustomer');
-    Route::get('/sample', 'Admin\SampleController@index')->name('sample.index');
 
     Route::get('/report', 'Admin\ReportController@index')->name('report.index');
     Route::get('/report/edit/{id}', 'Admin\ReportController@edit')->name('report.edit');
     Route::post('/report/addReport', 'Admin\ReportController@addReport')->name('report.addReport');
     Route::post('/report/saveReport/{id}', 'Admin\ReportController@saveReport')->name('report.saveReport');
     Route::get('/home/changeReportMonth/{month}', 'Admin\HomeController@changeReportMonth')->name('home.changeReportMonth');
+
+    Route::get('/google-ads/settings', 'Admin\GoogleAdsController@index')->name('google.ads.settings');
+    Route::post('/google-ads/save', 'Admin\GoogleAdsController@store')->name('google.ads.save');
+    Route::get('/google-ads/authenticate', 'Admin\GoogleAdsController@authenticate')->name('google.ads.authenticate');
+    Route::get('/google-ads/callback', 'Admin\GoogleAdsController@callback')->name('google.ads.callback');
 });
 
 
