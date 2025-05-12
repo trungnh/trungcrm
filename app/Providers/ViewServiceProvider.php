@@ -26,7 +26,6 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         // Using class based composers...
-        View::composer('sample', 'App\Http\View\Composers\ProfileComposer');
 
         // Register directive for blade.
         $this->extendBladeJsData();

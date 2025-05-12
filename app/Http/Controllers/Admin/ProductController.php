@@ -16,7 +16,7 @@ class ProductController extends Controller
     private $productService;
 
     /**
-     * SampleController constructor.
+     * ProductController constructor.
      *
      * @param ProductService $productService
      */

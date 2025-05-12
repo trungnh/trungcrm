@@ -40,6 +40,7 @@ class HomeController extends Controller
 
         $month = request()->query('month');
         $filterUserId = request()->query('user') ?? null;
+        $filterProductId = request()->query('product') ?? null;
         if (is_null($month)) {
             $lastMonth = date('Y-n', strtotime('first day of last month'));
             $thisMonth = date('Y-n');
@@ -51,19 +52,21 @@ class HomeController extends Controller
 
         $usersInFilter = [];
         $productsInFilter = [];
+
+        $reportsOfThisMonth = [];
         $tmpReportsOfThisMonth = $this->reportService->getListByMonth($thisMonth, $loggedUser);
         foreach ($tmpReportsOfThisMonth as $tmpReport) {
             $usersInFilter[$tmpReport['user']['id']] = $tmpReport['user']['name'];
-            $productsInFilter[$tmpReport['product']['name']] = $tmpReport['product']['name'];
+            $productsInFilter[$tmpReport['product']['id']] = $tmpReport['product']['name'];
         }
 
-        $reportsOfLastMonth = $this->reportService->getListByMonth($lastMonth, $loggedUser, $filterUserId);
+        $reportsOfLastMonth = $this->reportService->getListByMonth($lastMonth, $loggedUser, $filterUserId, $filterProductId);
         foreach ($reportsOfLastMonth as &$report) {
             $report['items'] = unserialize($report['items']);
         }
 
         $thisMonthReportItemsTable = [];
-        $reportsOfThisMonth = $this->reportService->getListByMonth($thisMonth, $loggedUser, $filterUserId);
+        $reportsOfThisMonth = $this->reportService->getListByMonth($thisMonth, $loggedUser, $filterUserId, $filterProductId);
         foreach ($reportsOfThisMonth as &$report1) {
             $reportItemTmp = unserialize($report1['items']);
             $report1['items'] = $reportItemTmp;

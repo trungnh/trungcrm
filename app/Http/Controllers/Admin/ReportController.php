@@ -23,7 +23,7 @@ class ReportController extends Controller
     private $productService;
 
     /**
-     * SampleController constructor.
+     * ReportController constructor.
      *
      * @param ReportService $reportService
      * @param ProductService $productService

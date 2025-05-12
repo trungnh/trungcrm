@@ -38,18 +38,20 @@ class ReportRepository extends Repository
         return $collection->paginate(50);
     }
 
-    public function getListByMonth($month, $loggedUser, $userId = null)
+    public function getListByMonth($month, $loggedUser, $userId = null, $productId = null)
     {
         if ($loggedUser->role == Constant::ROLE_ADMIN) {
             $collection = $this->model()
                 ->where('month', $month);
             if ($userId) $collection = $collection->where('user_id', $userId);
+            if ($productId) $collection = $collection->where('product_id', $productId);
             $collection = $collection->with('product', 'user');
         } else {
             $collection = $this->model()
                 ->where('user_id', $loggedUser->id)
                 ->where('month', $month);
             if ($userId) $collection = $collection->where('user_id', $userId);
+            if ($productId) $collection = $collection->where('product_id', $productId);
             $collection = $collection->with('product', 'user');
         }
         

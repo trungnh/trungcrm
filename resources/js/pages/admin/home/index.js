@@ -15,7 +15,9 @@ export default {
         thisMonthReportItemsTable: [],
         filterMonth: null,
         filterUser: null,
+        filterProduct: null,
         usersInFilter: [],
+        productsInFilter: [],
         users: [],
         totalOrders: 0,
         totalRevenue: 0,
@@ -83,22 +85,36 @@ export default {
         },
         changeUser() {
             let urlParams = this.getAllUrlParams();
+            let targetUrl = "?user=" + event.target.value; 
             if (urlParams.month) {
-                window.location.href = "?user=" + event.target.value + "&month=" + urlParams.month;
-            } else {
-                window.location.href = "?user=" + event.target.value; 
+                targetUrl += "&month=" + urlParams.month;
+            } 
+            if (urlParams.product) {
+                targetUrl += "&product=" + urlParams.product;
             }
+            window.location.href = targetUrl; 
+        },
+        changeProduct() {
+            let urlParams = this.getAllUrlParams();
+            let targetUrl = "?product=" + event.target.value; 
+            if (urlParams.month) {
+                targetUrl += "&month=" + urlParams.month;
+            } 
+            if (urlParams.user) {
+                targetUrl += "&user=" + urlParams.user;
+            }
+            window.location.href = targetUrl; 
         },
         changeMonth() {
             let urlParams = this.getAllUrlParams();
+            let targetUrl = "?month=" + event.target.value; 
+            if (urlParams.product) {
+                targetUrl += "&product=" + urlParams.product;
+            } 
             if (urlParams.user) {
-                window.location.href = "?month=" + event.target.value + "&user=" + urlParams.user;
-            } else {
-                window.location.href = "?month=" + event.target.value;
+                targetUrl += "&user=" + urlParams.user;
             }
-            if (urlParams.month) {
-                this.filterMonth = urlParams.month;
-            }
+            window.location.href = targetUrl; 
             //window.location.href = "?month=" + event.target.value;
             // axios.get('/home/changeReportMonth/' + this.filterMonth).then(response => {
             //     if (response.status == 200) {
@@ -237,6 +253,9 @@ export default {
         let urlParams = this.getAllUrlParams();
         if (urlParams.user) {
             this.filterUser = urlParams.user;
+        }
+        if (urlParams.product) {
+            this.filterProduct = urlParams.product;
         }
         if (urlParams.month) {
             this.filterMonth = urlParams.month;
