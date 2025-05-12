@@ -14,6 +14,6 @@ class Constant {
     const GG_ADS_TAX_RATE = 0.1;
     const TT_ADS_TAX_RATE = 0.05;
     const FB_ADS_TAX_RATE = 0.05;
-    const TAX_RATE = 0.02;
+    const TAX_RATE = 0.015;
     const ADS_PAYMENT_FEE = 0.012;
 }
